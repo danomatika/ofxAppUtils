@@ -14,7 +14,7 @@ void testApp::setupApp(){
 	// to keep the same aspect ratio;
 	// the second true enables setting of the origin to change where the rendering
 	// goes on the screen
-	setRenderSize(800, 600, true, true);
+	setRenderSize(600, 600, true, true);
 	setOriginTranslate(true);
 	
 	// the control panel is setup automatically, of course you can still change

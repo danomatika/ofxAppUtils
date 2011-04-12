@@ -4,6 +4,7 @@
 #include <ofxControlPanel.h>
 #include <ofxLogger.h>
 
+#include "ofxQuadWarper.h"
 #include "ofxTimer.h"
 
 class ofxSceneManager;
@@ -143,16 +144,10 @@ class ofxApp : public ofBaseApp {
 		float _renderAspect, _screenAspect;
 		ofVec3f _origin;
 		
-		// projection warp points
-		ofVec2f	_warpPoints[4];
-		int _currentWarpPoint;	// currently selected projection point
-		
-		// projection warping matrices
-		double _warpMatrix[3][3];
-        GLfloat _glWarpMatrix[16];
-		
-		// are we currently editing the warp points?
-		bool _bEditingWarpPoints;
+		/// quad warper
+		ofxQuadWarper _quadWarper;
+		int _currentWarpPoint;		// currently selected projection point
+		bool _bEditingWarpPoints;	// are we currently editing the warp points?
 		ofMatrix4x4 _warpTransform;	// warp transform matrix needed for mouse picking
 		
 		bool _bTransformControls; ///< have the projeciton controls been added?

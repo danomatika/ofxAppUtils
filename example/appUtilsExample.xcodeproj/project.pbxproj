@@ -44,6 +44,7 @@
 		3014AF911353E23C00D37FBD /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3014AF6B1353E23C00D37FBD /* tinyxmlparser.cpp */; };
 		3014AF921353E23C00D37FBD /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3014AF6D1353E23C00D37FBD /* ofxXmlSettings.cpp */; };
 		3014AF9E1353E45700D37FBD /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3014AF9C1353E45700D37FBD /* ofxDirList.cpp */; };
+		3014B33A1354461400D37FBD /* ofxQuadWarper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3014B3381354461400D37FBD /* ofxQuadWarper.cpp */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
 		E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */; };
@@ -178,6 +179,8 @@
 		3014B0A81353FB6700D37FBD /* ParticleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleScene.h; sourceTree = "<group>"; };
 		3014B0A91353FB6700D37FBD /* LineScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineScene.h; sourceTree = "<group>"; };
 		3014B0AA1353FB6700D37FBD /* scenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenes.h; sourceTree = "<group>"; };
+		3014B3381354461400D37FBD /* ofxQuadWarper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxQuadWarper.cpp; sourceTree = "<group>"; };
+		3014B3391354461400D37FBD /* ofxQuadWarper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxQuadWarper.h; sourceTree = "<group>"; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -235,6 +238,8 @@
 		3014AF181353E23C00D37FBD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3014B3381354461400D37FBD /* ofxQuadWarper.cpp */,
+				3014B3391354461400D37FBD /* ofxQuadWarper.h */,
 				3014AF191353E23C00D37FBD /* matrix_funcs.h */,
 				3014AF1A1353E23C00D37FBD /* ofxAppUtils.h */,
 				3014AF1B1353E23C00D37FBD /* ofxApp.cpp */,
@@ -597,6 +602,7 @@
 				3014AF911353E23C00D37FBD /* tinyxmlparser.cpp in Sources */,
 				3014AF921353E23C00D37FBD /* ofxXmlSettings.cpp in Sources */,
 				3014AF9E1353E45700D37FBD /* ofxDirList.cpp in Sources */,
+				3014B33A1354461400D37FBD /* ofxQuadWarper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

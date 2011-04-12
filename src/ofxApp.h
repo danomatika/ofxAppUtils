@@ -6,9 +6,11 @@
 
 #include "ofxTimer.h"
 
+class ofxSceneManager;
+
 /**
     \class  App
-    \brief  application implementation with automatic transforms and projection mapping
+    \brief  application implementation with automatic transforms and projection mapping,
 			includes a built in ofxControlPanel
 **/
 class ofxApp : public ofBaseApp {
@@ -37,9 +39,9 @@ class ofxApp : public ofBaseApp {
 		bool getScale() 			{return _bScale;}
 		
 		/// screen mirroring
-		void setMirror(bool mirrorX, bool mirrorY)	{_bMirrorX = mirrorX; _bMirrorY = mirrorY;}
-		void setMirrorX(bool mirrorX)				{_bMirrorX = mirrorX;}
-		void setMirrorY(bool mirrorY)				{_bMirrorY = mirrorY;}
+		void setMirror(bool mirrorX, bool mirrorY);
+		void setMirrorX(bool mirrorX);
+		void setMirrorY(bool mirrorY);
 		bool getMirrorX()		{return _bMirrorX;}
 		bool getMirrorY()		{return _bMirrorY;}
 		
@@ -48,16 +50,16 @@ class ofxApp : public ofBaseApp {
 		bool getOriginTranslate()					{return _bTranslate;}
 		
 		/// set the origin position
-		void setOrigin(float x, float y, float z=0)	{_origin.set(x, y, z);}
-		void setOrigin(ofVec2f point)				{_origin.set(point.x, point.y, 0);}
-		void setOrigin(ofVec3f point)				{_origin = point;}
+		void setOrigin(float x, float y, float z=0);
+		void setOrigin(ofVec2f point)				{setOrigin(point.x, point.y, 0);}
+		void setOrigin(ofVec3f point)				{setOrigin(point.x, point.y, point.z);}
 		ofVec3f getOrigin()		{return _origin;}
 		float getOriginX()		{return _origin.x;}
 		float getOriginY()		{return _origin.y;}
 		float getOriginZ()		{return _origin.z;}
 		
 		/// set/edit the projection warping
-		void setWarp(bool warp)		{_bWarp = warp;}
+		void setWarp(bool warp);
 		bool getWarp()				{return _bWarp;}
 		void resetWarp();
 		void setEditWarp(bool edit) {_bEditingWarpPoints = edit;}
@@ -78,11 +80,33 @@ class ofxApp : public ofBaseApp {
 		void applyOriginTranslate();
 		void applyWarp();
 		
+		/// add transform controls to the ofxControlPanel (optional)
+		/// set panelNum to choose which to add the controls to, otherwise a
+		/// new panel is added
+		///
+		/// the controls are (xmlName, type):
+		///	- transformPos 				float slider2D
+		/// - transformZ 				float slider
+		/// - transformMirrorX			bool toggle
+		/// - transformMirrorY			bool toggle
+		/// - transformEnableQuadWarper	bool toggle
+		/// - transformEditQuadWarper	bool toggle (button)
+		/// - transformSaveQuadWarper	bool toggle (button)
+		///
+		void addTransformControls(int panelNum=-1, int panelCol=0);
+		
+		/// set the built in SceneManager (optional)
+		void setSceneManager(ofxSceneManager* manager);
+		ofxSceneManager* getSceneManager();
+		void clearSceneManager();
+		
 		/// is debug mode on?
 		bool isDebug()	{return bDebug;}
 
 		/// functions imeplemented by this class,
 		/// use the protected callbacks instead
+		void setup();
+		void exit();
 		void update();
 		void draw();
 		void keyPressed(int key);
@@ -94,6 +118,8 @@ class ofxApp : public ofBaseApp {
 	protected:
 	
 		/// callbacks to implement
+		virtual void setupApp() = 0;
+		virtual void exitApp() {}
 		virtual void updateApp() = 0;
 		virtual void drawApp() = 0;
 		virtual void keyPressedApp(int key) = 0;
@@ -107,6 +133,9 @@ class ofxApp : public ofBaseApp {
 		ofxControlPanel	controlPanel; ///< the settings control panel
 		
 	private:
+		
+		/// setup the control panel
+		void _setupControlPanel();
 		
 		bool _bScale, _bMirrorX, _bMirrorY, _bTranslate, _bHandleAspect, _bWarp;
 		float _renderWidth, _renderHeight;
@@ -125,4 +154,8 @@ class ofxApp : public ofBaseApp {
 		// are we currently editing the warp points?
 		bool _bEditingWarpPoints;
 		ofMatrix4x4 _warpTransform;	// warp transform matrix needed for mouse picking
+		
+		bool _bTransformControls; ///< have the projeciton controls been added?
+		
+		ofxSceneManager* _sceneManager;	///< optional buitl in scene manager
 };

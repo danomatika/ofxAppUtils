@@ -6,9 +6,12 @@ class ParticleScene : public ofxScene {
 
 	public:
 
-		// takes a reference of the parent for data access,
+		// takes a reference of the parent app for data access,
 		// set the scene name through the base class initializer
-		ParticleScene(testApp &app) : ofxScene((ofxApp&) app, "Particles") {}
+		ParticleScene(testApp &app) : ofxScene((ofxApp&) app, "Particles")
+		{
+			alpha = 255;
+		}
 
 		// scene setup
 		void setupScene() {
@@ -29,7 +32,9 @@ class ParticleScene : public ofxScene {
 				ofxLog() << "ParticleScene: update enter";
 			}
 		
+			// calc alpha amount based on alarm time diff
 			alpha = 255*timer.getDiffN();
+			
 			updateScene();
 		
 			// call finishedEntering() to indicate scne is done entering
@@ -56,7 +61,9 @@ class ParticleScene : public ofxScene {
 				ofxLog() << "ParticleScene: update exit";
 			}
 			
+			// calc alpha amount based on alarm time diff
 			alpha = 255*abs(timer.getDiffN()-1.0);
+			
 			updateScene();
 		
 			// call finishedExiting() to indicate scene is done exiting
@@ -69,12 +76,15 @@ class ParticleScene : public ofxScene {
 
 		// draw
         void drawScene() {
+			ofEnableAlphaBlending();
 			ofFill();
 			ofSetRectMode(OF_RECTMODE_CENTER);
 			ofSetColor(255, 0, 0, alpha);
 			
 			for(unsigned int i = 0; i < particles.size(); ++i)
 				particles[i]->draw();
+				
+			ofDisableAlphaBlending();
 		}
 		
 		// cleanup
@@ -94,11 +104,18 @@ class ParticleScene : public ofxScene {
 
 			public:
 			
+				// takes a reference of the parent app for data access,
+				// here used to get the size of the render area
+				// you can also cast the ofxApp reference to your own derived
+				// class to pass custom data:
+				//
+				// TestApp& testApp = static_cast<TestAPp&> (app);
+				//
 				Particle(ofxApp& app) : app(app) {
 					size = ofRandom(10, 40);
 					pos.set(ofRandom(size/2, app.getRenderWidth()),
 							ofRandom(size/2, app.getRenderHeight()));
-					vel.set(ofRandom(-10, 10), ofRandom(-10, 10));
+					vel.set(ofRandom(-5, 5), ofRandom(-5, 5));
 				}
 				
 				void update() {

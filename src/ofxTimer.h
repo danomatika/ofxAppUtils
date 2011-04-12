@@ -4,7 +4,7 @@
 
 /**
 	\class	Timer
-	\brief	a simple timer/alarm
+	\brief	a simple millis timer/alarm
 */
 class ofxTimer
 {

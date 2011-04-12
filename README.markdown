@@ -17,11 +17,11 @@ OpenFrameworks is a cross platform open source toolkit for creative coding in C+
 Installation
 ------------
 
-To use ofxAppUtils, first you need to download and install Open Frameworks. ofxLogger.xcodeproj is currently developed against the latest version of Open Frameworks on github (007), but ofxLogger itself should work with 0062.
+To use ofxAppUtils, first you need to download and install Open Frameworks. ofxAppUtils is currently developed against the latest version of Open Frameworks on github (007).
 
-To get a copy of the repository you can download the source from [http://github.com/danomatika/ofxLogger/zipball/master](http://github.com/danomatika/ofxLogger/zipball/master) or, alternatively, you can use git clone:
+To get a copy of the repository you can download the source from [http://github.com/danomatika/ofxAppUtils/zipball/master](http://github.com/danomatika/ofxAppUtils/zipball/master) or, alternatively, you can use git clone:
 <pre>
-git clone git://github.com/danomatika/ofxLogger.git
+git clone git://github.com/danomatika/ofxAppUtilsgit
 </pre>
 
 The addon should sit in openFrameworks/addons/ofxAppUtils/.

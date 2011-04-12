@@ -7,19 +7,19 @@ ofxSceneManager::ofxSceneManager(ofxApp& app) :
 	app(app), _currentScene(SCENE_NONE), _newScene(SCENE_NOCHANGE),
 	_bChangeNow(false), _minChangeTimeMS(100), _bSignalledAutoChange(false)
 {
-	ofxLog::addTopic("SceneManager");
+	ofxLog::addTopic("ofxSceneManager");
 	_sceneChangeTimer.set();
 }
 
 //--------------------------------------------------------------
 void ofxSceneManager::add(ofxScene* scene) {
 	if(scene == NULL) {
-		ofxLogWarning("SceneManager") << "Cannot add NULL scene";
+		ofxLogWarning("ofxSceneManager") << "Cannot add NULL scene";
 		return;
 	}
 
 	if(_scenes.find(scene->getName()) != _scenes.end()) {
-		ofxLogWarning("SceneManager") << "Scene " << scene->getName()
+		ofxLogWarning("ofxSceneManager") << "Scene " << scene->getName()
 									 << " already added, only unique names allowed";
 		return;
 	}
@@ -30,7 +30,7 @@ void ofxSceneManager::add(ofxScene* scene) {
 //--------------------------------------------------------------
 void ofxSceneManager::remove(ofxScene* scene) {
 	if(scene == NULL) {
-		ofxLogWarning("SceneManager") << "Cannot remove NULL scene";
+		ofxLogWarning("ofxSceneManager") << "Cannot remove NULL scene";
 		return;
 	}
 	
@@ -149,7 +149,7 @@ void ofxSceneManager::mouseReleased(int x, int y, int button) {
 void ofxSceneManager::run(bool run) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->run(run);
-		ofxLogVerbose("SceneManager") << "SCENE " << _currentScenePtr->getName()
+		ofxLogVerbose("ofxSceneManager") << "SCENE " << _currentScenePtr->getName()
 					  << " RUN: " << _currentScenePtr->isRunning();
     }
 }
@@ -177,7 +177,7 @@ void ofxSceneManager::noScene(bool now) {
 	}
 	_bChangeNow = now;
 	_newScene = SCENE_NONE;
-	ofxLogVerbose("SceneManager") << "NO SCENE";
+	ofxLogVerbose("ofxSceneManager") << "NO SCENE";
 }
 
 //--------------------------------------------------------------
@@ -206,7 +206,7 @@ void ofxSceneManager::gotoScene(unsigned int num, bool now) {
 
 	ofxScene* s;
 	if(_currentScene == (int) num) {
-		ofxLogWarning("SceneManager") << "ignoring duplicate goto scene change";
+		ofxLogWarning("ofxSceneManager") << "ignoring duplicate goto scene change";
 		return;
 	}
 
@@ -225,16 +225,16 @@ void ofxSceneManager::gotoScene(unsigned int num, bool now) {
 	
 	_newScene = num;
 	_bChangeNow = now;
-	ofxLogVerbose("SceneManager") << "GOTO SCENE: " << _newScene;
+	ofxLogVerbose("ofxSceneManager") << "GOTO SCENE: " << _newScene;
 }
 
 //--------------------------------------------------------------
 void ofxSceneManager::gotoScene(std::string name, bool now) {
 	map<std::string,ofxScene*>::iterator iter = _scenes.find(name);
 	if(iter == _scenes.end()) {
-		ofxLogWarning("SceneManager") << "Could not find \"" << name << "\"";
+		ofxLogWarning("ofxSceneManager") << "Could not find \"" << name << "\"";
 	}
-	_currentScenePtr = (*iter).second;
+	gotoScene(std::distance(_scenes.begin(), iter), now);
 }
 
 /* ***** PRIVATE ***** */
@@ -249,7 +249,7 @@ void ofxSceneManager::handleSceneChanges() {
         if(_newScene == _currentScene) {
             if(_currentScenePtr->isEntering()) {
                 _newScene = SCENE_NOCHANGE;
-                ofxLogWarning("SceneManager") << "ignoring duplicate scene change, "
+                ofxLogWarning("ofxSceneManager") << "ignoring duplicate scene change, "
                           	<< "current scene is not done entering";
 				_sceneChangeTimer.set();
 			}
@@ -263,8 +263,8 @@ void ofxSceneManager::handleSceneChanges() {
                 _newScene = SCENE_NOCHANGE; // done
                 _bSignalledAutoChange = false;
             	_sceneChangeTimer.set();
-				ofxLogVerbose("SceneManager") << "changed to " << _currentScene
-					<< " " << _currentScenePtr->getName();
+				ofxLogVerbose("ofxSceneManager") << "changed to " << _currentScene
+					<< " \"" << _currentScenePtr->getName() << "\"";
 			}
         } else {   // no current scene to wait for
             _currentScene = _newScene;
@@ -272,8 +272,8 @@ void ofxSceneManager::handleSceneChanges() {
             _newScene = SCENE_NOCHANGE; // done
             _bSignalledAutoChange = false;
 			_sceneChangeTimer.set();
-			ofxLogVerbose("SceneManager") << "changed to " << _currentScene
-					<< " " << _currentScenePtr->getName();
+			ofxLogVerbose("ofxSceneManager") << "changed to " << _currentScene
+					<< " \"" << _currentScenePtr->getName() << "\"";
         }
     }
 }

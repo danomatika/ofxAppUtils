@@ -1,6 +1,7 @@
 #include "ofxApp.h"
 
 #include "matrix_funcs.h"
+#include "ofxSceneManager.h"
 
 /// APP
 
@@ -26,6 +27,10 @@ ofxApp::ofxApp() :
 	_renderAspect = 1;
 	_screenAspect = ofGetWidth()/ofGetHeight();
 	
+	_bTransformControls = false;
+	
+	_sceneManager = NULL;
+	
 	resetWarp();
 }
 
@@ -50,6 +55,39 @@ void ofxApp::setRenderScale(float x, float y) {
 
 //--------------------------------------------------------------
 
+void ofxApp::setMirror(bool mirrorX, bool mirrorY) {
+	setMirrorX(mirrorX);
+	setMirrorY(mirrorY);
+}
+
+void ofxApp::setMirrorX(bool mirrorX) {
+	_bMirrorX = mirrorX;
+	if(_bTransformControls)
+		controlPanel.setValueB("transformMirrorX", _bMirrorX);
+}
+
+void ofxApp::setMirrorY(bool mirrorY) {
+	_bMirrorY = mirrorY;
+	if(_bTransformControls)
+		controlPanel.setValueB("transformMirrorY", _bMirrorY);
+}
+
+void ofxApp::setOrigin(float x, float y, float z)	{
+	_origin.set(x, y, z);
+	if(_bTransformControls) {
+		controlPanel.setValueF("transformPos", x, 0);
+		controlPanel.setValueF("transformPos", y, 1);
+		controlPanel.setValueF("transformZ", x);
+	}
+}
+
+void ofxApp::setWarp(bool warp) {
+	_bWarp = warp;
+	if(_bTransformControls)
+		controlPanel.setValueB("transformEnableQuadWarper", _bWarp);
+}
+
+//--------------------------------------------------------------
 void ofxApp::resetWarp() {
 	_warpPoints[0].set(0.0, 0.0);
 	_warpPoints[1].set(1.0, 0.0);
@@ -225,8 +263,93 @@ void ofxApp::applyWarp() {
 }
 
 //--------------------------------------------------------------
+void ofxApp::addTransformControls(int panelNum, int panelCol) {
+	if(_bTransformControls)
+		return;
+	if(panelNum < 0) {
+		controlPanel.addPanel("Transformer", 1, false);
+		controlPanel.setWhichPanel(controlPanel.panels.size()-1);
+	}
+	else {
+		controlPanel.setWhichPanel(panelNum);
+	}
+	controlPanel.setWhichColumn(panelCol);
+	controlPanel.addSlider2D("position", "transformPosition", 0, 0,
+							 -getRenderWidth(), getRenderWidth(),
+							 -getRenderHeight(), getRenderHeight(), false);
+	controlPanel.addSlider("z", "transformZ", 0, -1000, 200, false);
+	controlPanel.addToggle("mirror x", "transformMirrorX", false);
+	controlPanel.addToggle("mirror y", "transformMirrorY", false);
+	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", true);
+	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
+	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
+	_bTransformControls = true;
+}
+
+//--------------------------------------------------------------
+void ofxApp::setSceneManager(ofxSceneManager* manager) {
+	if(manager == NULL) {
+		ofxLogWarning("ofxApp") << "cannot add NULL scene manager";
+		return;
+	}
+	_sceneManager = manager;
+}
+
+//--------------------------------------------------------------
+ofxSceneManager* ofxApp::getSceneManager() {
+	return _sceneManager;
+}
+		
+//--------------------------------------------------------------
+void ofxApp::clearSceneManager() {
+	_sceneManager = NULL;
+}
+
+//--------------------------------------------------------------
+void ofxApp::setup() {
+	_setupControlPanel();
+	setupApp();
+}
+
+//--------------------------------------------------------------
+void ofxApp::exit() {
+	exitApp();
+	if(_sceneManager)
+		_sceneManager->clear();
+}
+
+//--------------------------------------------------------------
 void ofxApp::update() {
+
+	if(_bTransformControls) {
+		// grab control panel variables
+		_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
+				   controlPanel.getValueF("transformPosition", 1),	// y
+				   controlPanel.getValueF("transformZ"));			// z
+		
+		// mirror x/y?
+		_bMirrorX = controlPanel.getValueB("transformMirrorX");
+		_bMirrorY = controlPanel.getValueB("transformMirrorY");
+		
+		// enable quad warper?
+		_bWarp = controlPanel.getValueB("transformEnableQuadWarper");
+		
+		// edit quad warper?
+		if(controlPanel.getValueB("transformEditQuadWarper")) {
+			setEditWarp(true);
+			controlPanel.setValueB("transformEditQuadWarper", false);
+		}
+		
+		// save quad warper?
+		if(controlPanel.getValueB("transformSaveQuadWarper")) {
+			saveWarpSettings();
+			controlPanel.setValueB("transformSaveQuadWarper", false);
+		}
+	}
+
 	controlPanel.update();
+	if(_sceneManager)
+		_sceneManager->update();
 	updateApp();
 }
 
@@ -257,6 +380,8 @@ void ofxApp::draw() {
 		}
 		
 		ofPushMatrix();
+		if(_sceneManager)
+			_sceneManager->draw();
 		drawApp();	// do the user callback
 		ofPopMatrix();
 		
@@ -287,7 +412,7 @@ void ofxApp::draw() {
 			// draw center exit box
 			ofNoFill();
 			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofRect(ofGetWidth()/2, ofGetHeight()/2, 200, 200);
+			ofRect(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
 			ofSetRectMode(OF_RECTMODE_CORNER);
 			ofFill();
 		}
@@ -297,23 +422,28 @@ void ofxApp::draw() {
 			controlPanel.draw();
 		}
 		ofSetColor(255);
-		ofxBitmapString(14, ofGetHeight()-14) << "fps: " << ofGetFrameRate();
+		ofxBitmapString(ofGetWidth()-100, ofGetHeight()-14) << "fps: " << ofGetFrameRate();
 	}
 }
 
 //--------------------------------------------------------------
 void ofxApp::keyPressed(int key) {
+	if(_sceneManager)
+		_sceneManager->keyPressed(key);
 	keyPressedApp(key);
 }
 
 //--------------------------------------------------------------
 void ofxApp::mouseMoved(int x, int y) {
+	if(_sceneManager)
+		_sceneManager->mouseMoved(x, y);
 	mouseMovedApp(x, y);
 }
 
 //--------------------------------------------------------------
 void ofxApp::mouseDragged(int x, int y, int button) {
-
+	if(_sceneManager)
+		_sceneManager->mouseDragged(x, y, button);
 	mouseDraggedApp(x, y, button);
 	
 	if(bDebug) {
@@ -330,15 +460,16 @@ void ofxApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofxApp::mousePressed(int x, int y, int button) {
-
+	if(_sceneManager)
+		_sceneManager->mousePressed(x, y, button);
 	mousePressedApp(x, y, button);
 	
 	if(bDebug) {
 		if(_bWarp && _bEditingWarpPoints) {
 		
 			// check if middle of the screen was pressed to exit edit mode
-			if((x > ofGetWidth()/2  - 100 && (x < ofGetWidth()/2  + 100) &&
-			   (y > ofGetHeight()/2 - 100 && (y < ofGetHeight()/2 + 100))))
+			if((x > ofGetWidth()/2  - 50 && (x < ofGetWidth()/2  + 50) &&
+			   (y > ofGetHeight()/2 - 50 && (y < ofGetHeight()/2 + 50))))
 			{
 				_bEditingWarpPoints = false;
 				return;
@@ -365,7 +496,8 @@ void ofxApp::mousePressed(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofxApp::mouseReleased(int x, int y, int button) {
-
+	if(_sceneManager)
+		_sceneManager->mouseReleased(x, y, button);
 	mouseReleasedApp(x, y, button);
 	
 	if(bDebug) {
@@ -374,4 +506,9 @@ void ofxApp::mouseReleased(int x, int y, int button) {
 		}
 	}
 	_currentWarpPoint = -1;
+}
+
+//--------------------------------------------------------------
+void ofxApp::_setupControlPanel() {
+	controlPanel.setup("App Controls", 1, 0, 275, getRenderHeight()-40);
 }

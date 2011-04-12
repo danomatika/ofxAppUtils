@@ -21,22 +21,35 @@ ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::setRenderSize(float w, float h, bool handleAspectRatio,
-								   bool translate, bool useWarp) {
-	_bHandleAspect = handleAspectRatio;
-	_bTranslate = translate;
-	_bWarp = useWarp;
+void ofxTransformer::setRenderSize(float w, float h,
+	float screenWidth, float screenHeight) {
 	_renderAspect = w/h;
 	_renderWidth = w;
 	_renderHeight = h;
-	_renderScaleX = (float) ofGetWidth()/_renderWidth;
-	_renderScaleY = (float) ofGetHeight()/_renderHeight;
+	_screenWidth = screenWidth;
+	_screenHeight = screenHeight;
+	_renderScaleX = _screenWidth/_renderWidth;
+	_renderScaleY = _screenHeight/_renderHeight;
+	_screenAspect = _screenWidth/_screenHeight;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setRenderSize(float w, float h) {
+	setRenderSize(w, h, ofGetWidth(), ofGetHeight());
 }
 
 //--------------------------------------------------------------
 void ofxTransformer::setRenderScale(float x, float y) {
 	_renderScaleX = x;
 	_renderScaleY = y;	
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setTransforms(bool translate, bool scale, bool warp, bool handleAspect) {
+	_bTranslate = translate;
+	_bScale = scale;
+	_bWarp = warp;
+	_bHandleAspect = handleAspect;
 }
 
 //--------------------------------------------------------------
@@ -89,19 +102,23 @@ void ofxTransformer::applyRenderScale() {
 	if(_renderScaleX != 1.0 || _renderScaleY != 1.0) {
 		
 		// adjust to screen dimensions?
-		if(_bHandleAspect) {
+		if(_bHandleAspect && _renderAspect != _screenAspect) {
 			
 			if(_renderAspect == 1.0) { // square, windowbox
-				ofTranslate((ofGetWidth()-(_renderScaleY*_renderWidth))/4,
-							(ofGetHeight()+(_renderScaleX*_renderHeight))/4);
+				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/4,
+							(_screenHeight+(_renderScaleX*_renderHeight))/4);
 			}
 			else if(_renderAspect < 1.0) { // w < h, letterbox
-				ofScale(_renderScaleX, _renderScaleX);
-				ofTranslate((0, ofGetHeight()-(_renderScaleX*_renderHeight))/4);
+				//ofScale(_renderScaleX, _renderScaleX);
+//				ofTranslate((0, _screenHeight-(_renderScaleX*_renderHeight))/2);
+				ofScale(_renderScaleY, _renderScaleY);
+				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/2, 0);
 			}
 			else { // w > h, pillarbox
-				ofScale(_renderScaleY, _renderScaleY);
-				ofTranslate((ofGetWidth()-(_renderScaleY*_renderWidth))/2, 0);
+				//ofScale(_renderScaleY, _renderScaleY);
+//				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/2, 0);
+				ofScale(_renderScaleX, _renderScaleX);
+				ofTranslate((0, _screenHeight-(_renderScaleX*_renderHeight))/2);
 			}
 		
 		} else { // basic stretch

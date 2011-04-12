@@ -22,65 +22,18 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		ofxApp();
 		virtual ~ofxApp() {}
 		
-		/// set the desired render size compared to the window size
-		/// set handleAspectRatio to true if you want automatic letter/pillar boxing
-		/// set translate if you want to move the origin
-		/// set useWarp if you want ot enable to quad warper
-//		void setRenderSize(float w, float h, bool handleAspectRatio=true,
-//						   bool translate=true, bool useWarp=false);
-//		float getRenderWidth()	{return _renderWidth;}
-//		float getRenderHeight()	{return _renderHeight;}
-		
-		/// set the render scale directly
-//		void setRenderScale(float x, float y);
-//		float getRenderScaleX()	{return _renderScaleX;}
-//		float getRenderScaleY()	{return _renderScaleY;}
-		
-		/// turn on/off automatic screen scaling
-//		void setScale(bool scale)	{_bScale = scale;}
-//		bool getScale() 			{return _bScale;}
-		
 		/// screen mirroring
 		void setMirror(bool mirrorX, bool mirrorY);
 		void setMirrorX(bool mirrorX);
 		void setMirrorY(bool mirrorY);
-//		bool getMirrorX()		{return _bMirrorX;}
-//		bool getMirrorY()		{return _bMirrorY;}
-		
-		/// origin translation
-//		void setOriginTranslate(bool translate)		{_bTranslate = translate;}
-//		bool getOriginTranslate()					{return _bTranslate;}
 		
 		/// set the origin position
 		void setOrigin(float x, float y, float z=0);
-//		void setOrigin(ofVec2f point)				{setOrigin(point.x, point.y, 0);}
-//		void setOrigin(ofVec3f point)				{setOrigin(point.x, point.y, point.z);}
-//		ofVec3f getOrigin()		{return _origin;}
-//		float getOriginX()		{return _origin.x;}
-//		float getOriginY()		{return _origin.y;}
-//		float getOriginZ()		{return _origin.z;}
 		
 		/// set/edit the projection warping
 		void setWarp(bool warp);
-//		bool getWarp()				{return _bWarp;}
-//		void resetWarp();
 		void setEditWarp(bool edit) {_bEditingWarpPoints = edit;}
 		bool getEditWarp()			{return _bEditingWarpPoints;}
-//		bool loadWarpSettings(const string xmlFile="quadWarper.xml");
-//		void saveWarpSettings(const string xmlFile="quadWarper.xml");
-		
-		/// manually set/get the warp points
-		/// index: 0 - upper left, 1 - upper right, 2 - lower right, 3 - lower left 
-//		void setWarpPoint(unsigned int index, ofVec2f point);
-//		ofVec2f getWarpPoint(unsigned int index);
-		
-		/// apply the transforms manually,
-		/// these do not do a matrix push or pop
-//		void applyRenderScale();
-//		void applyMirrorX();
-//		void applyMirrorY();
-//		void applyOriginTranslate();
-//		void applyWarp();
 		
 		/// add transform controls to the ofxControlPanel (optional)
 		/// set panelNum to choose which to add the controls to, otherwise a
@@ -140,14 +93,8 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		void _setupControlPanel();
 		
 		ofxTransformer _transformer;
-//		bool _bScale, _bMirrorX, _bMirrorY, _bTranslate, _bHandleAspect, _bWarp;
-//		float _renderWidth, _renderHeight;
-//		float _renderScaleX, _renderScaleY;
-//		float _renderAspect, _screenAspect;
-//		ofVec3f _origin;
 		
 		/// quad warper
-		//ofxQuadWarper _quadWarper;
 		int _currentWarpPoint;		// currently selected projection point
 		bool _bEditingWarpPoints;	// are we currently editing the warp points?
 		ofMatrix4x4 _warpTransform;	// warp transform matrix needed for mouse picking

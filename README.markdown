@@ -8,6 +8,8 @@ ofxAppUtils is a set utilites for applicaiton development including:
 * ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an ofxControlPanel
 * ofxScene: a mini ofBaseApp for writing stand alone scenes
 * ofxSceneManager: handles a list of scenes using a std::map
+* ofxTransformer: open gl transformer for origin translation, screen scaling, mirroring, and quad warping
+* ofxQuadWarper: an open gl matrix quad warper (useful for oblique projection mapping)
 * ofxTimer: a simple millis timer
 
 OpenFrameworks is a cross platform open source toolkit for creative coding in C++.

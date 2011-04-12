@@ -14,14 +14,23 @@ class ofxTransformer{
 	
 		ofxTransformer();
 		
-		/// set the desired render size compared to the window size,
+		/// set the desired render size compared to the given screen (or window) size,
 		/// set handleAspectRatio to true if you want automatic letter/pillar boxing
-		/// set translate if you want to move the origin
-		/// set useWarp if you want to enable to quad warper
-		void setRenderSize(float w, float h, bool handleAspectRatio=true,
-						   bool translate=true, bool useWarp=false);
+		void setRenderSize(float w, float h, float screenWidth, float screenHeight);
+		void setRenderSize(float w, float h);	/// use the full screen size
 		float getRenderWidth()	{return _renderWidth;}
 		float getRenderHeight()	{return _renderHeight;}
+		
+		/// enable/disable the transforms
+		///
+		/// set translate if you want to be able to move the origin
+		/// set scale if you want to turn on automatic scaling to the screen size
+		/// set warp if you want to enable to quad warper
+		/// set handleAspect to true if you want automatic letter/pillar boxing
+		///
+		/// note: all of these options can also be enabled one by one
+		///
+		void setTransforms(bool translate, bool scale, bool warp=false, bool handleAspect=false);
 		
 		/// set the render scale directly
 		void setRenderScale(float x, float y);
@@ -31,6 +40,10 @@ class ofxTransformer{
 		/// turn on/off automatic screen scaling
 		virtual void setScale(bool scale)	{_bScale = scale;}
 		bool getScale() 					{return _bScale;}
+		
+		/// keep the aspect ratio when scaling?
+		virtual void setAspect(bool aspect)	{_bHandleAspect = aspect;}
+		bool getAspect()					{return _bHandleAspect;}
 		
 		/// screen mirroring
 		virtual void setMirror(bool mirrorX, bool mirrorY);
@@ -75,8 +88,9 @@ class ofxTransformer{
 	protected:
 		
 		bool _bScale, _bMirrorX, _bMirrorY, _bTranslate, _bHandleAspect, _bWarp;
-		float _renderWidth, _renderHeight;
-		float _renderScaleX, _renderScaleY;
+		float _screenWidth, _screenHeight;	///< parent render size (screen or window)
+		float _renderWidth, _renderHeight;	///< render size
+		float _renderScaleX, _renderScaleY;	///< render scale
 		float _renderAspect, _screenAspect;
 		ofVec3f _origin;
 		

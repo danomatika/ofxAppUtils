@@ -9,13 +9,11 @@ void testApp::setupApp(){
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 
-	// setup the render size (working area) which is scaled to fit the screen;
-	// the first true is to turn on the automatic aspect ratio scaling which tries
-	// to keep the same aspect ratio;
-	// the second true enables setting of the origin to change where the rendering
-	// goes on the screen
-	setRenderSize(600, 600, true, true);
-	setOriginTranslate(true);
+	// setup the render size (working area)
+	setRenderSize(600, 400);
+	
+	// turn on transform origin translation and scaling to screen size
+	setTransforms(true, true);
 	
 	// the control panel is setup automatically, of course you can still change
 	// all the settings manually here

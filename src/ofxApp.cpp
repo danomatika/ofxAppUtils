@@ -6,51 +6,53 @@
 
 //--------------------------------------------------------------
 ofxApp::ofxApp() :
-	ofBaseApp(), _origin(0, 0, 0), _currentWarpPoint(-1) {
+	ofBaseApp(), 
+	//_origin(0, 0, 0), 
+	_currentWarpPoint(-1) {
 	
 	bDebug = false;
 	
-	_bScale = false;
-	_bMirrorX = false;
-	_bMirrorY = false;
-	_bTranslate = false;
-	_bHandleAspect = false;
-	_bWarp = false;
-	
+//	_bScale = false;
+//	_bMirrorX = false;
+//	_bMirrorY = false;
+//	_bTranslate = false;
+//	_bHandleAspect = false;
+//	_bWarp = false;
+//	
 	_bEditingWarpPoints = false;
-	
-	_renderWidth = ofGetWidth();
-	_renderHeight = ofGetHeight();
-	_renderScaleX = 1;
-	_renderScaleY = 1;
-	_renderAspect = 1;
-	_screenAspect = ofGetWidth()/ofGetHeight();
+//	
+//	_renderWidth = ofGetWidth();
+//	_renderHeight = ofGetHeight();
+//	_renderScaleX = 1;
+//	_renderScaleY = 1;
+//	_renderAspect = 1;
+//	_screenAspect = ofGetWidth()/ofGetHeight();
 	
 	_bTransformControls = false;
 	
 	_sceneManager = NULL;
 	
-	resetWarp();
+	//resetWarp();
 }
 
 //--------------------------------------------------------------
-void ofxApp::setRenderSize(float w, float h, bool handleAspectRatio,
-								   bool translate, bool useWarp) {
-	_bHandleAspect = handleAspectRatio;
-	_bTranslate = translate;
-	_bWarp = useWarp;
-	_renderAspect = w/h;
-	_renderWidth = w;
-	_renderHeight = h;
-	_renderScaleX = (float) ofGetWidth()/_renderWidth;
-	_renderScaleY = (float) ofGetHeight()/_renderHeight;
-}
-
-//--------------------------------------------------------------
-void ofxApp::setRenderScale(float x, float y) {
-	_renderScaleX = x;
-	_renderScaleY = y;	
-}
+//void ofxApp::setRenderSize(float w, float h, bool handleAspectRatio,
+//								   bool translate, bool useWarp) {
+//	_bHandleAspect = handleAspectRatio;
+//	_bTranslate = translate;
+//	_bWarp = useWarp;
+//	_renderAspect = w/h;
+//	_renderWidth = w;
+//	_renderHeight = h;
+//	_renderScaleX = (float) ofGetWidth()/_renderWidth;
+//	_renderScaleY = (float) ofGetHeight()/_renderHeight;
+//}
+//
+////--------------------------------------------------------------
+//void ofxApp::setRenderScale(float x, float y) {
+//	_renderScaleX = x;
+//	_renderScaleY = y;	
+//}
 
 //--------------------------------------------------------------
 
@@ -87,74 +89,74 @@ void ofxApp::setWarp(bool warp) {
 }
 
 //--------------------------------------------------------------
-void ofxApp::resetWarp() {
-	_quadWarper.reset();
-}
-
-bool ofxApp::loadWarpSettings(const string xmlFile) {
-	return _quadWarper.loadSettings(xmlFile);
-}
-
-void ofxApp::saveWarpSettings(const string xmlFile) {
-	return _quadWarper.saveSettings(xmlFile);
-}
-
-//--------------------------------------------------------------
-void ofxApp::setWarpPoint(unsigned int index, ofVec2f point) {
-	_quadWarper.setPoint(index, point);
-}
-
-ofVec2f ofxApp::getWarpPoint(unsigned int index) {
-	return _quadWarper.getPoint(index);
-}
+//void ofxApp::resetWarp() {
+//	_quadWarper.reset();
+//}
+//
+//bool ofxApp::loadWarpSettings(const string xmlFile) {
+//	return _quadWarper.loadSettings(xmlFile);
+//}
+//
+//void ofxApp::saveWarpSettings(const string xmlFile) {
+//	return _quadWarper.saveSettings(xmlFile);
+//}
 
 //--------------------------------------------------------------
-void ofxApp::applyRenderScale() {
-	if(_renderScaleX != 1.0 || _renderScaleY != 1.0) {
-		
-		// adjust to screen dimensions?
-		if(_bHandleAspect) {
-			
-			if(_renderAspect == 1.0) { // square, windowbox
-				ofTranslate((ofGetWidth()-(_renderScaleY*_renderWidth))/4,
-							(ofGetHeight()+(_renderScaleX*_renderHeight))/4);
-			}
-			else if(_renderAspect < 1.0) { // w < h, letterbox
-				ofScale(_renderScaleX, _renderScaleX);
-				ofTranslate((0, ofGetHeight()-(_renderScaleX*_renderHeight))/4);
-			}
-			else { // w > h, pillarbox
-				ofScale(_renderScaleY, _renderScaleY);
-				ofTranslate((ofGetWidth()-(_renderScaleY*_renderWidth))/2, 0);
-			}
-		
-		} else { // basic stretch
-			ofScale(_renderScaleX, _renderScaleY);
-		}
-	}
-}
+//void ofxApp::setWarpPoint(unsigned int index, ofVec2f point) {
+//	_quadWarper.setPoint(index, point);
+//}
+//
+//ofVec2f ofxApp::getWarpPoint(unsigned int index) {
+//	return _quadWarper.getPoint(index);
+//}
 
 //--------------------------------------------------------------
-void ofxApp::applyMirrorX() {
-	ofRotateY(180);
-	ofTranslate(-_renderWidth, 0, 0);
-}
+//void ofxApp::applyRenderScale() {
+//	if(_renderScaleX != 1.0 || _renderScaleY != 1.0) {
+//		
+//		// adjust to screen dimensions?
+//		if(_bHandleAspect) {
+//			
+//			if(_renderAspect == 1.0) { // square, windowbox
+//				ofTranslate((ofGetWidth()-(_renderScaleY*_renderWidth))/4,
+//							(ofGetHeight()+(_renderScaleX*_renderHeight))/4);
+//			}
+//			else if(_renderAspect < 1.0) { // w < h, letterbox
+//				ofScale(_renderScaleX, _renderScaleX);
+//				ofTranslate((0, ofGetHeight()-(_renderScaleX*_renderHeight))/4);
+//			}
+//			else { // w > h, pillarbox
+//				ofScale(_renderScaleY, _renderScaleY);
+//				ofTranslate((ofGetWidth()-(_renderScaleY*_renderWidth))/2, 0);
+//			}
+//		
+//		} else { // basic stretch
+//			ofScale(_renderScaleX, _renderScaleY);
+//		}
+//	}
+//}
 
 //--------------------------------------------------------------
-void ofxApp::applyMirrorY() {
-	ofRotateX(180);
-	ofTranslate(0, -_renderHeight, 0);
-}
-
-//--------------------------------------------------------------
-void ofxApp::applyOriginTranslate() {
-	ofTranslate(_origin);
-}
-
-//--------------------------------------------------------------
-void ofxApp::applyWarp() {
-	_quadWarper.apply(_renderWidth, _renderHeight);
-}
+//void ofxApp::applyMirrorX() {
+//	ofRotateY(180);
+//	ofTranslate(-_renderWidth, 0, 0);
+//}
+//
+////--------------------------------------------------------------
+//void ofxApp::applyMirrorY() {
+//	ofRotateX(180);
+//	ofTranslate(0, -_renderHeight, 0);
+//}
+//
+////--------------------------------------------------------------
+//void ofxApp::applyOriginTranslate() {
+//	ofTranslate(_origin);
+//}
+//
+////--------------------------------------------------------------
+//void ofxApp::applyWarp() {
+//	_quadWarper.apply(_renderWidth, _renderHeight);
+//}
 
 //--------------------------------------------------------------
 void ofxApp::addTransformControls(int panelNum, int panelCol) {

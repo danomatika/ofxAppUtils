@@ -6,6 +6,11 @@
 /// QUAD WARPER
 
 //--------------------------------------------------------------
+ofxQuadWarper::ofxQuadWarper() {
+	reset();
+}
+
+//--------------------------------------------------------------
 //
 // projection warping from a modified Theo example on the OF forums:
 // http://threeblindmiceandamonkey.com/?p=31

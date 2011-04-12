@@ -10,7 +10,7 @@ class ofxQuadWarper {
 
 	public:
 	
-		ofxQuadWarper() {}
+		ofxQuadWarper();
 		virtual ~ofxQuadWarper() {}
 		
 		// apply the gl matrix transform

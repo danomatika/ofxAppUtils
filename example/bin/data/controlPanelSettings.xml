@@ -1,0 +1,22 @@
+<transformPosition>
+    <val_0>0.000000</val_0>
+    <val_1>0.000000</val_1>
+</transformPosition>
+<transformZ>
+    <val_0>0.000000</val_0>
+</transformZ>
+<transformMirrorX>
+    <val_0>0.000000</val_0>
+</transformMirrorX>
+<transformMirrorY>
+    <val_0>0.000000</val_0>
+</transformMirrorY>
+<transformEnableQuadWarper>
+    <val_0>1.000000</val_0>
+</transformEnableQuadWarper>
+<transformEditQuadWarper>
+    <val_0>0.000000</val_0>
+</transformEditQuadWarper>
+<transformSaveQuadWarper>
+    <val_0>0.000000</val_0>
+</transformSaveQuadWarper>

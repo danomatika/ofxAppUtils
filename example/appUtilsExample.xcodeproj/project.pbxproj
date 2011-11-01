@@ -96,7 +96,6 @@
 		3065859F145F77B80015FD7B /* LineScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineScene.h; sourceTree = "<group>"; };
 		306585A0145F77B80015FD7B /* ParticleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleScene.h; sourceTree = "<group>"; };
 		306585A1145F77B80015FD7B /* scenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenes.h; sourceTree = "<group>"; };
-		306585A7145F78B50015FD7B /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDirList.h; sourceTree = "<group>"; };
 		306585AB145F78C00015FD7B /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		306585AC145F78C00015FD7B /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		306585AD145F78C00015FD7B /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
@@ -231,23 +230,6 @@
 				306585A1145F77B80015FD7B /* scenes.h */,
 			);
 			path = scenes;
-			sourceTree = "<group>";
-		};
-		306585A2145F78B50015FD7B /* ofxDirList */ = {
-			isa = PBXGroup;
-			children = (
-				306585A6145F78B50015FD7B /* src */,
-			);
-			name = ofxDirList;
-			path = ../../../addons/ofxDirList;
-			sourceTree = "<group>";
-		};
-		306585A6145F78B50015FD7B /* src */ = {
-			isa = PBXGroup;
-			children = (
-				306585A7145F78B50015FD7B /* ofxDirList.h */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		306585A8145F78C00015FD7B /* ofxXmlSettings */ = {
@@ -390,7 +372,6 @@
 				30658765145F79DA0015FD7B /* ofxControlPanel */,
 				306585B6145F78D20015FD7B /* ofxAppUtils */,
 				306585A8145F78C00015FD7B /* ofxXmlSettings */,
-				306585A2145F78B50015FD7B /* ofxDirList */,
 			);
 			name = addons;
 			sourceTree = "<group>";

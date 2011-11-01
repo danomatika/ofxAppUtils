@@ -53,8 +53,8 @@ For XCode:
 * create a new group "ofxAppUtils"
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
 * you also need to add the following addon dependencies in a similar manner:
-** ofxControlPanel
-** ofxXmlSettings
+	* ofxControlPanel
+	* ofxXmlSettings
 
 DEVELOPING
 ----------

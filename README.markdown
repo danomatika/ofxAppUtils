@@ -1,16 +1,16 @@
-
-
 ofxAppUtils
-==================
+===========
 
-ofxAppUtils is a set utilites for applicaiton development including:
+Copyright (c) [Dan Wilcox](danomatika.com) 2011
+
+ofxAppUtils is a set of utilites for applicaiton development including:
 
 * ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an ofxControlPanel
 * ofxScene: a mini ofBaseApp for writing stand alone scenes
 * ofxSceneManager: handles a list of scenes using a std::map
 * ofxTransformer: open gl transformer for origin translation, screen scaling, mirroring, and quad warping
 * ofxQuadWarper: an open gl matrix quad warper (useful for oblique projection mapping)
-* ofxTimer: a simple millis timer
+* ofxTimer: a simple millis-based timer
 
 OpenFrameworks is a cross platform open source toolkit for creative coding in C++.
 
@@ -30,15 +30,16 @@ The addon should sit in openFrameworks/addons/ofxAppUtils/.
 
 You will also need the following addon dependencies:
 
-* ofxControlPanel: https://github.com/ofTheo/ofxControlPanel
-* ofxLogger: https://github.com/danomatika/ofxLogger
+* ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel
 
 Running the Example Project
 -------------------------------
 
-If you're using OS X, open the XCode project in ofxAppUtils/ofxAppUtilsExample/ and hit "Build and Run".
+If you're using OS X, open the XCode project in ofxAppUtils/example/ and hit "Build and Run".
 
-Adding ofxLogger to an Existing Project
+The addon should work fine in Windows and Linux, although there are no example build files yet.
+
+Adding ofxAppUtils to an Existing Project
 ---------------------------------------
 
 If you want to add ofxAppUtils to another project, you need to make sure you include the src folders:
@@ -52,5 +53,12 @@ For XCode:
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
 * you also need to add the following addon dependencies in a similar manner:
 ** ofxControlPanel
-** ofxLogger
 
+DEVELOPING
+----------
+
+You can help develop ofxAppUtils on GitHub: [https://github.com/danomatika/ofxAppUtils](https://github.com/danomatika/ofxAppUtils)
+
+Create an account, clone or fork the repo, then request a push/merge.
+
+If you find any bugs or suggestions please log them to GitHub as well.

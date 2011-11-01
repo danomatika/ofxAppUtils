@@ -3,7 +3,7 @@ ofxAppUtils
 
 Copyright (c) [Dan Wilcox](danomatika.com) 2011
 
-ofxAppUtils is a set of utilites for applicaiton development including:
+ofxAppUtils is a set of utilities for applicaiton development including:
 
 * ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an ofxControlPanel
 * ofxScene: a mini ofBaseApp for writing stand alone scenes
@@ -23,19 +23,20 @@ To use ofxAppUtils, first you need to download and install Open Frameworks. ofxA
 
 To get a copy of the repository you can download the source from [http://github.com/danomatika/ofxAppUtils/zipball/master](http://github.com/danomatika/ofxAppUtils/zipball/master) or, alternatively, you can use git clone:
 <pre>
-git clone git://github.com/danomatika/ofxAppUtilsgit
+git clone git://github.com/danomatika/ofxAppUtils.git
 </pre>
 
-The addon should sit in openFrameworks/addons/ofxAppUtils/.
+The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
 You will also need the following addon dependencies:
 
 * ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel
+* ofxXmlSettings: included with OpenFrameworks
 
 Running the Example Project
 -------------------------------
 
-If you're using OS X, open the XCode project in ofxAppUtils/example/ and hit "Build and Run".
+If you're using OS X, open the Xcode project in ofxAppUtils/example/ and hit "Build and Run".
 
 The addon should work fine in Windows and Linux, although there are no example build files yet.
 
@@ -53,6 +54,7 @@ For XCode:
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
 * you also need to add the following addon dependencies in a similar manner:
 ** ofxControlPanel
+** ofxXmlSettings
 
 DEVELOPING
 ----------

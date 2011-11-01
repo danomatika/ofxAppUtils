@@ -25,7 +25,7 @@ void testApp::setupApp(){
 	sceneManager.add(new ParticleScene(*this));
 	sceneManager.add(new LineScene(*this));
 	sceneManager.setup(true);	// true = setup all the scenes now (not on the fly)
-	ofxLog::setTopicLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
+	ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 	
 	// start with a specific scene
 	sceneManager.gotoScene("Lines", true);

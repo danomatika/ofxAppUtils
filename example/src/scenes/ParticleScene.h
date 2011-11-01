@@ -29,7 +29,7 @@ class ParticleScene : public ofxScene {
 			if(isEnteringFirst()) {
 				timer.setAlarm(5000);
 				alpha = 0;
-				ofxLog() << "ParticleScene: update enter";
+				ofLogNotice() << "ParticleScene: update enter";
 			}
 		
 			// calc alpha amount based on alarm time diff
@@ -41,7 +41,7 @@ class ParticleScene : public ofxScene {
 			if(timer.alarm()) {
 				finishedEntering();
 				alpha = 255;
-				ofxLog() << "ParticleScene: update enter done";
+				ofLogNotice() << "ParticleScene: update enter done";
 			}
 		}
 
@@ -58,7 +58,7 @@ class ParticleScene : public ofxScene {
 			if(isExitingFirst()) {
 				timer.setAlarm(5000);
 				alpha = 0;
-				ofxLog() << "ParticleScene: update exit";
+				ofLogNotice() << "ParticleScene: update exit";
 			}
 			
 			// calc alpha amount based on alarm time diff
@@ -70,7 +70,7 @@ class ParticleScene : public ofxScene {
 			if(timer.alarm()) {
 				finishedExiting();
 				alpha = 0;
-				ofxLog() << "ParticleScene: update exit done";
+				ofLogNotice() << "ParticleScene: update exit done";
 			}
 		}
 

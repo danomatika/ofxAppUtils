@@ -27,7 +27,7 @@ class LineScene : public ofxScene {
 			if(isEnteringFirst()) {
 				timer.setAlarm(5000);
 				alpha = 0;
-				ofxLog() << "LineScene: update enter";
+				ofLogNotice() << "LineScene: update enter";
 			}
 		
 			// calc alpha amount based on alarm time diff
@@ -39,7 +39,7 @@ class LineScene : public ofxScene {
 			if(timer.alarm()) {
 				finishedEntering();
 				alpha = 255;
-				ofxLog() << "LineScene: update enter done";
+				ofLogNotice() << "LineScene: update enter done";
 			}
 		}
 
@@ -57,7 +57,7 @@ class LineScene : public ofxScene {
 			if(isExitingFirst()) {
 				timer.setAlarm(5000);
 				alpha = 0;
-				ofxLog() << "LineScene: update exit";
+				ofLogNotice() << "LineScene: update exit";
 			}
 			
 			// calc alpha amount based on alarm time diff
@@ -69,7 +69,7 @@ class LineScene : public ofxScene {
 			if(timer.alarm()) {
 				finishedExiting();
 				alpha = 0;
-				ofxLog() << "LineScene: update exit done";
+				ofLogNotice() << "LineScene: update exit done";
 			}
 		}
 

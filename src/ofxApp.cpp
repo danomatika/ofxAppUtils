@@ -76,7 +76,7 @@ void ofxApp::addTransformControls(int panelNum, int panelCol) {
 //--------------------------------------------------------------
 void ofxApp::setSceneManager(ofxSceneManager* manager) {
 	if(manager == NULL) {
-		ofxLogWarning("ofxApp") << "cannot add NULL scene manager";
+		ofLogWarning("ofxApp") << "cannot add NULL scene manager";
 		return;
 	}
 	_sceneManager = manager;
@@ -189,12 +189,15 @@ void ofxApp::draw() {
 	ofPopMatrix();
 	
 	if(bDebug) {
+        stringstream text;
 		if(_bEditingWarpPoints) {
 		
 			ofSetHexColor(0x00FF00);
-			ofxBitmapString(28, 28) << "Quad Warper Edit Mode" << endl
-									<< "Drag from the corners of the screen" << endl
-								    << "Click center rectangle to exit";
+			text << "Quad Warper Edit Mode" << endl
+                 << "Drag from the corners of the screen" << endl
+                 << "Click center rectangle to exit";
+            ofDrawBitmapString(text.str(), 28, 28);
+            text.str("");
 				
 			// draw center exit box
 			ofNoFill();
@@ -209,7 +212,8 @@ void ofxApp::draw() {
 			controlPanel.draw();
 		}
 		ofSetColor(255);
-		ofxBitmapString(ofGetWidth()-100, ofGetHeight()-14) << "fps: " << ofGetFrameRate();
+        text << "fps: " << ofGetFrameRate();
+		ofDrawBitmapString(text.str(), ofGetWidth()-100, ofGetHeight()-14);
 	}
 }
 

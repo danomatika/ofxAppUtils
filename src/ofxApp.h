@@ -2,7 +2,6 @@
 
 #include <ofMain.h>
 #include <ofxControlPanel.h>
-#include <ofxLogger.h>
 
 #include "ofxQuadWarper.h"
 #include "ofxTransformer.h"

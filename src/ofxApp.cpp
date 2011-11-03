@@ -234,9 +234,13 @@ void ofxRunnerApp::windowResized(int w, int h) {
 
 //--------------------------------------------------------------
 void ofxRunnerApp::keyPressed(int key) {
-	if(app->_sceneManager)
+    if(app->_sceneManager)
 		app->_sceneManager->keyPressed(key);
 	app->keyPressed(key);
+    
+    if(app->bDebug) {
+        app->controlPanel.keyPressed(key);
+    }
 }
 
 //--------------------------------------------------------------
@@ -312,6 +316,12 @@ void ofxRunnerApp::mouseReleased() {
     if(app->_sceneManager)
 		app->_sceneManager->mouseReleased();
     app->mouseReleased();
+    
+    if(app->bDebug) {
+		if(!app->_bEditingWarpPoints) {
+			app->controlPanel.mouseReleased();
+		}
+	}
 }
 
 //--------------------------------------------------------------

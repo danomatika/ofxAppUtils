@@ -1,9 +1,20 @@
 ofxAppUtils
 ===========
 
+OpenFrameworks app utilities
+
 Copyright (c) [Dan Wilcox](danomatika.com) 2011
 
-ofxAppUtils is a set of utilities for applicaiton development including:
+See Documentation on [Github](https://github.com/danomatika/ofxAppUtils) and the [OpenFrameworks Forum post](http://forum.openframeworks.cc/index.php/topic,5995.0.html).
+
+OpenFrameworks is a cross platform open source toolkit for creative coding in C++.
+
+[http://www.openframeworks.cc/](http://www.openframeworks.cc/)
+
+Description
+-----------
+
+ofxAppUtils is a set of utilities for OpenFrameworks application development including:
 
 * ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an ofxControlPanel
 * ofxScene: a mini ofBaseApp for writing stand alone scenes
@@ -12,9 +23,7 @@ ofxAppUtils is a set of utilities for applicaiton development including:
 * ofxQuadWarper: an open gl matrix quad warper (useful for oblique projection mapping)
 * ofxTimer: a simple millis-based timer
 
-OpenFrameworks is a cross platform open source toolkit for creative coding in C++.
-
-[http://www.openframeworks.cc/](http://www.openframeworks.cc/)
+All ofBaseApp callbacks are handled down to the scene level.
 
 Installation
 ------------

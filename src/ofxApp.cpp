@@ -67,7 +67,7 @@ void ofxApp::addTransformControls(int panelNum, int panelCol) {
 	controlPanel.addSlider("z", "transformZ", 0, -1000, 200, false);
 	controlPanel.addToggle("mirror x", "transformMirrorX", false);
 	controlPanel.addToggle("mirror y", "transformMirrorY", false);
-	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", true);
+	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", false);
 	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
 	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
 	_bTransformControls = true;

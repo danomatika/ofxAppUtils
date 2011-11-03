@@ -19,7 +19,14 @@ void testApp::setup() {
 	// all the settings manually here
 
 	// add the built in transform control to control panel (adds new panel)
+    //
+    // loads and saves control panel settings to "controlPanelSettings.xml"
+    // in the data folder 
 	addTransformControls();
+    
+    // load saved quad warper settings
+    // loads and saves to "quadWarper.xml" in the data folder
+    loadWarpSettings();
 	
 	// load scenes
 	sceneManager.add(new ParticleScene(*this));

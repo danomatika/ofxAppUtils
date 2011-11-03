@@ -1,18 +1,18 @@
 <quad>
     <upperLeft>
-        <x>0.155000</x>
-        <y>0.083333</y>
+        <x>0.168750</x>
+        <y>0.036667</y>
     </upperLeft>
     <upperRight>
-        <x>0.963750</x>
-        <y>0.203333</y>
+        <x>1.000000</x>
+        <y>0.000000</y>
     </upperRight>
     <lowerRight>
-        <x>1.272500</x>
-        <y>0.816667</y>
+        <x>0.824818</x>
+        <y>0.998466</y>
     </lowerRight>
     <lowerLeft>
-        <x>0.000000</x>
-        <y>1.000000</y>
+        <x>0.180049</x>
+        <y>0.978528</y>
     </lowerLeft>
 </quad>

@@ -7,6 +7,14 @@
 
 /// make sure you check out main.cpp for how to run this app with app utils!
 ///
+/// controls:
+///     - L & R arrows to change scenes (note: wait for transition)
+///     - 'd' key to toggle debug mode and enable control panel
+///     - 'm' key to mirror the render area on the x axis
+///     - 'n' key to mirror the render area on the y axis
+///     - 'q' key to toggle to quad warper
+///     - 'f' to toggle fullscreen mode
+///
 class testApp : public ofxApp {
 	
 	public:

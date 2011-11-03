@@ -3,7 +3,7 @@
 #include "scenes/scenes.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){
+void testApp::setup() {
 
 	// setup for nice jaggy-less rendering (if your machine/drivers dont suck)
 	ofSetFrameRate(60);
@@ -32,18 +32,19 @@ void testApp::setup(){
 	
 	// attach scene manager to this ofxApp so it's called automatically,
 	// you can also call the callbacks (update, draw, keyPressed, etc) manually
+    // if you don't set it
 	setSceneManager(&sceneManager);
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
+void testApp::update() {
 
 	// the control panel and current scene are automatically updated
 	
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void testApp::draw() {
 
 	ofBackground(0, 0, 0);
 
@@ -103,13 +104,13 @@ void testApp::mouseMoved(int x, int y) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void testApp::mouseDragged(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void testApp::mousePressed(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void testApp::mouseReleased(int x, int y, int button) {
 }

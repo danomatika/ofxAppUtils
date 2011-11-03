@@ -5,6 +5,8 @@
 
 #include <ofxAppUtils.h>
 
+/// make sure you check out main.cpp for how to run this app with app utils!
+///
 class testApp : public ofxApp {
 	
 	public:

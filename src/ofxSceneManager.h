@@ -30,22 +30,9 @@ class ofxSceneManager {
 		
 		/// setup current scenes
 		/// set loadAll to true to laod all scenes at once
+        ///
+        /// unloaded scenes are automatically loaded on their first update
 		void setup(bool loadAll=true);
-		
-		/// update the current scene
-		void update();
-		
-		/// render the current scene
-		void draw();
-		
-		//// \section Input
-		
-		/// passes input to current scene
-		void keyPressed(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
 		
 		/// \section Scene Control
 		
@@ -60,6 +47,42 @@ class ofxSceneManager {
         void prevScene(bool now=false);
         void gotoScene(unsigned int num, bool now=false);
 		void gotoScene(std::string name, bool now=false);
+        
+        /// \section Current Scene Callbacks
+        
+        /// these are called in the current scene
+        
+        /// ofBaseApp callbacks
+		///
+        /// exit() is called automatically on removal/clear
+        void update();
+		void draw();
+
+        /// this is sent to all currently loaded scenes so resize events
+        /// are handled during transtions, etc correctly
+		void windowResized(int w, int h);
+
+		void keyPressed(int key);
+		void keyReleased(int key);
+
+		void mouseMoved(int x, int y);
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased();
+		void mouseReleased(int x, int y, int button);
+		
+		void dragEvent(ofDragInfo dragInfo);
+		void gotMessage(ofMessage msg);	
+        
+        // ofBaseSoundInput callbacks
+        void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+		void audioIn(float * input, int bufferSize, int nChannels );
+		void audioReceived(float * input, int bufferSize, int nChannels);
+        
+        // ofBaseSoundOutput callbacks
+        void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+		void audioOut(float * output, int bufferSize, int nChannels);
+		void audioRequested(float * output, int bufferSize, int nChannels);
 		
 	protected:
 		
@@ -67,11 +90,11 @@ class ofxSceneManager {
 		
 	private:
 	
-		/// handle a pedning scene change
+		/// handle a pending scene change
 		void handleSceneChanges();
 		
 		/// wrapper around iter + advance
-		ofxScene* getSceneAt(int index);
+		ofxRunnerScene* getSceneAt(int index);
 	
 		/// valid scene index value enums
         enum
@@ -80,12 +103,13 @@ class ofxSceneManager {
             SCENE_NONE = -1,
         };
 	
-		ofxScene*	_currentScenePtr;	///< pointer to the current scene
+		ofxScene*	_currentScenePtr;       ///< pointer to the current scene
+        ofxRunnerScene* _currentRunnerScenePtr;  ///< pointer to the current runner scene
 		int _currentScene;	///< the current scene, < 0 if none
 		int _newScene;		///< scene to change to
 		bool _bChangeNow;	///< ignore enter and exit when changing scenes?
 		
-		std::map<std::string, ofxScene*> _scenes;	///< scenes
+		std::map<std::string, ofxRunnerScene*> _scenes;	///< scenes
 	
 		bool _bSignalledAutoChange;		///< has an automatic change been called?
 		unsigned int _minChangeTimeMS;	///< minimum ms to wait before accepting scene change commands

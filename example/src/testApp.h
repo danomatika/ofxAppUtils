@@ -9,22 +9,19 @@ class testApp : public ofxApp {
 	
 	public:
 	
+        // setup the scene manager with a reference to the parent app
 		testApp() : sceneManager(*this) {}
 	
-		// note: these are the ofxApp callbacks ...
-		// do not implement the regular ofBaseApp callbacks
-		// (setup, draw, etc) as they are used by ofxApp which then calls these
-	
-		void setupApp();
-		void updateApp();
-		void drawApp();
+		void setup();
+		void update();
+		void draw();
 
-		void keyPressedApp(int key);
-		void keyReleasedApp(int key);
-		void mouseMovedApp(int x, int y);
-		void mouseDraggedApp(int x, int y, int button);
-		void mousePressedApp(int x, int y, int button);
-		void mouseReleasedApp(int x, int y, int button);
+		void keyPressed(int key);
+		void keyReleased(int key);
+		void mouseMoved(int x, int y);
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
 
 		// handles the scenes
 		ofxSceneManager sceneManager;

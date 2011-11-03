@@ -3,7 +3,7 @@
 #include "scenes/scenes.h"
 
 //--------------------------------------------------------------
-void testApp::setupApp(){
+void testApp::setup(){
 
 	// setup for nice jaggy-less rendering (if your machine/drivers dont suck)
 	ofSetFrameRate(60);
@@ -36,14 +36,14 @@ void testApp::setupApp(){
 }
 
 //--------------------------------------------------------------
-void testApp::updateApp(){
+void testApp::update(){
 
 	// the control panel and current scene are automatically updated
 	
 }
 
 //--------------------------------------------------------------
-void testApp::drawApp(){
+void testApp::draw(){
 
 	ofBackground(0, 0, 0);
 
@@ -60,7 +60,7 @@ void testApp::drawApp(){
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressedApp(int key) {
+void testApp::keyPressed(int key) {
 	
 	switch (key) {
 	
@@ -95,17 +95,21 @@ void testApp::keyPressedApp(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMovedApp(int x, int y) {
+void testApp::keyReleased(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDraggedApp(int x, int y, int button){
+void testApp::mouseMoved(int x, int y) {
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressedApp(int x, int y, int button){
+void testApp::mouseDragged(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleasedApp(int x, int y, int button){
+void testApp::mousePressed(int x, int y, int button){
+}
+
+//--------------------------------------------------------------
+void testApp::mouseReleased(int x, int y, int button){
 }

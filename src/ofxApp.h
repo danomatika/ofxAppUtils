@@ -8,11 +8,15 @@
 #include "ofxTimer.h"
 
 class ofxSceneManager;
+class ofxRunnerApp;
 
 /**
     \class  App
     \brief  application implementation with automatic transforms and projection mapping,
 			includes a built in ofxControlPanel
+            
+    simply inherit from this class and implement the regular ofBaseApp callbacks
+    ie setup(), update(), draw(), etc
 **/
 class ofxApp : public ofBaseApp, public ofxTransformer {
 
@@ -20,7 +24,7 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 	
 		ofxApp();
 		virtual ~ofxApp() {}
-		
+        
 		/// screen mirroring
 		void setMirror(bool mirrorX, bool mirrorY);
 		void setMirrorX(bool mirrorX);
@@ -56,40 +60,16 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		
 		/// is debug mode on?
 		bool isDebug()	{return bDebug;}
-
-		/// functions imeplemented by this class,
-		/// use the protected callbacks instead
-		void setup();
-		void exit();
-		void update();
-		void draw();
-		void keyPressed(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
+        
+        friend class ofxRunnerApp;  ///< used to wrap this app
 
 	protected:
-	
-		/// callbacks to implement
-		virtual void setupApp() = 0;
-		virtual void exitApp() {}
-		virtual void updateApp() = 0;
-		virtual void drawApp() = 0;
-		virtual void keyPressedApp(int key) = 0;
-		virtual void mouseMovedApp(int x, int y) = 0;
-		virtual void mouseDraggedApp(int x, int y, int button) = 0;
-		virtual void mousePressedApp(int x, int y, int button) = 0;
-		virtual void mouseReleasedApp(int x, int y, int button) = 0;
 	
 		bool bDebug;	///< are we in debug mode?
 		
 		ofxControlPanel	controlPanel; ///< the settings control panel
 		
 	private:
-		
-		/// setup the control panel
-		void _setupControlPanel();
 		
 		ofxTransformer _transformer;
 		
@@ -98,7 +78,53 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		bool _bEditingWarpPoints;	// are we currently editing the warp points?
 		ofMatrix4x4 _warpTransform;	// warp transform matrix needed for mouse picking
 		
-		bool _bTransformControls; ///< have the projeciton controls been added?
+		bool _bTransformControls; ///< have the projection controls been added?
 		
-		ofxSceneManager* _sceneManager;	///< optional buitl in scene manager
+		ofxSceneManager* _sceneManager;	///< optional built in scene manager
+};
+
+/// wrapper used to handle ofxApp magic behind the scenes ...
+/// do not use directly!
+class ofxRunnerApp : public ofBaseApp {
+
+    public:
+
+        ofxRunnerApp(ofxApp* app) : ofBaseApp() {
+            this->app = app;
+        }
+        ~ofxRunnerApp() {
+            delete app;
+        }
+
+        // ofBaseApp callbacks
+        void setup();
+		void update();
+		void draw();
+		void exit();
+
+		void windowResized(int w, int h);
+
+		void keyPressed(int key);
+		void keyReleased(int key);
+
+		void mouseMoved(int x, int y);
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased();
+		void mouseReleased(int x, int y, int button);
+		
+		void dragEvent(ofDragInfo dragInfo);
+		void gotMessage(ofMessage msg);	
+        
+        // ofBaseSoundInput callbacks
+        void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+		void audioIn(float * input, int bufferSize, int nChannels );
+		void audioReceived(float * input, int bufferSize, int nChannels);
+        
+        // ofBaseSoundOutput callbacks
+        void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+		void audioOut(float * output, int bufferSize, int nChannels);
+		void audioRequested(float * output, int bufferSize, int nChannels);
+        
+        ofxApp* app;
 };

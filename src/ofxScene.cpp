@@ -1,42 +1,37 @@
 #include "ofxScene.h"
 
 
-/// SCENE
+/// RUNNER SCENE
 
 //--------------------------------------------------------------
-void ofxScene::setup() {
-	if(!_bSetup){
-		setupScene();
-		_bSetup = true;
+void ofxRunnerScene::setup() {
+	if(!scene->_bSetup){
+		scene->setup();
+		scene->_bSetup = true;
 	}
 }
 
 //--------------------------------------------------------------
-void ofxScene::update() {
- 	if(!_bSetup || !_bRunning)
+void ofxRunnerScene::update() {
+ 	if(!scene->_bSetup || !scene->_bRunning)
 		return;
 
-	if(_bEntering) {
-		updateSceneEnter();
-		_bEnteringFirst = false;
+	if(scene->_bEntering) {
+		scene->updateEnter();
+		scene->_bEnteringFirst = false;
 	}
-	else if(_bExiting) {
-		updateSceneExit();
-		_bExitingFirst = false;
+	else if(scene->_bExiting) {
+		scene->updateExit();
+		scene->_bExitingFirst = false;
 	}
 	else {
-		updateScene();
+		scene->update();
 	}
 }
 		
 //--------------------------------------------------------------
-void ofxScene::draw() {
-	if(!_bSetup)
+void ofxRunnerScene::draw() {
+	if(!scene->_bSetup)
 		return;
-	drawScene();			
-}
-
-//--------------------------------------------------------------
-void ofxScene::exit() {
-	cleanupScene();			
+	scene->draw();			
 }

@@ -5,6 +5,8 @@
 #include "ofxApp.h"
 #include "ofxTimer.h"
 
+class ofxRunnerScene;
+
 /**
     \class  Scene
     \brief  application scene abstract class
@@ -21,22 +23,20 @@ class ofxScene : public ofBaseApp {
             _bDone(false) {}
 		virtual ~ofxScene() {}
 		
-		// \section Main
+        /// \section Main
+        
+        /// implement the regular ofBaseApp clalbacks functions
+        /// ie setup(), update(), draw(), etc
+        ///
+        /// there are also the following functions for scene enter and exit
+        /// control
 
-		/// functions imeplemented by this class,
-		/// use the protected callbacks instead
-		void setup();
-		void update();
-		void draw();
-		void exit();
-		
-		// input callbacks
-		virtual void keyPressed(int key) {}
-		virtual void mouseMoved(int x, int y) {}
-		virtual void mouseDragged(int x, int y, int button) {}
-		virtual void mousePressed(int x, int y, int button) {}
-		virtual void mouseReleased(int x, int y, int button) {}
-		
+        /// called when entering
+        virtual void updateEnter() {finishedEntering();};
+
+        /// called when exiting
+        virtual void updateExit()	{finishedExiting();};
+
 		// \section Transitional Control
 
         /// start entering
@@ -84,29 +84,11 @@ class ofxScene : public ofBaseApp {
 
         /// is the scene already setup?
         inline bool isSetup()   {return _bSetup;}
+        
+        friend class ofxRunnerScene;  ///< used to wrap this app
 
 	protected:
 
-		/// \section Callbacks to Implement
-		
-		/// has an OpenGL context, set GL parameters, load textures etc here
-        virtual void setupScene() {};
-
-        /// called when entering
-        virtual void updateSceneEnter() {finishedEntering();};
-
-        /// called when running
-        virtual void updateScene() = 0;
-
-        /// called when exiting
-        virtual void updateSceneExit()	{finishedExiting();};
-
-        /// called when drawing
-        virtual void drawScene() = 0;
-		
-		/// called before being deleted, cleanup resources here
-		virtual void cleanupScene() {};
-		
 		ofxApp& app;	///< the parent application reference
 		
 		/// for processing heads
@@ -118,4 +100,26 @@ class ofxScene : public ofBaseApp {
 		std::string _name;		///< the name of this scene
 		bool _bSetup, _bRunning, _bEntering, _bEnteringFirst,
 			 _bExiting, _bExitingFirst, _bDone;
+};
+
+/// wrapper used to handle ofxScene magic behind the scenes ...
+/// do not use directly!
+class ofxRunnerScene : public ofBaseApp {
+
+    public:
+
+        ofxRunnerScene(ofxScene* scene) : ofBaseApp() {
+            this->scene = scene;
+        }
+        ~ofxRunnerScene() {
+            if(scene != NULL)
+                delete scene;
+        }
+
+        // need these for proper entering/exit, etc
+        void setup();
+		void update();
+		void draw();
+        
+        ofxScene* scene;
 };

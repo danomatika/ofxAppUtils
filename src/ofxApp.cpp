@@ -92,95 +92,96 @@ void ofxApp::clearSceneManager() {
 	_sceneManager = NULL;
 }
 
+/// RUNNER APP
+
 //--------------------------------------------------------------
-void ofxApp::setup() {
-	_setupControlPanel();
-	setupApp();
+void ofxRunnerApp::setup() {
+	app->controlPanel.setup("App Controls", 1, 0, 275, app->getRenderHeight()-40);
+	app->setup();
 }
 
 //--------------------------------------------------------------
-void ofxApp::exit() {
-	exitApp();
-	if(_sceneManager)
-		_sceneManager->clear();
-}
+void ofxRunnerApp::update() {
 
-//--------------------------------------------------------------
-void ofxApp::update() {
+    app->mouseX = mouseX;
+    app->mouseY = mouseY;
 
-	if(_bTransformControls) {
+    ofxControlPanel& controlPanel = app->controlPanel;
+
+	if(app->_bTransformControls) {
+    
 		// grab control panel variables
-		_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
-				   controlPanel.getValueF("transformPosition", 1),	// y
-				   controlPanel.getValueF("transformZ"));			// z
+		app->_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
+				   controlPanel.getValueF("transformPosition", 1),          // y
+				   controlPanel.getValueF("transformZ"));                   // z
 		
 		// mirror x/y?
-		_bMirrorX = controlPanel.getValueB("transformMirrorX");
-		_bMirrorY = controlPanel.getValueB("transformMirrorY");
+		app->_bMirrorX = controlPanel.getValueB("transformMirrorX");
+		app->_bMirrorY = controlPanel.getValueB("transformMirrorY");
 		
 		// enable quad warper?
-		_bWarp = controlPanel.getValueB("transformEnableQuadWarper");
+		app->_bWarp = controlPanel.getValueB("transformEnableQuadWarper");
 		
 		// edit quad warper?
 		if(controlPanel.getValueB("transformEditQuadWarper")) {
-			setEditWarp(true);
+			app->setEditWarp(true);
 			controlPanel.setValueB("transformEditQuadWarper", false);
 		}
 		
 		// save quad warper?
 		if(controlPanel.getValueB("transformSaveQuadWarper")) {
-			saveWarpSettings();
+			app->saveWarpSettings();
 			controlPanel.setValueB("transformSaveQuadWarper", false);
 		}
 	}
 
 	controlPanel.update();
-	if(_sceneManager)
-		_sceneManager->update();
-	updateApp();
+	if(app->_sceneManager)
+		app->_sceneManager->update();
+	app->update();
 }
 
 //--------------------------------------------------------------
-void ofxApp::draw() {
+void ofxRunnerApp::draw() {
 
 	ofPushMatrix();
 
-		if(_bScale) {
-			applyRenderScale();
+		if(app->_bScale) {
+			app->applyRenderScale();
 		}
 
-		if(_bTranslate) {
-			applyOriginTranslate();
+		if(app->_bTranslate) {
+			app->applyOriginTranslate();
 		}
 		
-		if(_bWarp) {
-			applyWarp();
+		if(app->_bWarp) {
+			app->applyWarp();
 			ofPushMatrix();
 		}
 		
-		if(_bMirrorX) {
-			applyMirrorX();
+		if(app->_bMirrorX) {
+			app->applyMirrorX();
 		}
 		
-		if(_bMirrorY) {
-			applyMirrorY();
+		if(app->_bMirrorY) {
+			app->applyMirrorY();
 		}
 		
 		ofPushMatrix();
-		if(_sceneManager)
-			_sceneManager->draw();
-		drawApp();	// do the user callback
+		if(app->_sceneManager)
+			app->_sceneManager->draw();
+		app->draw();	// do the user callback
 		ofPopMatrix();
 		
-		if(_bWarp) {
+		if(app->_bWarp) {
 			ofPopMatrix();
 			
-			if(_bEditingWarpPoints && bDebug) {
+			if(app->_bEditingWarpPoints && app->bDebug) {
 				// draw projection warping bounding box
 				ofNoFill();
 				ofSetRectMode(OF_RECTMODE_CORNER);
 				ofSetHexColor(0x00FF00);
-				ofRect(0.35, 0.35, _renderWidth-1.35, _renderHeight-1.35);
+				ofRect(0.35, 0.35, app->_renderWidth-1.35, app->_renderHeight-1.35);
 				ofSetRectMode(OF_RECTMODE_CORNER);
 				ofFill();
 			}
@@ -188,9 +189,9 @@ void ofxApp::draw() {
 	
 	ofPopMatrix();
 	
-	if(bDebug) {
+	if(app->bDebug) {
         stringstream text;
-		if(_bEditingWarpPoints) {
+		if(app->_bEditingWarpPoints) {
 		
 			ofSetHexColor(0x00FF00);
 			text << "Quad Warper Edit Mode" << endl
@@ -209,7 +210,7 @@ void ofxApp::draw() {
 		else {
 			ofFill();
 			ofSetRectMode(OF_RECTMODE_CORNER);
-			controlPanel.draw();
+			app->controlPanel.draw();
 		}
 		ofSetColor(255);
         text << "fps: " << ofGetFrameRate();
@@ -218,88 +219,162 @@ void ofxApp::draw() {
 }
 
 //--------------------------------------------------------------
-void ofxApp::keyPressed(int key) {
-	if(_sceneManager)
-		_sceneManager->keyPressed(key);
-	keyPressedApp(key);
+void ofxRunnerApp::exit() {
+	app->exit();
+	if(app->_sceneManager)
+		app->_sceneManager->clear();
 }
 
 //--------------------------------------------------------------
-void ofxApp::mouseMoved(int x, int y) {
-	if(_sceneManager)
-		_sceneManager->mouseMoved(x, y);
-	mouseMovedApp(x, y);
+void ofxRunnerApp::windowResized(int w, int h) {
+    if(app->_sceneManager)
+		app->_sceneManager->windowResized(w, h);
+    app->windowResized(w, h);
 }
 
 //--------------------------------------------------------------
-void ofxApp::mouseDragged(int x, int y, int button) {
-	if(_sceneManager)
-		_sceneManager->mouseDragged(x, y, button);
-	mouseDraggedApp(x, y, button);
+void ofxRunnerApp::keyPressed(int key) {
+	if(app->_sceneManager)
+		app->_sceneManager->keyPressed(key);
+	app->keyPressed(key);
+}
+
+//--------------------------------------------------------------
+void ofxRunnerApp::keyReleased(int key) {
+    if(app->_sceneManager)
+		app->_sceneManager->keyReleased(key);
+    app->keyReleased(key);
+}
+
+//--------------------------------------------------------------
+void ofxRunnerApp::mouseMoved(int x, int y) {
+	if(app->_sceneManager)
+		app->_sceneManager->mouseMoved(x, y);
+	app->mouseMoved(x, y);
+}
+
+//--------------------------------------------------------------
+void ofxRunnerApp::mouseDragged(int x, int y, int button) {
+	if(app->_sceneManager)
+		app->_sceneManager->mouseDragged(x, y, button);
+	app->mouseDragged(x, y, button);
 	
-	if(bDebug) {
-		if(_bWarp && _bEditingWarpPoints) {
-			if(_currentWarpPoint >= 0) {
-				_quadWarper.setPoint(_currentWarpPoint,
+	if(app->bDebug) {
+		if(app->_bWarp && app->_bEditingWarpPoints) {
+			if(app->_currentWarpPoint >= 0) {
+				app->_quadWarper.setPoint(app->_currentWarpPoint,
 					ofVec2f((float)x/ofGetWidth(), (float)y/ofGetHeight()));
 			}
 		} else {
-			controlPanel.mouseDragged(x, y, button);
+			app->controlPanel.mouseDragged(x, y, button);
 		}
 	}
 }
 
 //--------------------------------------------------------------
-void ofxApp::mousePressed(int x, int y, int button) {
-	if(_sceneManager)
-		_sceneManager->mousePressed(x, y, button);
-	mousePressedApp(x, y, button);
+void ofxRunnerApp::mousePressed(int x, int y, int button) {
+	if(app->_sceneManager)
+		app->_sceneManager->mousePressed(x, y, button);
+	app->mousePressed(x, y, button);
 	
-	if(bDebug) {
-		if(_bWarp && _bEditingWarpPoints) {
+	if(app->bDebug) {
+		if(app->_bWarp && app->_bEditingWarpPoints) {
 		
 			// check if middle of the screen was pressed to exit edit mode
 			if((x > ofGetWidth()/2  - 50 && (x < ofGetWidth()/2  + 50) &&
 			   (y > ofGetHeight()/2 - 50 && (y < ofGetHeight()/2 + 50))))
 			{
-				_bEditingWarpPoints = false;
+				app->_bEditingWarpPoints = false;
 				return;
 			}
 			
 			// check if the screen corners are being clicked
 			float smallestDist = 1.0;
-			_currentWarpPoint = -1;
+			app->_currentWarpPoint = -1;
 			for(int i = 0; i < 4; i++) {
-				float distx = _quadWarper.getPoint(i).x - (float) x/ofGetWidth();
-				float disty = _quadWarper.getPoint(i).y - (float) y/ofGetHeight();
+				float distx = app->_quadWarper.getPoint(i).x - (float) x/ofGetWidth();
+				float disty = app->_quadWarper.getPoint(i).y - (float) y/ofGetHeight();
 				float dist  = sqrt(distx * distx + disty * disty);
 
 				if(dist < smallestDist && dist < 0.1) {
-					_currentWarpPoint = i;
+					app->_currentWarpPoint = i;
 					smallestDist = dist;
 				}
 			}	
 		} else {
-			controlPanel.mousePressed(x, y, button);
+			app->controlPanel.mousePressed(x, y, button);
 		}
 	}
 }
 
 //--------------------------------------------------------------
-void ofxApp::mouseReleased(int x, int y, int button) {
-	if(_sceneManager)
-		_sceneManager->mouseReleased(x, y, button);
-	mouseReleasedApp(x, y, button);
+void ofxRunnerApp::mouseReleased() {
+    if(app->_sceneManager)
+		app->_sceneManager->mouseReleased();
+    app->mouseReleased();
+}
+
+//--------------------------------------------------------------
+void ofxRunnerApp::mouseReleased(int x, int y, int button) {
+	if(app->_sceneManager)
+		app->_sceneManager->mouseReleased(x, y, button);
+	app->mouseReleased(x, y, button);
 	
-	if(bDebug) {
-		if(!_bEditingWarpPoints) {
-			controlPanel.mouseReleased();
+	if(app->bDebug) {
+		if(!app->_bEditingWarpPoints) {
+			app->controlPanel.mouseReleased();
 		}
 	}
-	_currentWarpPoint = -1;
+	app->_currentWarpPoint = -1;
 }
 
 //--------------------------------------------------------------
-void ofxApp::_setupControlPanel() {
-	controlPanel.setup("App Controls", 1, 0, 275, getRenderHeight()-40);
+void ofxRunnerApp::dragEvent(ofDragInfo dragInfo) {
+    if(app->_sceneManager)
+		app->_sceneManager->dragEvent(dragInfo);
+    app->dragEvent(dragInfo);
+}
+
+//--------------------------------------------------------------
+void ofxRunnerApp::gotMessage(ofMessage msg){
+    if(app->_sceneManager)
+		app->_sceneManager->gotMessage(msg);
+    app->gotMessage(msg);
+}
+
+//--------------------------------------------------------------
+void ofxRunnerApp::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+    if(app->_sceneManager)
+		app->_sceneManager->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+    app->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+}
+
+void ofxRunnerApp::audioIn(float * input, int bufferSize, int nChannel ) {
+    if(app->_sceneManager)
+		app->_sceneManager->audioIn(input, bufferSize, nChannel);
+    app->audioIn(input, bufferSize, nChannel);
+}
+void ofxRunnerApp::audioReceived(float * input, int bufferSize, int nChannels) {
+    if(app->_sceneManager)
+		app->_sceneManager->audioIn(input, bufferSize, nChannels);
+    app->audioIn(input, bufferSize, nChannels);
+}
+        
+//--------------------------------------------------------------
+void ofxRunnerApp::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+    if(app->_sceneManager)
+		app->_sceneManager->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+    app->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+}
+
+void ofxRunnerApp::audioOut(float * output, int bufferSize, int nChannels) {
+    if(app->_sceneManager)
+		app->_sceneManager->audioOut(output, bufferSize, nChannels);
+    app->audioOut(output, bufferSize, nChannels);
+}
+
+void ofxRunnerApp::audioRequested(float * output, int bufferSize, int nChannels) {
+    if(app->_sceneManager)
+		app->_sceneManager->audioOut(output, bufferSize, nChannels);
+    app->audioOut(output, bufferSize, nChannels);
 }

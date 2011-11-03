@@ -13,7 +13,7 @@ class LineScene : public ofxScene {
 		}
 
 		// scene setup
-		void setupScene() {
+		void setup() {
 			timer.set();
 			
 			lines.push_back(new Line(app, Line::HORZ));
@@ -21,7 +21,7 @@ class LineScene : public ofxScene {
 		}
 
 		// called when scene is entering
-       	void updateSceneEnter() {
+       	void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
@@ -33,7 +33,7 @@ class LineScene : public ofxScene {
 			// calc alpha amount based on alarm time diff
 			alpha = 255*timer.getDiffN();
 			
-			updateScene();
+			update();
 		
 			// call finishedEntering() to indicate scene is done entering
 			if(timer.alarm()) {
@@ -44,14 +44,14 @@ class LineScene : public ofxScene {
 		}
 
 		// normal update
-        void updateScene() {
+        void update() {
 			for(unsigned int i = 0; i < lines.size(); ++i) {
 				lines[i]->update();
 			}
 		}
 
 		// called when scene is exiting
-        void updateSceneExit() {
+        void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
@@ -63,7 +63,7 @@ class LineScene : public ofxScene {
 			// calc alpha amount based on alarm time diff
 			alpha = 255*abs(timer.getDiffN()-1.0);
 			
-			updateScene();
+			update();
 		
 			// call finishedExiting() to indicate scene is done exiting
 			if(timer.alarm()) {
@@ -74,7 +74,7 @@ class LineScene : public ofxScene {
 		}
 
 		// draw
-        void drawScene() {
+        void draw() {
 			ofEnableAlphaBlending();
 			ofSetLineWidth(5);
 			ofSetColor(255, 255, 255, alpha);	// alpha for fade in/out
@@ -86,7 +86,7 @@ class LineScene : public ofxScene {
 		}
 		
 		// cleanup
-		void cleanupScene() {
+		void exit() {
 			for(unsigned int i = 0; i < lines.size(); ++i) {
 				Line* l = lines[i];
 				delete l;
@@ -107,7 +107,7 @@ class LineScene : public ofxScene {
 				// you can also cast the ofxApp reference to your own derived
 				// class to pass custom data:
 				//
-				// TestApp& testApp = static_cast<TestAPp&> (app);
+				// TestApp& testApp = static_cast<TestApp&> (app);
 				//
 				Line(ofxApp &app, int type) : app(app) {
 					this->type = (Type) type;

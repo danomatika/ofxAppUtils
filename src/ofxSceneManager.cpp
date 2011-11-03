@@ -23,7 +23,7 @@ void ofxSceneManager::add(ofxScene* scene) {
 		return;
 	}
 	
-	_scenes.insert(_scenes.end(), pair<std::string,ofxScene*>(scene->getName(), scene));
+	_scenes.insert(_scenes.end(), pair<std::string,ofxRunnerScene*>(scene->getName(), new ofxRunnerScene(scene)));
 }
 		
 //--------------------------------------------------------------
@@ -33,11 +33,11 @@ void ofxSceneManager::remove(ofxScene* scene) {
 		return;
 	}
 	
-	map<std::string,ofxScene*>::iterator iter;
-	map<std::string,ofxScene*>::iterator diter;
+	map<std::string,ofxRunnerScene*>::iterator iter;
+	map<std::string,ofxRunnerScene*>::iterator diter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene* s = (*iter).second;
-		if(s == scene) {
+		ofxRunnerScene* s = (*iter).second;
+		if(s->scene == scene) {
 			if(s != NULL) {
 				s->exit();
 				delete s;
@@ -52,9 +52,9 @@ void ofxSceneManager::remove(ofxScene* scene) {
 
 //--------------------------------------------------------------
 void ofxSceneManager::clear() {
-	map<std::string,ofxScene*>::iterator iter;
+	map<std::string,ofxRunnerScene*>::iterator iter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene* s = (*iter).second;
+		ofxRunnerScene* s = (*iter).second;
 		if(s != NULL) {
 			s->exit();
 			delete s;
@@ -63,85 +63,20 @@ void ofxSceneManager::clear() {
 	_scenes.clear();
 }
 
+// need to call ofxRunnerScene::setup()
 //--------------------------------------------------------------
 void ofxSceneManager::setup(bool loadAll) {
 	if(loadAll) {
-		map<std::string,ofxScene*>::iterator iter;
+		map<std::string,ofxRunnerScene*>::iterator iter;
 		for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-			ofxScene* s = (*iter).second;
+			ofxRunnerScene* s = (*iter).second;
 			s->setup();
 		}
     } else {	// load the current one only
         if(!_scenes.empty() && _currentScene >= 0) {
-			_currentScenePtr->setup();
+			_currentRunnerScenePtr->setup();
         }
     }
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::update() {
-
-	handleSceneChanges();
-
-	// update the current main scene
-	if(!_scenes.empty() && _currentScene >= 0) {
-	
-		ofxScene* s = _currentScenePtr;
-
-		// call setup if scene is not setup yet
-		if(!s->isSetup()) {
-			s->setup();
-		}
-
-		s->update();
-
-		// if this scene says it's done, go to the next one
-		if(s->isDone() && !_bSignalledAutoChange) {
-			nextScene();
-			_bSignalledAutoChange = true;
-		}
-	}
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::draw() {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->draw();
-	}
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::keyPressed(int key) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->keyPressed(key);
-	}
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::mouseMoved(int x, int y ) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->mouseMoved(x, y);
-	}
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::mouseDragged(int x, int y, int button) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-	}
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::mousePressed(int x, int y, int button) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->mousePressed(x, y, button);
-	}
-}
-
-//--------------------------------------------------------------
-void ofxSceneManager::mouseReleased(int x, int y, int button) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->mouseReleased(x, y, button);
-	}
 }
 
 //--------------------------------------------------------------
@@ -218,7 +153,7 @@ void ofxSceneManager::gotoScene(unsigned int num, bool now) {
 		}
 
 		// tell new scene to enter
-		s = getSceneAt(num);
+		s = getSceneAt(num)->scene;
 		s->startEntering();
 	}
 	
@@ -229,7 +164,7 @@ void ofxSceneManager::gotoScene(unsigned int num, bool now) {
 
 //--------------------------------------------------------------
 void ofxSceneManager::gotoScene(std::string name, bool now) {
-	map<std::string,ofxScene*>::iterator iter = _scenes.find(name);
+	map<std::string,ofxRunnerScene*>::iterator iter = _scenes.find(name);
 	if(iter == _scenes.end()) {
 		ofLogWarning("ofxSceneManager") << "Could not find \"" << name << "\"";
 	}
@@ -258,7 +193,8 @@ void ofxSceneManager::handleSceneChanges() {
         if(_currentScene > SCENE_NONE) {
             if(_bChangeNow || !_currentScenePtr->isExiting()) {
                 _currentScene = _newScene;
-				_currentScenePtr = getSceneAt(_currentScene);
+                _currentRunnerScenePtr = getSceneAt(_currentScene);
+				_currentScenePtr = _currentRunnerScenePtr->scene;
                 _newScene = SCENE_NOCHANGE; // done
                 _bSignalledAutoChange = false;
             	_sceneChangeTimer.set();
@@ -267,7 +203,8 @@ void ofxSceneManager::handleSceneChanges() {
 			}
         } else {   // no current scene to wait for
             _currentScene = _newScene;
-			_currentScenePtr = getSceneAt(_currentScene);
+			_currentRunnerScenePtr = getSceneAt(_currentScene);
+				_currentScenePtr = _currentRunnerScenePtr->scene;
             _newScene = SCENE_NOCHANGE; // done
             _bSignalledAutoChange = false;
 			_sceneChangeTimer.set();
@@ -278,8 +215,150 @@ void ofxSceneManager::handleSceneChanges() {
 }
 
 //--------------------------------------------------------------
-ofxScene* ofxSceneManager::getSceneAt(int index) {
-	map<std::string,ofxScene*>::iterator iter = _scenes.begin();
+ofxRunnerScene* ofxSceneManager::getSceneAt(int index) {
+	map<std::string,ofxRunnerScene*>::iterator iter = _scenes.begin();
 	std::advance(iter, index);
 	return (*iter).second;
+}
+
+// need to call ofxRunnerScene::update()
+//--------------------------------------------------------------
+void ofxSceneManager::update() {
+
+	handleSceneChanges();
+
+	// update the current main scene
+	if(!_scenes.empty() && _currentScene >= 0) {
+	
+		ofxScene* s = _currentScenePtr;
+
+		// call setup if scene is not setup yet
+		if(!s->isSetup()) {
+			_currentRunnerScenePtr->setup();
+		}
+
+		_currentRunnerScenePtr->update();
+
+		// if this scene says it's done, go to the next one
+		if(s->isDone() && !_bSignalledAutoChange) {
+			nextScene();
+			_bSignalledAutoChange = true;
+		}
+	}
+}
+
+// need to call ofxRunnerScene::draw()
+//--------------------------------------------------------------
+void ofxSceneManager::draw() {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentRunnerScenePtr->draw();
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::windowResized(int w, int h) {
+    map<std::string,ofxRunnerScene*>::iterator iter;
+    for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
+        ofxRunnerScene* s = (*iter).second;
+        s->windowResized(w, h);;
+    }
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::keyPressed(int key) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->keyPressed(key);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::keyReleased(int key) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->keyReleased(key);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::mouseMoved(int x, int y ) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseMoved(x, y);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::mouseDragged(int x, int y, int button) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::mousePressed(int x, int y, int button) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mousePressed(x, y, button);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::mouseReleased() {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseReleased();
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::mouseReleased(int x, int y, int button) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseReleased(x, y, button);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::dragEvent(ofDragInfo dragInfo) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->dragEvent(dragInfo);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::gotMessage(ofMessage msg){
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->gotMessage(msg);
+	}
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+	}
+}
+
+void ofxSceneManager::audioIn(float * input, int bufferSize, int nChannel ) {
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioIn(input, bufferSize, nChannel);
+	}
+}
+void ofxSceneManager::audioReceived(float * input, int bufferSize, int nChannels) {
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioIn(input, bufferSize, nChannels);
+	}
+}
+        
+//--------------------------------------------------------------
+void ofxSceneManager::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+	}
+}
+
+void ofxSceneManager::audioOut(float * output, int bufferSize, int nChannels) {
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioOut(output, bufferSize, nChannels);
+	}
+}
+
+void ofxSceneManager::audioRequested(float * output, int bufferSize, int nChannels) {
+    if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioOut(output, bufferSize, nChannels);
+	}
 }

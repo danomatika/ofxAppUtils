@@ -14,7 +14,7 @@ class ParticleScene : public ofxScene {
 		}
 
 		// scene setup
-		void setupScene() {
+		void setup() {
 			timer.set();
 		
 			for(unsigned int i = 0; i < 100; ++i) {
@@ -23,7 +23,7 @@ class ParticleScene : public ofxScene {
 		}
 
 		// called when scene is entering
-       	void updateSceneEnter() {
+       	void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
@@ -35,7 +35,7 @@ class ParticleScene : public ofxScene {
 			// calc alpha amount based on alarm time diff
 			alpha = 255*timer.getDiffN();
 			
-			updateScene();
+			update();
 		
 			// call finishedEntering() to indicate scne is done entering
 			if(timer.alarm()) {
@@ -46,13 +46,13 @@ class ParticleScene : public ofxScene {
 		}
 
 		// normal update
-        void updateScene() {
+        void update() {
 			for(unsigned int i = 0; i < particles.size(); ++i)
 				particles[i]->update();
 		}
 
 		// called when scene is exiting
-        void updateSceneExit() {
+        void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
@@ -64,7 +64,7 @@ class ParticleScene : public ofxScene {
 			// calc alpha amount based on alarm time diff
 			alpha = 255*abs(timer.getDiffN()-1.0);
 			
-			updateScene();
+			update();
 		
 			// call finishedExiting() to indicate scene is done exiting
 			if(timer.alarm()) {
@@ -75,7 +75,7 @@ class ParticleScene : public ofxScene {
 		}
 
 		// draw
-        void drawScene() {
+        void draw() {
 			ofEnableAlphaBlending();
 			ofFill();
 			ofSetRectMode(OF_RECTMODE_CENTER);
@@ -88,7 +88,7 @@ class ParticleScene : public ofxScene {
 		}
 		
 		// cleanup
-		void cleanupScene() {
+		void exit() {
 			for(unsigned int i = 0; i < particles.size(); ++i) {
 				Particle* p = particles[i];
 				delete p;
@@ -109,7 +109,7 @@ class ParticleScene : public ofxScene {
 				// you can also cast the ofxApp reference to your own derived
 				// class to pass custom data:
 				//
-				// TestApp& testApp = static_cast<TestAPp&> (app);
+				// TestApp& testApp = static_cast<TestApp&> (app);
 				//
 				Particle(ofxApp& app) : app(app) {
 					size = ofRandom(10, 40);

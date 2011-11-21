@@ -13,6 +13,10 @@ ofxApp::ofxApp() : ofBaseApp(), _currentWarpPoint(-1) {
 	_bTransformControls = false;
 	
 	_sceneManager = NULL;
+
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+	_bDrawControlPanel = true;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -24,32 +28,58 @@ void ofxApp::setMirror(bool mirrorX, bool mirrorY) {
 
 void ofxApp::setMirrorX(bool mirrorX) {
 	_bMirrorX = mirrorX;
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(_bTransformControls)
 		controlPanel.setValueB("transformMirrorX", _bMirrorX);
+#endif
 }
 
 void ofxApp::setMirrorY(bool mirrorY) {
 	_bMirrorY = mirrorY;
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(_bTransformControls)
 		controlPanel.setValueB("transformMirrorY", _bMirrorY);
+#endif
 }
 
 void ofxApp::setOrigin(float x, float y, float z)	{
 	_origin.set(x, y, z);
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(_bTransformControls) {
 		controlPanel.setValueF("transformPos", x, 0);
 		controlPanel.setValueF("transformPos", y, 1);
 		controlPanel.setValueF("transformZ", x);
 	}
+#endif
+}
+
+void ofxApp::setAspect(bool aspect) {
+	_bHandleAspect = aspect;
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+	if(_bTransformControls)
+		controlPanel.setValueB("keepAspect", _bHandleAspect);
+#endif
+}
+		
+void ofxApp::setCentering(bool center) {
+	_bCenter = center;
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+	if(_bTransformControls)
+		controlPanel.setValueB("centerRender", _bCenter);
+#endif
 }
 
 void ofxApp::setWarp(bool warp) {
 	_bWarp = warp;
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(_bTransformControls)
 		controlPanel.setValueB("transformEnableQuadWarper", _bWarp);
+#endif
 }
 
 //--------------------------------------------------------------
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+
 void ofxApp::addTransformControls(int panelNum, int panelCol) {
 	if(_bTransformControls)
 		return;
@@ -65,6 +95,8 @@ void ofxApp::addTransformControls(int panelNum, int panelCol) {
 							 -getRenderWidth(), getRenderWidth(),
 							 -getRenderHeight(), getRenderHeight(), false);
 	controlPanel.addSlider("z", "transformZ", 0, -1000, 200, false);
+	controlPanel.addToggle("keep aspect", "keepAspect", false);
+	controlPanel.addToggle("center rendering", "centerRender", false);
 	controlPanel.addToggle("mirror x", "transformMirrorX", false);
 	controlPanel.addToggle("mirror y", "transformMirrorY", false);
 	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", false);
@@ -72,6 +104,23 @@ void ofxApp::addTransformControls(int panelNum, int panelCol) {
 	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
 	_bTransformControls = true;
 }
+
+void ofxApp::setDrawControlPanel(bool draw) {
+	_bDrawControlPanel = draw;
+}
+
+bool ofxApp::getDrawControlPanel() {
+	return _bDrawControlPanel;
+}
+
+void ofxApp::drawControlPanel() {
+	ofFill();
+	ofSetColor(255);
+	ofSetRectMode(OF_RECTMODE_CORNER);
+	controlPanel.draw();
+}
+
+#endif
 
 //--------------------------------------------------------------
 void ofxApp::setSceneManager(ofxSceneManager* manager) {
@@ -96,7 +145,9 @@ void ofxApp::clearSceneManager() {
 
 //--------------------------------------------------------------
 void ofxRunnerApp::setup() {
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	app->controlPanel.setup("App Controls", 1, 0, 275, app->getRenderHeight()-40);
+#endif
 	app->setup();
 }
 
@@ -106,14 +157,19 @@ void ofxRunnerApp::update() {
     app->mouseX = mouseX;
     app->mouseY = mouseY;
 
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
     ofxControlPanel& controlPanel = app->controlPanel;
 
 	if(app->_bTransformControls) {
     
 		// grab control panel variables
 		app->_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
-				   controlPanel.getValueF("transformPosition", 1),          // y
-				   controlPanel.getValueF("transformZ"));                   // z
+						 controlPanel.getValueF("transformPosition", 1),	// y
+						 controlPanel.getValueF("transformZ"));             // z
+		
+		// keep aspect?
+		app->_bHandleAspect = controlPanel.getValueB("keepAspect");
+		app->_bCenter = controlPanel.getValueB("centerRender");
 		
 		// mirror x/y?
 		app->_bMirrorX = controlPanel.getValueB("transformMirrorX");
@@ -136,6 +192,8 @@ void ofxRunnerApp::update() {
 	}
 
 	controlPanel.update();
+#endif
+
 	if(app->_sceneManager)
 		app->_sceneManager->update();
 	app->update();
@@ -207,11 +265,11 @@ void ofxRunnerApp::draw() {
 			ofSetRectMode(OF_RECTMODE_CORNER);
 			ofFill();
 		}
-		else {
-			ofFill();
-			ofSetRectMode(OF_RECTMODE_CORNER);
-			app->controlPanel.draw();
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+		else if(app->_bDrawControlPanel) {
+			app->drawControlPanel();
 		}
+#endif
 		ofSetColor(255);
         text << "fps: " << ofGetFrameRate();
 		ofDrawBitmapString(text.str(), ofGetWidth()-100, ofGetHeight()-14);
@@ -227,7 +285,8 @@ void ofxRunnerApp::exit() {
 
 //--------------------------------------------------------------
 void ofxRunnerApp::windowResized(int w, int h) {
-    if(app->_sceneManager)
+    app->resizeRender(w, h);
+	if(app->_sceneManager)
 		app->_sceneManager->windowResized(w, h);
     app->windowResized(w, h);
 }
@@ -237,10 +296,12 @@ void ofxRunnerApp::keyPressed(int key) {
     if(app->_sceneManager)
 		app->_sceneManager->keyPressed(key);
 	app->keyPressed(key);
-    
+
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
     if(app->bDebug) {
         app->controlPanel.keyPressed(key);
     }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -269,9 +330,12 @@ void ofxRunnerApp::mouseDragged(int x, int y, int button) {
 				app->_quadWarper.setPoint(app->_currentWarpPoint,
 					ofVec2f((float)x/ofGetWidth(), (float)y/ofGetHeight()));
 			}
-		} else {
+		}
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+		else {
 			app->controlPanel.mouseDragged(x, y, button);
 		}
+#endif
 	}
 }
 
@@ -305,9 +369,12 @@ void ofxRunnerApp::mousePressed(int x, int y, int button) {
 					smallestDist = dist;
 				}
 			}	
-		} else {
+		}
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+		else {
 			app->controlPanel.mousePressed(x, y, button);
 		}
+#endif
 	}
 }
 
@@ -316,12 +383,14 @@ void ofxRunnerApp::mouseReleased() {
     if(app->_sceneManager)
 		app->_sceneManager->mouseReleased();
     app->mouseReleased();
-    
+
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
     if(app->bDebug) {
 		if(!app->_bEditingWarpPoints) {
 			app->controlPanel.mouseReleased();
 		}
 	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -330,11 +399,13 @@ void ofxRunnerApp::mouseReleased(int x, int y, int button) {
 		app->_sceneManager->mouseReleased(x, y, button);
 	app->mouseReleased(x, y, button);
 	
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(app->bDebug) {
 		if(!app->_bEditingWarpPoints) {
 			app->controlPanel.mouseReleased();
 		}
 	}
+#endif
 	app->_currentWarpPoint = -1;
 }
 

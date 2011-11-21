@@ -16,7 +16,7 @@ Description
 
 ofxAppUtils is a set of utilities for OpenFrameworks application development including:
 
-* ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an ofxControlPanel
+* ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an optional ofxControlPanel
 * ofxScene: a mini ofBaseApp for writing stand alone scenes
 * ofxSceneManager: handles a list of scenes using a std::map
 * ofxTransformer: open gl transformer for origin translation, screen scaling, mirroring, and quad warping
@@ -39,8 +39,10 @@ The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
 You will also need the following addon dependencies:
 
-* ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel
 * ofxXmlSettings: included with OpenFrameworks
+* ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel (optional)
+
+To disable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_NO_CONTROL_PANEL` in your CFLAGS. For Xcode, see the Project.xcconfig file.
 
 Running the Example Project
 -------------------------------
@@ -57,7 +59,7 @@ If you want to add ofxAppUtils to another project, you need to make sure you inc
 openFrameworks/addons/ofxAppUtils/src
 </pre>
 
-For XCode:
+For Xcode:
 
 * create a new group "ofxAppUtils"
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src

@@ -10,6 +10,7 @@ ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
 	_bMirrorY = false;
 	_bTranslate = false;
 	_bHandleAspect = false;
+	_bCenter = false;
 	_bWarp = false;
 	
 	_renderWidth = ofGetWidth();
@@ -45,15 +46,20 @@ void ofxTransformer::setRenderScale(float x, float y) {
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::setTransforms(bool translate, bool scale, bool warp, bool handleAspect) {
+void ofxTransformer::setTransforms(bool translate, bool scale, bool warp, bool handleAspect, bool center) {
 	_bTranslate = translate;
 	_bScale = scale;
 	_bWarp = warp;
 	_bHandleAspect = handleAspect;
+	_bCenter = center;
 }
 
 //--------------------------------------------------------------
+void ofxTransformer::resizeRender(float screenWidth, float screenHeight) {
+	setRenderSize(_renderWidth, _renderHeight, screenWidth, screenHeight);
+}
 
+//--------------------------------------------------------------
 void ofxTransformer::setMirror(bool mirrorX, bool mirrorY) {
 	_bMirrorX = mirrorX;
 	_bMirrorY = mirrorY;
@@ -99,32 +105,22 @@ ofVec2f ofxTransformer::getWarpPoint(unsigned int index) {
 
 //--------------------------------------------------------------
 void ofxTransformer::applyRenderScale() {
-	if(_renderScaleX != 1.0 || _renderScaleY != 1.0) {
-		
 		// adjust to screen dimensions?
 		if(_bHandleAspect && _renderAspect != _screenAspect) {
-			
-			if(_renderAspect == 1.0) { // square, windowbox
-				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/4,
-							(_screenHeight+(_renderScaleX*_renderHeight))/4);
-			}
-			else if(_renderAspect < 1.0) { // w < h, letterbox
-				//ofScale(_renderScaleX, _renderScaleX);
-//				ofTranslate((0, _screenHeight-(_renderScaleX*_renderHeight))/2);
-				ofScale(_renderScaleY, _renderScaleY);
-				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/2, 0);
-			}
-			else { // w > h, pillarbox
-				//ofScale(_renderScaleY, _renderScaleY);
-//				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/2, 0);
+			if(_renderAspect > _screenAspect) {	// letter box
 				ofScale(_renderScaleX, _renderScaleX);
-				ofTranslate((0, _screenHeight-(_renderScaleX*_renderHeight))/2);
+				if(_bCenter)
+					ofTranslate(0, (_screenHeight-(_renderScaleX*_renderHeight))/4);
 			}
-		
-		} else { // basic stretch
+			else { // pillar box
+				ofScale(_renderScaleY, _renderScaleY);
+				if(_bCenter)
+					ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/4, 0);
+			}
+		}
+		else { // basic stretch
 			ofScale(_renderScaleX, _renderScaleY);
 		}
-	}
 }
 
 //--------------------------------------------------------------

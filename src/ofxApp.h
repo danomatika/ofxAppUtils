@@ -1,7 +1,11 @@
 #pragma once
 
 #include <ofMain.h>
-#include <ofxControlPanel.h>
+
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+	#include "ofxXmlSettings.h"
+	#include "ofxControlPanel.h"
+#endif
 
 #include "ofxQuadWarper.h"
 #include "ofxTransformer.h"
@@ -33,10 +37,22 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		/// set the origin position
 		void setOrigin(float x, float y, float z=0);
 		
+		/// keep the aspect ration when scaling?
+		void setAspect(bool aspect);
+		
+		/// center within the parent screen area?
+		void setCentering(bool center);
+		
 		/// set/edit the projection warping
 		void setWarp(bool warp);
 		void setEditWarp(bool edit) {_bEditingWarpPoints = edit;}
 		bool getEditWarp()			{return _bEditingWarpPoints;}
+		
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+		///
+		/// define OFX_APP_UTILS_NO_CONTROL_PANEL to disable the control panel
+		/// (and ofxControlPanel dependency)
+		///
 		
 		/// add transform controls to the ofxControlPanel (optional)
 		/// set panelNum to choose which to add the controls to, otherwise a
@@ -53,22 +69,32 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		///
 		void addTransformControls(int panelNum=-1, int panelCol=0);
 		
+		/// draw the control panel automatically? (on by default)
+		void setDrawControlPanel(bool draw);
+		bool getDrawControlPanel();
+		
+		/// draw the control panel manually
+		void drawControlPanel();
+#endif
+
 		/// set the built in SceneManager (optional)
 		void setSceneManager(ofxSceneManager* manager);
 		ofxSceneManager* getSceneManager();
 		void clearSceneManager();
 		
 		/// is debug mode on?
-		bool isDebug()	{return bDebug;}
+		inline bool isDebug()	{return bDebug;}
         
         friend class ofxRunnerApp;  ///< used to wrap this app
 
 	protected:
 	
 		bool bDebug;	///< are we in debug mode?
-		
+
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 		ofxControlPanel	controlPanel; ///< the settings control panel
-		
+#endif
+
 	private:
 		
 		ofxTransformer _transformer;
@@ -81,6 +107,10 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		bool _bTransformControls; ///< have the projection controls been added?
 		
 		ofxSceneManager* _sceneManager;	///< optional built in scene manager
+		
+#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+	bool _bDrawControlPanel;		  ///< draw the control panel automatically?
+#endif
 };
 
 /// wrapper used to handle ofxApp magic behind the scenes ...

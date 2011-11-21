@@ -7,8 +7,7 @@
 //
 
 // multiply matrix: c = a * b
-void multiplyMatrix(double a[3][3], double b[3][3], double c[3][3])
-{
+void multiplyMatrix(double a[3][3], double b[3][3], double c[3][3]) {
     c[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0];
     c[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1] + a[0][2]*b[2][1];
     c[0][2] = a[0][0]*b[0][2] + a[0][1]*b[1][2] + a[0][2]*b[2][2];
@@ -21,14 +20,12 @@ void multiplyMatrix(double a[3][3], double b[3][3], double c[3][3])
 }
 
 // determinant of a 2x2 matrix
-double det2(double a, double b, double c, double d)
-{
+double det2(double a, double b, double c, double d) {
     return( a*d - b*c);
 }
 
 // adjoint matrix: b = adjoint(a); returns determinant(a)
-double adjointMatrix(double a[3][3], double b[3][3])
-{
+double adjointMatrix(double a[3][3], double b[3][3]) {
     b[0][0] = det2(a[1][1], a[1][2], a[2][1], a[2][2]);
     b[1][0] = det2(a[1][2], a[1][0], a[2][2], a[2][0]);
     b[2][0] = det2(a[1][0], a[1][1], a[2][0], a[2][1]);
@@ -46,15 +43,13 @@ double adjointMatrix(double a[3][3], double b[3][3])
 
 // calculate matrix for unit square to quad mapping
 void mapSquareToQuad(double quad[4][2],  // vertices of quadrilateral
-                    double SQ[3][3])    // square->quad transform
-{
+                    double SQ[3][3]) {   // square->quad transform
     double px, py;
 
     px = quad[0][0]-quad[1][0]+quad[2][0]-quad[3][0];
     py = quad[0][1]-quad[1][1]+quad[2][1]-quad[3][1];
 
-    if (MATRIX_ZERO(px) && MATRIX_ZERO(py))
-    {
+    if (MATRIX_ZERO(px) && MATRIX_ZERO(py)) {
         SQ[0][0] = quad[1][0]-quad[0][0];
         SQ[1][0] = quad[2][0]-quad[1][0];
         SQ[2][0] = quad[0][0];
@@ -66,8 +61,7 @@ void mapSquareToQuad(double quad[4][2],  // vertices of quadrilateral
         SQ[2][2] = 1.;
         return;
     }
-    else
-    {
+    else {
         double dx1, dx2, dy1, dy2, del;
 
         dx1 = quad[1][0]-quad[2][0];
@@ -91,8 +85,8 @@ void mapSquareToQuad(double quad[4][2],  // vertices of quadrilateral
 // calculate matrix for general quad to quad mapping
 void mapQuadToQuad( double in[4][2],    // starting quad
                     double out[4][2],   // target quad
-                    double ST[3][3])    // the matrix (returned)
-{
+                    double ST[3][3]) {	// the matrix (returned)
+					
     double quad[4][2], MS[3][3];
     double SM[3][3], MT[3][3];
 
@@ -111,4 +105,3 @@ void mapQuadToQuad( double in[4][2],    // starting quad
 
     multiplyMatrix(SM, MT, ST);
 }
-

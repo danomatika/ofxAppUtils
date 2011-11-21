@@ -8,7 +8,7 @@
     \class  Transformer
     \brief  a render transformer
 **/
-class ofxTransformer{
+class ofxTransformer {
 
 	public:
 	
@@ -20,6 +20,11 @@ class ofxTransformer{
 		void setRenderSize(float w, float h);	/// use the full screen size
 		float getRenderWidth()	{return _renderWidth;}
 		float getRenderHeight()	{return _renderHeight;}
+		float getScreenWidth()	{return _screenWidth;}
+		float getScreenHeight() {return _screenHeight;}
+		
+		/// resize the render scaling to a new parent screen size
+		void resizeRender(float screenWidth, float screenHeight);
 		
 		/// enable/disable the transforms
 		///
@@ -30,7 +35,8 @@ class ofxTransformer{
 		///
 		/// note: all of these options can also be enabled one by one
 		///
-		void setTransforms(bool translate, bool scale, bool warp=false, bool handleAspect=false);
+		void setTransforms(bool translate, bool scale, bool warp=false,
+							bool handleAspect=false, bool center=false);
 		
 		/// set the render scale directly
 		void setRenderScale(float x, float y);
@@ -45,7 +51,13 @@ class ofxTransformer{
 		virtual void setAspect(bool aspect)	{_bHandleAspect = aspect;}
 		bool getAspect()					{return _bHandleAspect;}
 		
-		/// screen mirroring
+		/// center within the parent screen area?
+		/// only performed if getApsect() = true
+		/// note: does an origin translation when on
+		virtual void setCentering(bool center)	{_bCenter = center;}
+		bool getCentering()						{return _bCenter;}
+		
+		/// render mirroring
 		virtual void setMirror(bool mirrorX, bool mirrorY);
 		virtual void setMirrorX(bool mirrorX);
 		virtual void setMirrorY(bool mirrorY);
@@ -87,7 +99,7 @@ class ofxTransformer{
 				
 	protected:
 		
-		bool _bScale, _bMirrorX, _bMirrorY, _bTranslate, _bHandleAspect, _bWarp;
+		bool _bScale, _bMirrorX, _bMirrorY, _bTranslate, _bHandleAspect, _bCenter, _bWarp;
 		float _screenWidth, _screenHeight;	///< parent render size (screen or window)
 		float _renderWidth, _renderHeight;	///< render size
 		float _renderScaleX, _renderScaleY;	///< render scale

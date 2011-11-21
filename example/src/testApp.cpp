@@ -13,7 +13,8 @@ void testApp::setup() {
 	setRenderSize(600, 400);
 	
 	// turn on transform origin translation and scaling to screen size
-	setTransforms(true, true);
+	// also apsect ratio and centering
+	setTransforms(true, true, false, true, true);
 	
 	// the control panel is setup automatically, of course you can still change
 	// all the settings manually here

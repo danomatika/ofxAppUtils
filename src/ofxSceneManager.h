@@ -97,8 +97,7 @@ class ofxSceneManager {
 		ofxRunnerScene* getSceneAt(int index);
 	
 		/// valid scene index value enums
-        enum
-        {
+        enum {
             SCENE_NOCHANGE = INT_MIN,
             SCENE_NONE = -1,
         };

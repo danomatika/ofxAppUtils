@@ -11,13 +11,18 @@ OF_PATH = ../../..
 // path to the addons dir
 ADDONS_PATH = $(OF_PATH)/addons
 
+// app utils
+// uncomment this to disable the control panel (and ofxControlPanel dependency)
+//OFX_APP_UTILS_DEFINES = OFX_APP_UTILS_NO_CONTROL_PANEL
+
 // all addons
+OF_ADDON_DEFINES = $(OFX_APP_UTILS_DEFINES)
 OF_ADDON_HEADERS =
 OF_ADDON_LIBS = 
 
 ///////////////////////////////////////////
 // MAIN
 
-OTHER_CFLAGS =
+GCC_PREPROCESSOR_DEFINITIONS = $(OF_ADDON_DEFINES)
 HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(OF_ADDON_HEADERS)
 OTHER_LDFLAGS = $(OF_CORE_LIBS) $(OF_ADDON_LIBS)

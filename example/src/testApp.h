@@ -3,7 +3,7 @@
 
 #include "ofMain.h"
 
-#include <ofxAppUtils.h>
+#include "ofxAppUtils.h"
 
 /// make sure you check out main.cpp for how to run this app with app utils!
 ///

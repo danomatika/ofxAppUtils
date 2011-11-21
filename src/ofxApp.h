@@ -69,7 +69,7 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		///
 		void addTransformControls(int panelNum=-1, int panelCol=0);
 		
-		/// draw the control panel automatically? (on by default)
+		/// draw the control panel automatically in debug mode? (on by default)
 		void setDrawControlPanel(bool draw);
 		bool getDrawControlPanel();
 		
@@ -77,12 +77,22 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		void drawControlPanel();
 #endif
 
+		/// draw the framerate automatically in debug mode? (on by default)
+		virtual void setDrawFramerate(bool draw)	{_bDrawFramerate = draw;}
+		bool getDrawFramerate()						{return _bDrawFramerate;}
+		
+		/// reference to the framerate text color
+		ofColor& getFramerateColorRef()	{return _framerateColor;}
+		
+		/// draw the framerate text manually
+		void drawFramerate(float x, float y);
+
 		/// set the built in SceneManager (optional)
 		void setSceneManager(ofxSceneManager* manager);
 		ofxSceneManager* getSceneManager();
 		void clearSceneManager();
 		
-		/// is debug mode on?
+		/// is debug mode on? (show control panel and fps)
 		inline bool isDebug()	{return bDebug;}
         
         friend class ofxRunnerApp;  ///< used to wrap this app
@@ -100,16 +110,18 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		ofxTransformer _transformer;
 		
 		/// quad warper
-		int _currentWarpPoint;		// currently selected projection point
-		bool _bEditingWarpPoints;	// are we currently editing the warp points?
-		ofMatrix4x4 _warpTransform;	// warp transform matrix needed for mouse picking
+		int _currentWarpPoint;		///< currently selected projection point
+		bool _bEditingWarpPoints;	///< are we currently editing the warp points?
+		ofMatrix4x4 _warpTransform;	///< warp transform matrix needed for mouse picking
 		
-		bool _bTransformControls; ///< have the projection controls been added?
+		bool _bDrawFramerate;		///< draw the dramerate in debug mode?
+		ofColor _framerateColor;	///< framerate text color
 		
 		ofxSceneManager* _sceneManager;	///< optional built in scene manager
 		
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
-	bool _bDrawControlPanel;		  ///< draw the control panel automatically?
+		bool _bTransformControls;	///< have the projection controls been added?
+		bool _bDrawControlPanel;	///< draw the control panel automatically?
 #endif
 };
 

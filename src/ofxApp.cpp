@@ -10,11 +10,14 @@ ofxApp::ofxApp() : ofBaseApp(), _currentWarpPoint(-1) {
 	bDebug = false;
 	
 	_bEditingWarpPoints = false;
-	_bTransformControls = false;
+	
+	_bDrawFramerate = true;
+	_framerateColor.set(255);	// white
 	
 	_sceneManager = NULL;
 
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+	_bTransformControls = false;
 	_bDrawControlPanel = true;
 #endif
 }
@@ -121,6 +124,12 @@ void ofxApp::drawControlPanel() {
 }
 
 #endif
+
+//--------------------------------------------------------------
+void ofxApp::drawFramerate(float x, float y) {
+	ofSetColor(_framerateColor);
+	ofDrawBitmapString("fps: "+ofToString(ofGetFrameRate()), x, y);
+}
 
 //--------------------------------------------------------------
 void ofxApp::setSceneManager(ofxSceneManager* manager) {
@@ -270,9 +279,8 @@ void ofxRunnerApp::draw() {
 			app->drawControlPanel();
 		}
 #endif
-		ofSetColor(255);
-        text << "fps: " << ofGetFrameRate();
-		ofDrawBitmapString(text.str(), ofGetWidth()-100, ofGetHeight()-14);
+		if(app->_bDrawFramerate)
+			app->drawFramerate(ofGetWidth()-100, ofGetHeight()-6);
 	}
 }
 

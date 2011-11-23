@@ -1,22 +1,37 @@
+/*
+ * Copyright (c) 2011 Dan Wilcox <danomatika@gmail.com>
+ *
+ * BSD Simplified License.
+ * For information on usage and redistribution, and for a DISCLAIMER OF ALL
+ * WARRANTIES, see the file, "LICENSE.txt," in this distribution.
+ *
+ * See https://github.com/danomatika/ofxAppUtils for documentation
+ *
+ */
 #include "ofxParticle.h"
 
 unsigned int ofxParticle::_frameTimeout = 500;
 
+//--------------------------------------------------------------
 ofxParticle::ofxParticle() : ofRectangle(), bAlive(false), lifespan(5000), age(0) {
     reset();
 }
 
+//--------------------------------------------------------------
 ofxParticle::ofxParticle(float x, float y, float w, float h) :
     ofRectangle(x, y, w, h), bAlive(false), lifespan(0), age(0) {
     reset();
 }
 
+//--------------------------------------------------------------
 ofxParticle::~ofxParticle() {}
 
+//--------------------------------------------------------------
 ofxParticle::ofxParticle(const ofxParticle& from) {
     this->ofxParticle::operator=(from);
 }
 
+//--------------------------------------------------------------
 ofxParticle& ofxParticle::operator=(const ofxParticle& from) {
     (ofRectangle&) *this = from;    // call ofRectangle copy operator
 	bAlive = from.bAlive;
@@ -25,6 +40,7 @@ ofxParticle& ofxParticle::operator=(const ofxParticle& from) {
     return *this;
 }
 
+//--------------------------------------------------------------
 void ofxParticle::updateAge() {
     if(!bAlive)
         return;
@@ -41,12 +57,14 @@ void ofxParticle::updateAge() {
     lifeTimer.set();
 }
 
+//--------------------------------------------------------------
 double ofxParticle::getAge() {
     if(lifespan == 0)
         return 0;
     return age/lifespan;
 }
 
+//--------------------------------------------------------------
 double ofxParticle::getRemaingLife() {
     return ((getAge()*-1.0) + 1.0);
 }

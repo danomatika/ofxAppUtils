@@ -5,6 +5,11 @@ OpenFrameworks app utilities
 
 Copyright (c) [Dan Wilcox](danomatika.com) 2011
 
+BSD Simplified License.
+
+For information on usage and redistribution, and for a DISCLAIMER OF ALL
+WARRANTIES, see the file, "LICENSE.txt," in this distribution.
+
 See Documentation on [Github](https://github.com/danomatika/ofxAppUtils) and the [OpenFrameworks Forum post](http://forum.openframeworks.cc/index.php/topic,5995.0.html).
 
 OpenFrameworks is a cross platform open source toolkit for creative coding in C++.

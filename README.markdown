@@ -22,6 +22,8 @@ ofxAppUtils is a set of utilities for OpenFrameworks application development inc
 * ofxTransformer: open gl transformer for origin translation, screen scaling, mirroring, and quad warping
 * ofxQuadWarper: an open gl matrix quad warper (useful for oblique projection mapping)
 * ofxTimer: a simple millis-based timer
+* ofxParticle: a simple time-based particle base class
+* ofxParticleSystem: an auto manager for ofxParticles
 
 All ofBaseApp callbacks are handled down to the scene level.
 

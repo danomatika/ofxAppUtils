@@ -8,9 +8,9 @@ class ParticleScene : public ofxScene {
 
 		// takes a reference of the parent app for data access,
 		// set the scene name through the base class initializer
-		ParticleScene(testApp &app) : ofxScene((ofxApp&) app, "Particles")
-		{
+		ParticleScene(testApp &app) : ofxScene((ofxApp&) app, "Particles") {
 			alpha = 255;
+			particles.setAutoRemove(false);	// don't remove particles if dead
 		}
 
 		// scene setup
@@ -18,7 +18,7 @@ class ParticleScene : public ofxScene {
 			timer.set();
 		
 			for(unsigned int i = 0; i < 100; ++i) {
-				particles.push_back(new Particle(app));
+				particles.addParticle(new Particle(app));
 			}
 		}
 
@@ -47,8 +47,7 @@ class ParticleScene : public ofxScene {
 
 		// normal update
         void update() {
-			for(unsigned int i = 0; i < particles.size(); ++i)
-				particles[i]->update();
+			particles.update();
 		}
 
 		// called when scene is exiting
@@ -81,18 +80,14 @@ class ParticleScene : public ofxScene {
 			ofSetRectMode(OF_RECTMODE_CENTER);
 			ofSetColor(255, 0, 0, alpha);
 			
-			for(unsigned int i = 0; i < particles.size(); ++i)
-				particles[i]->draw();
+			particles.draw();
 				
 			ofDisableAlphaBlending();
 		}
 		
 		// cleanup
 		void exit() {
-			for(unsigned int i = 0; i < particles.size(); ++i) {
-				Particle* p = particles[i];
-				delete p;
-			}
+			particles.clear();
 		}
 		
 		// used for fade in and out
@@ -100,7 +95,7 @@ class ParticleScene : public ofxScene {
 		int alpha;
 
 		// particle class		
-		class Particle {
+		class Particle : public ofxParticle {
 
 			public:
 			
@@ -112,46 +107,52 @@ class ParticleScene : public ofxScene {
 				// TestApp& testApp = static_cast<TestApp&> (app);
 				//
 				Particle(ofxApp& app) : app(app) {
-					size = ofRandom(10, 40);
-					pos.set(ofRandom(size/2, app.getRenderWidth()),
-							ofRandom(size/2, app.getRenderHeight()));
+				
+					// ofxParticle is derived from ofRectangle
+					// so these variables are built in
+					width = ofRandom(10, 40);
+					height = width;
+					x = ofRandom(width/2, app.getRenderWidth());
+					y = ofRandom(height/2, app.getRenderHeight());
+					
 					vel.set(ofRandom(-5, 5), ofRandom(-5, 5));
 				}
 				
 				void update() {
-					pos += vel;
+				
+					// calc new pos
+					x += vel.x;
+					y += vel.y;
 					
 					// bounce on x axis
-					if(pos.x < size/2) {
-						pos.x = size/2;
+					if(x < width/2) {
+						x = width/2;
 						vel.x = -vel.x;
 					}
-					else if(pos.x > app.getRenderWidth()-size/2) {
-						pos.x = app.getRenderWidth()-size/2;
+					else if(x > app.getRenderWidth()-width/2) {
+						x = app.getRenderWidth()-width/2;
 						vel.x = -vel.x;
 					}
 					
 					// bounce on y axis
-					if(pos.y < size/2) {
-						pos.y = size/2;
+					if(y < height/2) {
+						y = height/2;
 						vel.y = -vel.y;
 					}
-					else if(pos.y > app.getRenderHeight()-size/2) {
-						pos.y = app.getRenderHeight()-size/2;
+					else if(y > app.getRenderHeight()-height/2) {
+						y = app.getRenderHeight()-height/2;
 						vel.y = -vel.y;
 					}
 				}
 				
 				void draw() {
-					ofRect(pos, size, size);
+					ofRect(*this);	// <- use this object as an ofRectangle
 				}
 				
-				ofVec2f pos;
 				ofVec2f vel;
-				int size;
 				ofxApp& app;
 		};
 		
-		// the particles
-		vector<Particle*> particles;
+		// particle manager to wrangle our little ones
+		ofxParticleManager particles;
 };

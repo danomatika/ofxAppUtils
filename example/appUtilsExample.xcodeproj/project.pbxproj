@@ -43,6 +43,7 @@
 		30658738145F78D30015FD7B /* ofxScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30658660145F78D20015FD7B /* ofxScene.cpp */; };
 		30658739145F78D30015FD7B /* ofxSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30658662145F78D20015FD7B /* ofxSceneManager.cpp */; };
 		3065873A145F78D30015FD7B /* ofxTransformer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30658665145F78D20015FD7B /* ofxTransformer.cpp */; };
+		30FA5FE6147D85A4005FF60F /* ofxParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30FA5FE3147D85A4005FF60F /* ofxParticle.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -174,6 +175,9 @@
 		30658664145F78D20015FD7B /* ofxTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTimer.h; sourceTree = "<group>"; };
 		30658665145F78D20015FD7B /* ofxTransformer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTransformer.cpp; sourceTree = "<group>"; };
 		30658666145F78D20015FD7B /* ofxTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTransformer.h; sourceTree = "<group>"; };
+		30FA5FE3147D85A4005FF60F /* ofxParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxParticle.cpp; sourceTree = "<group>"; };
+		30FA5FE4147D85A4005FF60F /* ofxParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxParticle.h; sourceTree = "<group>"; };
+		30FA5FE5147D85A4005FF60F /* ofxParticleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxParticleManager.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -344,6 +348,9 @@
 				3065865A145F78D20015FD7B /* ofxApp.cpp */,
 				3065865B145F78D20015FD7B /* ofxApp.h */,
 				3065865D145F78D20015FD7B /* ofxAppUtils.h */,
+				30FA5FE3147D85A4005FF60F /* ofxParticle.cpp */,
+				30FA5FE4147D85A4005FF60F /* ofxParticle.h */,
+				30FA5FE5147D85A4005FF60F /* ofxParticleManager.h */,
 				3065865E145F78D20015FD7B /* ofxQuadWarper.cpp */,
 				3065865F145F78D20015FD7B /* ofxQuadWarper.h */,
 				30658660145F78D20015FD7B /* ofxScene.cpp */,
@@ -578,6 +585,7 @@
 				300FDC851479EDE700061135 /* simpleColor.cpp in Sources */,
 				300FDC861479EDE700061135 /* simpleFileLister.cpp in Sources */,
 				300FDC871479EDE700061135 /* simpleLogger.cpp in Sources */,
+				30FA5FE6147D85A4005FF60F /* ofxParticle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,18 @@ class ofxTimer {
     	ofxTimer() : alarmMS(0), alarmstamp(0) {set();}
         ofxTimer(const unsigned int alarmTime) {setAlarm(alarmTime);}
         virtual ~ofxTimer() {}
+		
+		/// copy constructor
+		ofxTimer(const ofxTimer& from) {
+			this->ofxTimer::operator=(from);
+		}
+        /// copy operator
+        ofxTimer& operator=(const ofxTimer& from) {
+			alarmMS = from.alarmMS;
+			alarmstamp = from.alarmstamp;
+			timestamp = from.timestamp;
+			return *this;
+		}
         
         /// set the timestamp to the current time
         inline void set() {
@@ -25,6 +37,11 @@ class ofxTimer {
         	timestamp = ofGetElapsedTimeMillis();
             alarmstamp = timestamp + alarmTime;
         }
+		
+		/// set the alarm using the existing alarm time
+		inline void resetAlarm() {
+			setAlarm(alarmMS);
+		}
         
         /// has the alarm gone off?
         inline bool alarm() {

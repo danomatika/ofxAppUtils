@@ -27,6 +27,8 @@ ofxApp::ofxApp() : ofBaseApp(), _currentWarpPoint(-1) {
 	_framerateColor.set(255);	// white
 	
 	_sceneManager = NULL;
+	_bSceneManagerUpdate = true;
+	_bSceneManagerDraw = true;
 
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	_bTransformControls = false;
@@ -215,7 +217,7 @@ void ofxRunnerApp::update() {
 	controlPanel.update();
 #endif
 
-	if(app->_sceneManager)
+	if(app->_sceneManager && app->_bSceneManagerUpdate)
 		app->_sceneManager->update();
 	app->update();
 }
@@ -228,7 +230,7 @@ void ofxRunnerApp::draw() {
 	if(app->_bAutoTransforms)
 		app->pushTransforms();
 		
-		if(app->_sceneManager)
+		if(app->_sceneManager && app->_bSceneManagerDraw)
 			app->_sceneManager->draw();
 		app->draw();	// do the user callback
 		

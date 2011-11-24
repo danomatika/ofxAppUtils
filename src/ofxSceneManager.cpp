@@ -18,6 +18,7 @@ ofxSceneManager::ofxSceneManager(ofxApp& app) :
 	_bChangeNow(false), _minChangeTimeMS(100), _bSignalledAutoChange(false)
 {
 	_sceneChangeTimer.set();
+	_currentScenePtr = NULL;
 }
 
 //--------------------------------------------------------------

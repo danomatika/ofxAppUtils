@@ -132,9 +132,24 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		void drawFramerate(float x, float y);
 
 		/// set the built in SceneManager (optional)
+		///
+		/// the scene manager's update, draw, and input callback functions are
+		/// called automatically which, in turn, calls those of the current scene
+		///
 		void setSceneManager(ofxSceneManager* manager);
 		ofxSceneManager* getSceneManager();
 		void clearSceneManager();
+		
+		/// enable/disable automatic scene manager update and/or draw functions
+		/// (on by default)
+		///
+		/// disable these in order to set your own update/draw order,
+		/// simply call sceneManager.update() and/or sceneManager.draw()
+		/// manually
+		void setSceneManagerUpdate(bool update)	{_bSceneManagerUpdate = update;}
+		bool getSceneManagerUpdate()			{return _bSceneManagerUpdate;} 
+		void setSceneManagerDraw(bool draw)		{_bSceneManagerDraw = draw;}
+		bool getSceneManagerDraw()				{return _bSceneManagerDraw;} 
 		
 		/// is debug mode on? (show control panel and fps)
 		inline bool isDebug()	{return bDebug;}
@@ -163,6 +178,7 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		ofColor _framerateColor;	///< framerate text color
 		
 		ofxSceneManager* _sceneManager;	///< optional built in scene manager
+		bool _bSceneManagerUpdate, _bSceneManagerDraw;
 		
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 		bool _bTransformControls;	///< have the projection controls been added?

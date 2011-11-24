@@ -51,21 +51,28 @@ void testApp::setup() {
 	
 	// attach scene manager to this ofxApp so it's called automatically,
 	// you can also call the callbacks (update, draw, keyPressed, etc) manually
-    // if you don't set it
+    // if you don't set it .. but that's alot of work
+	//
+	// you can also turn off the auto sceneManager update and draw calls with:
+	// setSceneManagerUpdate(false);
+	// setSceneManagerDraw(false);
+	//
+	// the input callbacks in your scenes will be called if they are implemented
+	//
 	setSceneManager(&sceneManager);
 }
 
 //--------------------------------------------------------------
 void testApp::update() {
 
-	// the control panel and current scene are automatically updated
-	
+	// the control panel and current scene are automatically updated before
+	// this function
 }
 
 //--------------------------------------------------------------
 void testApp::draw() {
 
-	// the current scene is drawn before this function automatically
+	// the current scene is automatically drawn before this function
 
 	ofBackground(0, 0, 0);
 

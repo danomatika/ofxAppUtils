@@ -29,6 +29,7 @@ ofxAppUtils is a set of utilities for OpenFrameworks application development inc
 * ofxTimer: a simple millis-based timer
 * ofxParticle: a simple time-based particle base class
 * ofxParticleSystem: an auto manager for ofxParticles
+* ofxBitmapString: a stream interface for ofDrawBitmapString
 
 All ofBaseApp callbacks are handled down to the scene level.
 

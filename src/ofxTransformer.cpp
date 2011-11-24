@@ -29,6 +29,9 @@ ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
 	_renderScaleY = 1;
 	_renderAspect = 1;
 	_screenAspect = ofGetWidth()/ofGetHeight();
+	
+	_bTransformsPushed = false;
+	_bWarpPushed = false;
 }
 
 //--------------------------------------------------------------
@@ -155,3 +158,50 @@ void ofxTransformer::applyWarp() {
 	_quadWarper.apply(_renderWidth, _renderHeight);
 }
 
+//--------------------------------------------------------------
+void ofxTransformer::pushTransforms() {
+	// don't push twice
+	if(_bTransformsPushed)
+		return;
+
+	ofPushMatrix();
+
+	if(_bScale) {
+		applyRenderScale();
+	}
+
+	if(_bTranslate) {
+		applyOriginTranslate();
+	}
+	
+	if(_bWarp) {
+		applyWarp();
+		ofPushMatrix();
+		_bWarpPushed = true;
+	}
+	
+	if(_bMirrorX) {
+		applyMirrorX();
+	}
+	
+	if(_bMirrorY) {
+		applyMirrorY();
+	}
+	
+	_bTransformsPushed = true;
+}
+
+// TODO: an extra pop would occur if warp was set to false in the user
+// draw function ...
+void ofxTransformer::popTransforms() {
+	// avoid extra pops
+	if(!_bTransformsPushed)
+		return;
+		
+	if(_bWarp && _bWarpPushed == true) {
+		ofPopMatrix();
+		_bWarpPushed = false;
+	}
+	ofPopMatrix();
+	_bTransformsPushed = false;
+}

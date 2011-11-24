@@ -99,13 +99,28 @@ class ofxTransformer {
 		void setWarpPoint(unsigned int index, ofVec2f point);
 		ofVec2f getWarpPoint(unsigned int index);
 		
-		/// apply the transforms manually,
+		/// apply the transforms types manually,
 		/// these do not do a matrix push or pop
 		void applyRenderScale();
 		void applyMirrorX();
 		void applyMirrorY();
 		void applyOriginTranslate();
 		void applyWarp();
+		
+		/// manually push/pop the transforms
+		///
+		/// use this if you need to jump out of the auto transform and do
+		/// something in the default screen space
+		///
+		/// note: the transforms can only be pushed/popped in a pair, multiple
+		///		  subsequent calls to push or pop will be ignored
+		///
+		/// note: this is done automatically before draw is called, it will do 
+		///       nothing if you've disabled all of the individual transform
+		///       options (origin translation, scaling, etc)
+		///
+		void pushTransforms();
+		void popTransforms();
 				
 	protected:
 		
@@ -116,6 +131,8 @@ class ofxTransformer {
 		float _renderAspect, _screenAspect;
 		ofVec3f _origin;
 		
-		/// quad warper
 		ofxQuadWarper _quadWarper;
+		
+		bool _bTransformsPushed;	///< have the transforms been pushed?
+		bool _bWarpPushed;			///< was the warp transform pushed?
 };

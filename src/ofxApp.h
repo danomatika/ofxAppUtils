@@ -86,8 +86,10 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		///       nothing if you've disabled all of the individual transform
 		///       options (origin translation, scaling, etc)
 		///
-		void pushTransforms();
-		void popTransforms();
+		/// inherited from ofxTransformer
+		///
+		/// void pushTransforms();
+		/// void popTransforms();
 		
 		
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
@@ -151,8 +153,6 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		
 		ofxTransformer _transformer;
 		bool _bAutoTransforms;		///< apply the transforms automatically?
-		bool _bTransformsPushed;	///< have the transforms been pushed?
-		bool _bWarpPushed;			///< was the warp trasnform pushed?
 		
 		/// quad warper
 		int _currentWarpPoint;		///< currently selected projection point

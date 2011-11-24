@@ -22,8 +22,8 @@ void testApp::setup() {
 	// setup the render size (working area)
 	setRenderSize(600, 400);
 	
-	// turn on transform origin translation and scaling to screen size
-	// also apsect ratio and centering
+	// turn on transform origin translation and scaling to screen size,
+	// disable quad warping, and enable aspect ratio and centering when scaling
 	setTransforms(true, true, false, true, true);
 	
 	// the control panel is setup automatically, of course you can still change
@@ -81,7 +81,7 @@ void testApp::draw() {
 	// drop out of the auto transform space back to OF screen space
 	popTransforms();
 	
-	// draw current scene info using ofxBitmapString stream interface
+	// draw current scene info usingthe  ofxBitmapString stream interface
 	// to ofDrawBitmapString
 	ofSetColor(200);
 	ofxBitmapString(12, ofGetHeight()-8)
@@ -91,7 +91,7 @@ void testApp::draw() {
 	// go back to the auto transform space
 	pushTransforms();
 
-	// the control panel is drawn automatically after this function automatically
+	// the control panel is drawn automatically after this function
 }
 
 //--------------------------------------------------------------

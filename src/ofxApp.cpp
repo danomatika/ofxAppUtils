@@ -20,8 +20,6 @@ ofxApp::ofxApp() : ofBaseApp(), _currentWarpPoint(-1) {
 	bDebug = false;
 	
 	_bAutoTransforms = true;
-	_bTransformsPushed = false;
-	_bWarpPushed = false;
 	
 	_bEditingWarpPoints = false;
 	
@@ -92,54 +90,6 @@ void ofxApp::setWarp(bool warp) {
 	if(_bTransformControls)
 		controlPanel.setValueB("transformEnableQuadWarper", _bWarp);
 #endif
-}
-
-//--------------------------------------------------------------
-void ofxApp::pushTransforms() {
-	// don't push twice
-	if(_bTransformsPushed)
-		return;
-
-	ofPushMatrix();
-
-	if(_bScale) {
-		applyRenderScale();
-	}
-
-	if(_bTranslate) {
-		applyOriginTranslate();
-	}
-	
-	if(_bWarp) {
-		applyWarp();
-		ofPushMatrix();
-		_bWarpPushed = true;
-	}
-	
-	if(_bMirrorX) {
-		applyMirrorX();
-	}
-	
-	if(_bMirrorY) {
-		applyMirrorY();
-	}
-	
-	_bTransformsPushed = true;
-}
-
-// TODO: an extra pop would occur if warp was set to false in the user
-// draw function ...
-void ofxApp::popTransforms() {
-	// avoid extra pops
-	if(!_bTransformsPushed)
-		return;
-		
-	if(_bWarp && _bWarpPushed == true) {
-		ofPopMatrix();
-		_bWarpPushed = false;
-	}
-	ofPopMatrix();
-	_bTransformsPushed = false;
 }
 
 //--------------------------------------------------------------

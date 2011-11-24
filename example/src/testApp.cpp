@@ -46,6 +46,7 @@ void testApp::setup() {
 	ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 	
 	// start with a specific scene
+	// set now to true in order to ignore the scene fade and change now
 	sceneManager.gotoScene("Lines", true);
 	
 	// attach scene manager to this ofxApp so it's called automatically,
@@ -64,6 +65,8 @@ void testApp::update() {
 //--------------------------------------------------------------
 void testApp::draw() {
 
+	// the current scene is drawn before this function automatically
+
 	ofBackground(0, 0, 0);
 
 	// show the render area edges with a white rect
@@ -75,7 +78,20 @@ void testApp::draw() {
 		ofFill();
 	}
 	
-	// the current scene and control panel are automatically drawn
+	// drop out of the auto transform space back to OF screen space
+	popTransforms();
+	
+	// draw current scene info using ofxBitmapString stream interface
+	// to ofDrawBitmapString
+	ofSetColor(200);
+	ofxBitmapString(12, ofGetHeight()-8)
+		<< "Current Scene: #" << sceneManager.getCurrentSceneIndex()
+		<< " " << sceneManager.getCurrentSceneName() << endl;
+	
+	// go back to the auto transform space
+	pushTransforms();
+
+	// the control panel is drawn automatically after this function automatically
 }
 
 //--------------------------------------------------------------

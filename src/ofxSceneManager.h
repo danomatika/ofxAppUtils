@@ -55,9 +55,37 @@ class ofxSceneManager {
 		void noScene(bool now=false);
         void nextScene(bool now=false);
         void prevScene(bool now=false);
-        void gotoScene(unsigned int num, bool now=false);
+        void gotoScene(unsigned int index, bool now=false);
 		void gotoScene(std::string name, bool now=false);
-        
+		
+		/// scene access
+		/// returns NULL if scene not found
+		ofxScene* getScene(std::string name);
+		ofxScene* getSceneAt(unsigned int index);
+		
+		/// returns empty string "" if index out of range
+		std::string getSceneName(unsigned int index);
+		
+		/// returns -1 if index scene not found
+		int getSceneIndex(std::string name);
+		
+		/// current scene access
+		/// returns NULL if there is no current scene
+		ofxScene* getCurrentScene();
+		
+		/// returns empty string "" if there is no current scene
+        std::string getCurrentSceneName(); 
+		
+		/// returns -1 if there is no current scene
+		int getCurrentSceneIndex();
+		
+		// \section Util
+		
+		/// get/set the minimum allowed time between scene changes in ms
+		/// note: this is ignored it the change is done "now"
+		unsigned int getMinChangeTime();
+		void setMinChangeTime(unsigned int time);
+		
         /// \section Current Scene Callbacks
         
         /// these are called in the current scene
@@ -101,10 +129,10 @@ class ofxSceneManager {
 	private:
 	
 		/// handle a pending scene change
-		void handleSceneChanges();
+		void _handleSceneChanges();
 		
 		/// wrapper around iter + advance
-		ofxRunnerScene* getSceneAt(int index);
+		ofxRunnerScene* _getRunnerSceneAt(int index);
 	
 		/// valid scene index value enums
         enum {

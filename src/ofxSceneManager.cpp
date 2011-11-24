@@ -143,14 +143,14 @@ void ofxSceneManager::prevScene(bool now) {
 }
 
 //--------------------------------------------------------------
-void ofxSceneManager::gotoScene(unsigned int num, bool now) {
-	if(_scenes.empty() || num >= _scenes.size() ||
+void ofxSceneManager::gotoScene(unsigned int index, bool now) {
+	if(_scenes.empty() || index >= _scenes.size() ||
 	   _sceneChangeTimer.getDiff() < _minChangeTimeMS)
         return;
 
 	ofxScene* s;
-	if(_currentScene == (int) num) {
-		ofLogWarning("ofxSceneManager") << "ignoring duplicate goto scene change";
+	if(_currentScene == (int) index) {
+		ofLogWarning("ofxSceneManager") << "Ignoring duplicate goto scene change";
 		return;
 	}
 
@@ -163,79 +163,75 @@ void ofxSceneManager::gotoScene(unsigned int num, bool now) {
 		}
 
 		// tell new scene to enter
-		s = getSceneAt(num)->scene;
+		s = getSceneAt(index);
 		s->startEntering();
 	}
 	
-	_newScene = num;
+	_newScene = index;
 	_bChangeNow = now;
 	ofLogVerbose("ofxSceneManager") << "GOTO SCENE: " << _newScene;
 }
 
 //--------------------------------------------------------------
+// using the std::distance func to turn iter into index
 void ofxSceneManager::gotoScene(std::string name, bool now) {
 	map<std::string,ofxRunnerScene*>::iterator iter = _scenes.find(name);
 	if(iter == _scenes.end()) {
 		ofLogWarning("ofxSceneManager") << "Could not find \"" << name << "\"";
+		return;
 	}
 	gotoScene(std::distance(_scenes.begin(), iter), now);
 }
 
-/* ***** PRIVATE ***** */
-
 //--------------------------------------------------------------
-void ofxSceneManager::handleSceneChanges() {
+ofxScene* ofxSceneManager::getScene(std::string name) {
+	map<std::string,ofxRunnerScene*>::iterator iter = _scenes.find(name);
+	return iter != _scenes.end() ? iter->second->scene : NULL;
+}
 
-	// do the actual main scene change
-    if(_newScene != SCENE_NOCHANGE) {
-	
-        // ignore duplicates if not done entering
-        if(_newScene == _currentScene) {
-            if(_currentScenePtr->isEntering()) {
-                _newScene = SCENE_NOCHANGE;
-                ofLogWarning("ofxSceneManager") << "ignoring duplicate scene change, "
-                          	<< "current scene is not done entering";
-				_sceneChangeTimer.set();
-			}
-        }
+ofxScene* ofxSceneManager::getSceneAt(unsigned int index) {
+	ofxRunnerScene* rs = _getRunnerSceneAt(index);
+	return rs == NULL ? NULL : rs->scene;
+}
 
-        // only change to the new scene if the old scene is done exiting
-        if(_currentScene > SCENE_NONE) {
-            if(_bChangeNow || !_currentScenePtr->isExiting()) {
-                _currentScene = _newScene;
-                _currentRunnerScenePtr = getSceneAt(_currentScene);
-				_currentScenePtr = _currentRunnerScenePtr->scene;
-                _newScene = SCENE_NOCHANGE; // done
-                _bSignalledAutoChange = false;
-            	_sceneChangeTimer.set();
-				ofLogVerbose("ofxSceneManager") << "changed to " << _currentScene
-					<< " \"" << _currentScenePtr->getName() << "\"";
-			}
-        } else {   // no current scene to wait for
-            _currentScene = _newScene;
-			_currentRunnerScenePtr = getSceneAt(_currentScene);
-				_currentScenePtr = _currentRunnerScenePtr->scene;
-            _newScene = SCENE_NOCHANGE; // done
-            _bSignalledAutoChange = false;
-			_sceneChangeTimer.set();
-			ofLogVerbose("ofxSceneManager") << "changed to " << _currentScene
-					<< " \"" << _currentScenePtr->getName() << "\"";
-        }
-    }
+std::string ofxSceneManager::getSceneName(unsigned int index) {
+	ofxScene* s = getSceneAt(index);
+	return s == NULL ? "" : s->getName();
+}
+
+// using the std::distance func to turn iter into index
+int ofxSceneManager::getSceneIndex(std::string name) {
+	map<std::string,ofxRunnerScene*>::iterator iter = _scenes.find(name);
+	return iter != _scenes.end() ? std::distance(_scenes.begin(), iter) : -1;
 }
 
 //--------------------------------------------------------------
-ofxRunnerScene* ofxSceneManager::getSceneAt(int index) {
-	map<std::string,ofxRunnerScene*>::iterator iter = _scenes.begin();
-	std::advance(iter, index);
-	return (*iter).second;
+ofxScene* ofxSceneManager::getCurrentScene() {
+	return _currentScenePtr;
+}
+
+std::string ofxSceneManager::ofxSceneManager::getCurrentSceneName() {
+	return _currentScenePtr == NULL ? "" : _currentScenePtr->getName();
+}
+
+int ofxSceneManager::getCurrentSceneIndex() {
+	return _currentScene;
+}
+
+//--------------------------------------------------------------
+unsigned int ofxSceneManager::getMinChangeTime() {
+	return _minChangeTimeMS;
+}
+
+void ofxSceneManager::setMinChangeTime(unsigned int time) {
+	_minChangeTimeMS = time;
 }
 
 // need to call ofxRunnerScene::update()
 //--------------------------------------------------------------
 void ofxSceneManager::update() {
 
-	handleSceneChanges();
+	_handleSceneChanges();
 
 	// update the current main scene
 	if(!_scenes.empty() && _currentScene >= 0) {
@@ -371,4 +367,57 @@ void ofxSceneManager::audioRequested(float * output, int bufferSize, int nChanne
     if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels);
 	}
+}
+
+/* ***** PRIVATE ***** */
+
+//--------------------------------------------------------------
+void ofxSceneManager::_handleSceneChanges() {
+
+	// do the actual main scene change
+    if(_newScene != SCENE_NOCHANGE) {
+	
+        // ignore duplicates if not done entering
+        if(_newScene == _currentScene) {
+            if(_currentScenePtr->isEntering()) {
+                _newScene = SCENE_NOCHANGE;
+                ofLogWarning("ofxSceneManager") << "Ignoring duplicate scene change, "
+                          	<< "current scene is not done entering";
+				_sceneChangeTimer.set();
+			}
+        }
+
+        // only change to the new scene if the old scene is done exiting
+        if(_currentScene > SCENE_NONE) {
+            if(_bChangeNow || !_currentScenePtr->isExiting()) {
+                _currentScene = _newScene;
+                _currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
+				_currentScenePtr = _currentRunnerScenePtr->scene;
+                _newScene = SCENE_NOCHANGE; // done
+                _bSignalledAutoChange = false;
+            	_sceneChangeTimer.set();
+				ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
+					<< " \"" << _currentScenePtr->getName() << "\"";
+			}
+        } else {   // no current scene to wait for
+            _currentScene = _newScene;
+			_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
+				_currentScenePtr = _currentRunnerScenePtr->scene;
+            _newScene = SCENE_NOCHANGE; // done
+            _bSignalledAutoChange = false;
+			_sceneChangeTimer.set();
+			ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
+					<< " \"" << _currentScenePtr->getName() << "\"";
+        }
+    }
+}
+
+//--------------------------------------------------------------
+ofxRunnerScene* ofxSceneManager::_getRunnerSceneAt(int index) {
+	if(index < _scenes.size()) {
+		map<std::string,ofxRunnerScene*>::iterator iter = _scenes.begin();
+		std::advance(iter, index);
+		return (*iter).second;
+	}
+	return NULL;
 }

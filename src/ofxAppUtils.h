@@ -15,6 +15,7 @@
 #include "ofxSceneManager.h"
 #include "ofxTimer.h"
 #include "ofxParticleManager.h"
+#include "ofxBitmapString.h"
 
 /// replace ofRunApp with this in main.cpp ...
 inline void ofRunAppWithAppUtils(ofxApp* app) {

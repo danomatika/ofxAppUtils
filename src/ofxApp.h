@@ -57,6 +57,39 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		void setEditWarp(bool edit) {_bEditingWarpPoints = edit;}
 		bool getEditWarp()			{return _bEditingWarpPoints;}
 		
+		/// enable/disable automatically applying the transforms
+		///
+		/// enable/disable individual transforms using setTransforms or the
+		/// specific ofxTransform setter functions (setScale, setOriginTranslate,
+		/// etc)
+		///
+		/// this is done automatically before the scene and app draw functions
+		/// are called, see push/popTransforms if you need to drop back to
+		/// screen space
+		///
+		/// warning: the quad warper requires an extra matrix push/pop, do not
+		///          change the setWarp within your draw function as an extra
+		///          push or pop may ocurr which could muck up your transforms
+		///
+		void setAutoTransforms(bool apply)	{_bAutoTransforms = apply;}
+		bool getAutoTransforms()			{return _bAutoTransforms;}
+		
+		/// manually push/pop the transforms
+		///
+		/// use this if you need to jump out of the auto transform and do
+		/// something in the default screen space
+		///
+		/// note: the transforms can only be pushed/popped in a pair, multiple
+		///		  subsequent calls to push or pop will be ignored
+		///
+		/// note: this is done automatically before draw is called, it will do 
+		///       nothing if you've disabled all of the individual transform
+		///       options (origin translation, scaling, etc)
+		///
+		void pushTransforms();
+		void popTransforms();
+		
+		
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 		///
 		/// define OFX_APP_UTILS_NO_CONTROL_PANEL to disable the control panel
@@ -117,6 +150,9 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 	private:
 		
 		ofxTransformer _transformer;
+		bool _bAutoTransforms;		///< apply the transforms automatically?
+		bool _bTransformsPushed;	///< have the transforms been pushed?
+		bool _bWarpPushed;			///< was the warp trasnform pushed?
 		
 		/// quad warper
 		int _currentWarpPoint;		///< currently selected projection point

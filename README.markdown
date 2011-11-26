@@ -75,6 +75,23 @@ For Xcode:
 	* ofxControlPanel
 	* ofxXmlSettings
 
+There are two changes you need to make to extend your app with the ofApputils ofxApp class:
+
+* your base app needs to inherit from ofxApp in your testApp.h
+<pre>
+class testApp : public ofBaseApp { 
+// becomes
+class testApp : public ofxApp { 
+</pre>
+* you need to run your app with the app utils in main.cpp
+<pre>
+ofRunApp(new testApp());
+// becomes
+ofRunAppWithAppUtils(new testApp());
+</pre>
+
+That's it. Check the example testApp::setup() for more info on startup settings.
+
 DEVELOPING
 ----------
 

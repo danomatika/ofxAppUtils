@@ -28,7 +28,7 @@
 ///     - 'q' key to toggle to quad warper
 ///     - 'f' to toggle fullscreen mode
 ///
-class testApp : public ofxApp {
+class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 	
 	public:
 	

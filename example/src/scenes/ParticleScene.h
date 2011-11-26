@@ -37,7 +37,7 @@ class ParticleScene : public ofxScene {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
-				timer.setAlarm(5000);
+				timer.setAlarm(2000);
 				alpha = 0;
 				ofLogNotice() << "ParticleScene: update enter";
 			}
@@ -65,7 +65,7 @@ class ParticleScene : public ofxScene {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
-				timer.setAlarm(5000);
+				timer.setAlarm(2000);
 				alpha = 0;
 				ofLogNotice() << "ParticleScene: update exit";
 			}

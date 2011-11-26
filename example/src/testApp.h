@@ -18,10 +18,13 @@
 /// make sure you check out main.cpp for how to run this app with app utils!
 ///
 /// controls:
-///     - L & R arrows to change scenes (note: wait for transition)
-///     - 'd' key to toggle debug mode and enable control panel
+///     - L & R arrows to change scenes (note: wait for 2s transition)
+///     - 'd' key to toggle debug mode and enable control panel & warp editor
 ///     - 'm' key to mirror the render area on the x axis
 ///     - 'n' key to mirror the render area on the y axis
+///		- 'a' key to enable aspect ratio scaling
+///		- 'c' key to enable auto centering, only applied if apsect ratio scaling
+///           is on and the quad warper is off
 ///     - 'q' key to toggle to quad warper
 ///     - 'f' to toggle fullscreen mode
 ///

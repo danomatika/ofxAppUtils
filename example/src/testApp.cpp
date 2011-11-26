@@ -15,17 +15,17 @@
 //--------------------------------------------------------------
 void testApp::setup() {
 
-	// setup for nice jaggy-less rendering (if your machine/drivers dont suck)
+	// setup for nice jaggy-less rendering
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 
 	// setup the render size (working area)
 	setRenderSize(600, 400);
-	
+
 	// turn on transform origin translation and scaling to screen size,
 	// disable quad warping, and enable aspect ratio and centering when scaling
 	setTransforms(true, true, false, true, true);
-	
+
 	// the control panel is setup automatically, of course you can still change
 	// all the settings manually here
 
@@ -34,9 +34,15 @@ void testApp::setup() {
     // loads and saves control panel settings to "controlPanelSettings.xml"
     // in the data folder 
 	addTransformControls();
+	
+	// load saved control panel settings
+	// loads and saves to "controlPanelSettings.xml" in the data folder
+	// or use your own filename
+	loadControlSettings();
     
     // load saved quad warper settings
     // loads and saves to "quadWarper.xml" in the data folder
+	// or use your own filename
     loadWarpSettings();
 	
 	// load scenes
@@ -51,7 +57,7 @@ void testApp::setup() {
 	
 	// attach scene manager to this ofxApp so it's called automatically,
 	// you can also call the callbacks (update, draw, keyPressed, etc) manually
-    // if you don't set it .. but that's alot of work
+    // if you don't set it
 	//
 	// you can also turn off the auto sceneManager update and draw calls with:
 	// setSceneManagerUpdate(false);
@@ -88,7 +94,7 @@ void testApp::draw() {
 	// drop out of the auto transform space back to OF screen space
 	popTransforms();
 	
-	// draw current scene info usingthe  ofxBitmapString stream interface
+	// draw current scene info using the ofxBitmapString stream interface
 	// to ofDrawBitmapString
 	ofSetColor(200);
 	ofxBitmapString(12, ofGetHeight()-8)
@@ -96,9 +102,13 @@ void testApp::draw() {
 		<< " " << sceneManager.getCurrentSceneName() << endl;
 	
 	// go back to the auto transform space
+	//
+	// this is actually done automatically if the transforms were popped
+	// before the control panel is drawn, but included here for completeness
 	pushTransforms();
 
-	// the control panel is drawn automatically after this function
+	// the control panel and warp editor are drawn automatically after this
+	// function
 }
 
 //--------------------------------------------------------------
@@ -108,6 +118,14 @@ void testApp::keyPressed(int key) {
 	
 		case 'd':
 			bDebug = !bDebug;
+			break;
+			
+		case 'a':
+			setAspect(!getAspect());
+			break;
+			
+		case 'c':
+			setCentering(!getCentering());
 			break;
 			
 		case 'm':

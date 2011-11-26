@@ -122,12 +122,12 @@ void ofxTransformer::applyRenderScale() {
 		if(_bHandleAspect && _renderAspect != _screenAspect) {
 			if(_renderAspect > _screenAspect) {	// letter box
 				ofScale(_renderScaleX, _renderScaleX);
-				if(_bCenter)
+				if(_bCenter && !_bWarp)
 					ofTranslate(0, (_screenHeight-(_renderScaleX*_renderHeight))/4);
 			}
 			else { // pillar box
 				ofScale(_renderScaleY, _renderScaleY);
-				if(_bCenter)
+				if(_bCenter && !_bWarp)
 					ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/4, 0);
 			}
 		}
@@ -159,7 +159,7 @@ void ofxTransformer::applyWarp() {
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::pushTransforms() {
+void ofxTransformer::pushTransforms(bool forceWarp) {
 	// don't push twice
 	if(_bTransformsPushed)
 		return;
@@ -174,7 +174,7 @@ void ofxTransformer::pushTransforms() {
 		applyOriginTranslate();
 	}
 	
-	if(_bWarp) {
+	if(_bWarp || forceWarp) {
 		applyWarp();
 		ofPushMatrix();
 		_bWarpPushed = true;

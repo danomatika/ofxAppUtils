@@ -43,7 +43,7 @@ class ofxTransformer {
 		/// set warp if you want to enable to quad warper
 		/// set handleAspect to true if you want automatic letter/pillar boxing
 		///
-		/// note: all of these options can also be enabled one by one
+		/// note: all of these options can also be enabled individually
 		///
 		void setTransforms(bool translate, bool scale, bool warp=false,
 							bool handleAspect=false, bool center=false);
@@ -62,8 +62,10 @@ class ofxTransformer {
 		bool getAspect()					{return _bHandleAspect;}
 		
 		/// center within the parent screen area?
-		/// only performed if getApsect() = true
+		/// only performed if getApsect() = true & the quad warper is disabled
+		///
 		/// note: does an origin translation when on
+		///
 		virtual void setCentering(bool center)	{_bCenter = center;}
 		bool getCentering()						{return _bCenter;}
 		
@@ -119,7 +121,9 @@ class ofxTransformer {
 		///       nothing if you've disabled all of the individual transform
 		///       options (origin translation, scaling, etc)
 		///
-		void pushTransforms();
+		/// setforceWarp to true to ignore the setWarp setting (needed internally)
+		///
+		void pushTransforms(bool forceWarp=false);
 		void popTransforms();
 				
 	protected:

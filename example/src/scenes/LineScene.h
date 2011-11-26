@@ -35,7 +35,7 @@ class LineScene : public ofxScene {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
-				timer.setAlarm(5000);
+				timer.setAlarm(2000);
 				alpha = 0;
 				ofLogNotice() << "LineScene: update enter";
 			}
@@ -65,7 +65,7 @@ class LineScene : public ofxScene {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
-				timer.setAlarm(5000);
+				timer.setAlarm(2000);
 				alpha = 0;
 				ofLogNotice() << "LineScene: update exit";
 			}

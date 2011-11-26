@@ -74,7 +74,7 @@ void ofxApp::setAspect(bool aspect) {
 	_bHandleAspect = aspect;
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(_bTransformControls)
-		controlPanel.setValueB("keepAspect", _bHandleAspect);
+		controlPanel.setValueB("transformAspect", _bHandleAspect);
 #endif
 }
 		
@@ -82,7 +82,7 @@ void ofxApp::setCentering(bool center) {
 	_bCenter = center;
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	if(_bTransformControls)
-		controlPanel.setValueB("centerRender", _bCenter);
+		controlPanel.setValueB("transformCenter", _bCenter);
 #endif
 }
 
@@ -112,14 +112,22 @@ void ofxApp::addTransformControls(int panelNum, int panelCol) {
 							 -getRenderWidth(), getRenderWidth(),
 							 -getRenderHeight(), getRenderHeight(), false);
 	controlPanel.addSlider("z", "transformZ", 0, -1000, 200, false);
-	controlPanel.addToggle("keep aspect", "keepAspect", false);
-	controlPanel.addToggle("center rendering", "centerRender", false);
+	controlPanel.addToggle("keep aspect", "transformAspect", false);
+	controlPanel.addToggle("center rendering", "transformCenter", false);
 	controlPanel.addToggle("mirror x", "transformMirrorX", false);
 	controlPanel.addToggle("mirror y", "transformMirrorY", false);
 	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", false);
 	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
 	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
 	_bTransformControls = true;
+}
+
+void ofxApp::loadControlSettings(const string xmlFile) {
+	controlPanel.loadSettings(ofToDataPath(xmlFile));
+}
+
+void ofxApp::saveControlSettings(const string xmlFile) {
+	controlPanel.saveSettings(ofToDataPath(xmlFile));
 }
 
 void ofxApp::setDrawControlPanel(bool draw) {
@@ -191,8 +199,8 @@ void ofxRunnerApp::update() {
 						 controlPanel.getValueF("transformZ"));             // z
 		
 		// keep aspect?
-		app->_bHandleAspect = controlPanel.getValueB("keepAspect");
-		app->_bCenter = controlPanel.getValueB("centerRender");
+		app->_bHandleAspect = controlPanel.getValueB("transformAspect");
+		app->_bCenter = controlPanel.getValueB("transformCenter");
 		
 		// mirror x/y?
 		app->_bMirrorX = controlPanel.getValueB("transformMirrorX");
@@ -228,30 +236,42 @@ void ofxRunnerApp::update() {
 void ofxRunnerApp::draw() {
 
 	if(app->_bAutoTransforms)
-		app->pushTransforms();
+		app->pushTransforms(app->_bEditingWarpPoints);
 		
-		if(app->_sceneManager && app->_bSceneManagerDraw)
-			app->_sceneManager->draw();
-		app->draw();	// do the user callback
+	if(app->_sceneManager && app->_bSceneManagerDraw)
+		app->_sceneManager->draw();
 		
-		if(app->_bWarp) {
-			
-			//if(app->_bAutoTransforms && app->_bWarpPushed) {
-			if(app->_bWarpPushed) {
-				ofPopMatrix();
-				app->_bWarpPushed = false;
-			}
-			
-			if(app->_bEditingWarpPoints && app->bDebug) {
-				// draw projection warping bounding box
-				ofNoFill();
-				ofSetRectMode(OF_RECTMODE_CORNER);
-				ofSetHexColor(0x00FF00);
-				ofRect(0.35, 0.35, app->_renderWidth-1.35, app->_renderHeight-1.35);
-				ofSetRectMode(OF_RECTMODE_CORNER);
-				ofFill();
-			}
+	// do the user callback
+	app->draw();		
+	
+	if(app->_bWarpPushed) {
+		ofPopMatrix();
+		app->_bWarpPushed = false;
+	}
+	
+	// draw the quad warper editor
+	if(app->_bEditingWarpPoints && app->bDebug) {
+	
+		// push transforms if needed (for manual mode)
+		bool forceTransform = !app->_bTransformsPushed;
+		if(forceTransform) {
+			app->pushTransforms(true);
+			ofPopMatrix();
 		}
+		
+		// draw projection warping bounding box
+		ofNoFill();
+		ofSetRectMode(OF_RECTMODE_CORNER);
+		ofSetHexColor(0x00FF00);
+		ofRect(0.35, 0.35, app->_renderWidth-1.35, app->_renderHeight-1.35);
+		ofSetRectMode(OF_RECTMODE_CORNER);
+		ofFill();
+		
+		if(forceTransform) {
+			ofPopMatrix();
+			app->_bTransformsPushed = false;
+		}
+	}
 	
 	if(app->_bAutoTransforms && app->_bTransformsPushed) {
 		ofPopMatrix();
@@ -260,6 +280,8 @@ void ofxRunnerApp::draw() {
 	
 	if(app->bDebug) {
         stringstream text;
+		
+		// draw the quad warper editor
 		if(app->_bEditingWarpPoints) {
 		
 			ofSetHexColor(0x00FF00);
@@ -335,7 +357,7 @@ void ofxRunnerApp::mouseDragged(int x, int y, int button) {
 	app->mouseDragged(x, y, button);
 	
 	if(app->bDebug) {
-		if(app->_bWarp && app->_bEditingWarpPoints) {
+		if(app->_bEditingWarpPoints) {
 			if(app->_currentWarpPoint >= 0) {
 				app->_quadWarper.setPoint(app->_currentWarpPoint,
 					ofVec2f((float)x/ofGetWidth(), (float)y/ofGetHeight()));
@@ -356,7 +378,7 @@ void ofxRunnerApp::mousePressed(int x, int y, int button) {
 	app->mousePressed(x, y, button);
 	
 	if(app->bDebug) {
-		if(app->_bWarp && app->_bEditingWarpPoints) {
+		if(app->_bEditingWarpPoints) {
 		
 			// check if middle of the screen was pressed to exit edit mode
 			if((x > ofGetWidth()/2  - 50 && (x < ofGetWidth()/2  + 50) &&

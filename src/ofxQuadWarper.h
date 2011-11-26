@@ -23,7 +23,8 @@ class ofxQuadWarper {
 		ofxQuadWarper();
 		virtual ~ofxQuadWarper() {}
 		
-		// apply the gl matrix transform
+		/// apply the gl matrix transform
+		/// width and height is the size of the screen/render area
 		void apply(float width, float height);
 		
 		/// set/get the warp points
@@ -31,10 +32,10 @@ class ofxQuadWarper {
 		void setPoint(unsigned int index, ofVec2f point);
 		ofVec2f getPoint(unsigned int index);
 		
-		// reset the quad
+		/// reset the quad to screen size
 		void reset();
 		
-		// load/save the quad coords from/to an xml file
+		/// load/save the quad coords from/to an xml file
 		bool loadSettings(const string xmlFile="quadWarper.xml");
 		void saveSettings(const string xmlFile="quadWarper.xml");
 		

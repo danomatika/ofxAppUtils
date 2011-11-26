@@ -113,6 +113,10 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		///
 		void addTransformControls(int panelNum=-1, int panelCol=0);
 		
+		/// load and save the control panel settings
+		void loadControlSettings(const string xmlFile="controlPanelSettings.xml");
+		void saveControlSettings(const string xmlFile="controlPanelSettings.xml");
+		
 		/// draw the control panel automatically in debug mode? (on by default)
 		void setDrawControlPanel(bool draw);
 		bool getDrawControlPanel();
@@ -151,7 +155,7 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		void setSceneManagerDraw(bool draw)		{_bSceneManagerDraw = draw;}
 		bool getSceneManagerDraw()				{return _bSceneManagerDraw;} 
 		
-		/// is debug mode on? (show control panel and fps)
+		/// is debug mode on? (show control panel and fps, allow editing of warper)
 		inline bool isDebug()	{return bDebug;}
         
         friend class ofxRunnerApp;  ///< used to wrap this app

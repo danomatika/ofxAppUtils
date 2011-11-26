@@ -12,7 +12,7 @@
     <val_0>0.000000</val_0>
 </transformMirrorY>
 <transformEnableQuadWarper>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </transformEnableQuadWarper>
 <transformEditQuadWarper>
     <val_0>0.000000</val_0>
@@ -20,3 +20,9 @@
 <transformSaveQuadWarper>
     <val_0>0.000000</val_0>
 </transformSaveQuadWarper>
+<transformAspect>
+    <val_0>1.000000</val_0>
+</transformAspect>
+<transformCenter>
+    <val_0>1.000000</val_0>
+</transformCenter>

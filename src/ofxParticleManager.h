@@ -38,9 +38,11 @@ class ofxParticleManager {
         void clear() {
             std::vector<ofxParticle*> ::iterator iter;
             for(iter = particleList.begin(); iter != particleList.end(); ++iter) {
-                if((*iter) != NULL)
+                if((*iter) != NULL) {
                     delete (*iter);
+                }
             }
+            particleList.clear();
         }
 
         /// automatically remove (delete) dead particles?

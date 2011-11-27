@@ -23,6 +23,8 @@ class ofxParticle : public ofRectangle
 
         ofxParticle();
         ofxParticle(float x, float y, float w, float h);
+		ofxParticle(ofPoint pos, float w, float h);
+		ofxParticle(ofRectangle rect);
         virtual ~ofxParticle();
 
         /// copy constructor
@@ -34,7 +36,12 @@ class ofxParticle : public ofRectangle
 
         /// \section Main
 
-        /// update the particles age, ignores time between frames longer then the frame timeout
+        /// update the particles age, ignores time between frames longer then
+        /// the frame timeout
+        ///
+        /// note: make sure to call this in your update() or the age will not
+        ///       change
+        ///
         void updateAge();
 
         /// do the update calculations
@@ -49,17 +56,17 @@ class ofxParticle : public ofRectangle
         /// bring this particle to life
         void reset() {bAlive = true; lifeTimer.set();}
 
-        /// get the age normalized between 0 and 1: 0 is birth, 1 is death
-        double getAge();
-
         /// get the age in ms
-        double getAgeMS() {return age;}
+        double getAge() {return age;}
 
-        /// get the remaing life normalized between 0 and 1, 1 being death
-        double getRemaingLife();
+        /// get the age normalized between 0 and 1: 0 is birth, 1 is death
+        double getAgeN();
 
         /// get the remaining life in ms
-        double getRemaingLifeMS() {return lifespan - age;}
+        double getRemainingLife() {return lifespan - age;}
+
+        /// get the remaing life normalized between 0 and 1, 1 being death
+        double getRemainingLifeN();
 
         /// is this particle alive?
         inline bool isAlive() {return bAlive;}
@@ -74,8 +81,8 @@ class ofxParticle : public ofRectangle
         inline unsigned int getLifespan()           {return lifespan;}
         inline void setLifespan(unsigned int span)  {lifespan = span;}
 
-        /// set how long to wait between frames (ms) before throwing out a time calculation
-        /// default is 500 ms
+        /// set how long to wait between frames (ms) before throwing out a time
+        /// calculation, default is 500 ms
         static void setFrameTimeout(unsigned int timeout) {_frameTimeout = timeout;}
         static unsigned int getFrameTimeout() {return _frameTimeout;}
 

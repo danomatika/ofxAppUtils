@@ -13,13 +13,25 @@
 unsigned int ofxParticle::_frameTimeout = 500;
 
 //--------------------------------------------------------------
-ofxParticle::ofxParticle() : ofRectangle(), bAlive(false), lifespan(5000), age(0) {
+ofxParticle::ofxParticle() : ofRectangle(), bAlive(false), lifespan(0), age(0) {
     reset();
 }
 
 //--------------------------------------------------------------
 ofxParticle::ofxParticle(float x, float y, float w, float h) :
     ofRectangle(x, y, w, h), bAlive(false), lifespan(0), age(0) {
+    reset();
+}
+
+//--------------------------------------------------------------
+ofxParticle::ofxParticle(ofPoint pos, float w, float h) : 
+    ofRectangle(pos.x, pos.y, w, h), bAlive(false), lifespan(0), age(0) {
+    reset();
+}
+		
+//--------------------------------------------------------------
+ofxParticle::ofxParticle(ofRectangle rect) : 
+    ofRectangle(rect), bAlive(false), lifespan(0), age(0) {
     reset();
 }
 
@@ -58,13 +70,13 @@ void ofxParticle::updateAge() {
 }
 
 //--------------------------------------------------------------
-double ofxParticle::getAge() {
+double ofxParticle::getAgeN() {
     if(lifespan == 0)
         return 0;
     return age/lifespan;
 }
 
 //--------------------------------------------------------------
-double ofxParticle::getRemaingLife() {
-    return ((getAge()*-1.0) + 1.0);
+double ofxParticle::getRemainingLifeN() {
+    return ((getAgeN()*-1.0) + 1.0);
 }

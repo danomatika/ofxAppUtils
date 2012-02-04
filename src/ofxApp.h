@@ -1,6 +1,3 @@
-#pragma once
-
-#include <ofMain.h>
 /*
  * Copyright (c) 2011 Dan Wilcox <danomatika@gmail.com>
  *
@@ -11,6 +8,10 @@
  * See https://github.com/danomatika/ofxAppUtils for documentation
  *
  */
+#pragma once
+
+#include <ofMain.h>
+
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	#include "ofxXmlSettings.h"
 	#include "ofxControlPanel.h"

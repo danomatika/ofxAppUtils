@@ -86,7 +86,7 @@ class ofxScene : public ofBaseApp {
         inline void runToggle()     {_bRunning = !_bRunning;}
 
         /// get/set the scenes name
-        inline void setName(std::string& name)   {_name = name;}
+        inline void setName(std::string name)   {_name = name;}
         inline std::string getName()            {return _name;}
 
         /// is the scene currently running?

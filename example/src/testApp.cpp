@@ -18,6 +18,7 @@ void testApp::setup() {
 	// setup for nice jaggy-less rendering
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
+	ofBackground(0, 0, 0);
 
 	// setup the render size (working area)
 	setRenderSize(600, 400);
@@ -79,8 +80,6 @@ void testApp::update() {
 void testApp::draw() {
 
 	// the current scene is automatically drawn before this function
-
-	ofBackground(0, 0, 0);
 
 	// show the render area edges with a white rect
 	if(bDebug) {

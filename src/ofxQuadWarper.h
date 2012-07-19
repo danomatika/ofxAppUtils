@@ -35,9 +35,13 @@ class ofxQuadWarper {
 		/// reset the quad to screen size
 		void reset();
 		
+#ifndef OFX_APP_UTILS_NO_XML
+		
 		/// load/save the quad coords from/to an xml file
 		bool loadSettings(const string xmlFile="quadWarper.xml");
 		void saveSettings(const string xmlFile="quadWarper.xml");
+
+#endif
 		
 	private:
 		

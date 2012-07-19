@@ -99,6 +99,8 @@ void ofxTransformer::resetWarp() {
 	_quadWarper.reset();
 }
 
+#ifndef OFX_APP_UTILS_NO_XML
+
 bool ofxTransformer::loadWarpSettings(const string xmlFile) {
 	return _quadWarper.loadSettings(xmlFile);
 }
@@ -106,6 +108,8 @@ bool ofxTransformer::loadWarpSettings(const string xmlFile) {
 void ofxTransformer::saveWarpSettings(const string xmlFile) {
 	return _quadWarper.saveSettings(xmlFile);
 }
+
+#endif
 
 //--------------------------------------------------------------
 void ofxTransformer::setWarpPoint(unsigned int index, ofVec2f point) {

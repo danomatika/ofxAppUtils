@@ -45,19 +45,24 @@ git clone git://github.com/danomatika/ofxAppUtils.git
 
 The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
-You will also need the following addon dependencies:
+You will may also need the following addon dependencies:
 
-* ofxXmlSettings: included with OpenFrameworks
-* ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel (optional)
+* ofxXmlSettings: included with OpenFrameworks (optional)
+* ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel (optional, also requires ofxXmlSettings)
 
-To disable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_NO_CONTROL_PANEL` in your CFLAGS. For Xcode, see the Project.xcconfig file.
+To disable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_NO_CONTROL_PANEL` in your CFLAGS.
+To disable the xml transform load/save (and ofxXmlSettings dependency), define `OFX_APP_UTILS_NO_XML` in your CFLAGS.
+
+For Xcode, see the example project Project.xcconfig file on how to set the defines.
 
 Running the Example Project
 -------------------------------
 
 If you're using OS X, open the Xcode project in ofxAppUtils/example/ and hit "Build and Run".
 
-The addon should work fine in Windows and Linux, although there are no example build files yet.
+The addon should work fine in iOS, Windows, and Linux, although there are no example build files yet.
+
+On iOS you will probably want to disable the control panel via the `OFX_APP_UTILS_NO_CONTROL_PANEL` define.
 
 Adding ofxAppUtils to an Existing Project
 ---------------------------------------

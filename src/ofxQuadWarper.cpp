@@ -10,7 +10,9 @@
  */
 #include "ofxQuadWarper.h"
 
-#include <ofxXmlSettings.h>
+#ifndef OFX_APP_UTILS_NO_XML
+	#include <ofxXmlSettings.h>
+#endif
 #include "matrix_funcs.h"
 
 /// QUAD WARPER
@@ -98,6 +100,8 @@ void ofxQuadWarper::reset() {
 }
 
 //--------------------------------------------------------------
+#ifndef OFX_APP_UTILS_NO_XML
+
 bool ofxQuadWarper::loadSettings(const string xmlFile) {
 	
 	ofxXmlSettings xml;
@@ -152,3 +156,5 @@ void ofxQuadWarper::saveSettings(const string xmlFile) {
 	
 	xml.saveFile(xmlFile);
 }
+
+#endif

@@ -1,10 +1,3 @@
-#pragma once
-
-#include <ofMain.h>
-
-#include "ofxApp.h"
-#include "ofxTimer.h"
-
 /*
  * Copyright (c) 2011 Dan Wilcox <danomatika@gmail.com>
  *
@@ -15,6 +8,13 @@
  * See https://github.com/danomatika/ofxAppUtils for documentation
  *
  */
+#pragma once
+
+#include <ofMain.h>
+
+#include "ofxApp.h"
+#include "ofxTimer.h"
+
 class ofxRunnerScene;
 
 /**

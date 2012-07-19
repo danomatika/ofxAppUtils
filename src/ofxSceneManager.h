@@ -12,6 +12,8 @@
 
 #include <ofMain.h>
 
+#include <map>
+
 #include "ofxApp.h"
 #include "ofxScene.h"
 #include "ofxTimer.h"

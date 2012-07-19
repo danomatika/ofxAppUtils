@@ -8,8 +8,7 @@
  * See https://github.com/danomatika/ofxAppUtils for documentation
  *
  */
-#ifndef _TEST_APP
-#define _TEST_APP
+#pragma once
 
 #include "ofMain.h"
 
@@ -49,5 +48,3 @@ class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 		// handles the scenes
 		ofxSceneManager sceneManager;
 };
-
-#endif

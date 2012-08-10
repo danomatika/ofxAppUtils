@@ -25,12 +25,14 @@ class ofxScene : public ofBaseApp {
 	
 	public:
 		
-		ofxScene(ofxApp& app, std::string name) :
+		/// the singleSetup bool controls whether the scene's setup function
+		/// is called only once or each time a scene change is made
+		ofxScene(ofxApp& app, std::string name, bool singleSetup=true) :
 			ofBaseApp(), app(app), mouseX(app.mouseX), mouseY(app.mouseY), 
 			_name(name), _bSetup(false), _bRunning(true),
             _bEntering(false), _bEnteringFirst(false),
 			_bExiting(false), _bExitingFirst(false),
-            _bDone(false) {}
+            _bDone(false), _bSingleSetup(singleSetup) {}
 		virtual ~ofxScene() {}
 		
         /// \section Main
@@ -93,7 +95,7 @@ class ofxScene : public ofBaseApp {
         inline bool isRunning() {return _bRunning;}
 
         /// is the scene already setup?
-        inline bool isSetup()   {return _bSetup;}
+        inline bool isSetup()	{return _bSetup;}
         
         friend class ofxRunnerScene;  ///< used to wrap this app
 
@@ -109,7 +111,7 @@ class ofxScene : public ofBaseApp {
 	
 		std::string _name;		///< the name of this scene
 		bool _bSetup, _bRunning, _bEntering, _bEnteringFirst,
-			 _bExiting, _bExitingFirst, _bDone;
+			 _bExiting, _bExitingFirst, _bDone, _bSingleSetup;
 };
 
 /// wrapper used to handle ofxScene magic behind the scenes ...
@@ -130,6 +132,7 @@ class ofxRunnerScene : public ofBaseApp {
         void setup();
 		void update();
 		void draw();
+		void exit();
         
         ofxScene* scene;
 };

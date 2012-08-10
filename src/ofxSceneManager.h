@@ -41,7 +41,7 @@ class ofxSceneManager {
 		void clear();
 		
 		/// setup current scenes
-		/// set loadAll to true to laod all scenes at once
+		/// set loadAll to true to load all scenes at once
         ///
         /// unloaded scenes are automatically loaded on their first update
 		void setup(bool loadAll=true);

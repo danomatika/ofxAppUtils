@@ -29,8 +29,8 @@ void ofxSceneManager::add(ofxScene* scene) {
 	}
 
 	if(_scenes.find(scene->getName()) != _scenes.end()) {
-		ofLogWarning("ofxSceneManager") << "Scene " << scene->getName()
-									 << " already added, only unique names allowed";
+		ofLogWarning("ofxSceneManager") << "Scene \"" << scene->getName()
+									 << "\" already added, only unique names allowed";
 		return;
 	}
 	
@@ -391,7 +391,8 @@ void ofxSceneManager::_handleSceneChanges() {
         // only change to the new scene if the old scene is done exiting
         if(_currentScene > SCENE_NONE) {
             if(_bChangeNow || !_currentScenePtr->isExiting()) {
-                _currentScene = _newScene;
+                _currentRunnerScenePtr->exit();
+				_currentScene = _newScene;
                 _currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
 				_currentScenePtr = _currentRunnerScenePtr->scene;
                 _newScene = SCENE_NOCHANGE; // done
@@ -401,7 +402,7 @@ void ofxSceneManager::_handleSceneChanges() {
 					<< " \"" << _currentScenePtr->getName() << "\"";
 			}
         } else {   // no current scene to wait for
-            _currentScene = _newScene;
+			_currentScene = _newScene;
 			_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
 				_currentScenePtr = _currentRunnerScenePtr->scene;
             _newScene = SCENE_NOCHANGE; // done

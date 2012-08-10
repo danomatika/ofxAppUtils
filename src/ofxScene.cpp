@@ -14,7 +14,7 @@
 
 //--------------------------------------------------------------
 void ofxRunnerScene::setup() {
-	if(!scene->_bSetup){
+	if(!scene->_bSetup) {
 		scene->setup();
 		scene->_bSetup = true;
 	}
@@ -43,4 +43,12 @@ void ofxRunnerScene::draw() {
 	if(!scene->_bSetup)
 		return;
 	scene->draw();			
+}
+
+//--------------------------------------------------------------
+void ofxRunnerScene::exit() {
+	scene->exit();
+	if(!scene->_bSingleSetup) {
+		scene->_bSetup = false;
+	}
 }

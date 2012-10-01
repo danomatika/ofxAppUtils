@@ -295,6 +295,7 @@ void ofxSceneManager::mouseMoved(int x, int y ) {
 //--------------------------------------------------------------
 void ofxSceneManager::mouseDragged(int x, int y, int button) {
 	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseDragged(x, y, button);
 	}
 }
 

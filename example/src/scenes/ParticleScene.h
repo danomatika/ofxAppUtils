@@ -12,15 +12,20 @@
 
 #include <ofxAppUtils.h>
 
+#include "../testApp.h"
+
 class ParticleScene : public ofxScene {
 
 	public:
 
 		// takes a reference of the parent app for data access,
 		// set the scene name through the base class initializer
-		ParticleScene(testApp &app) : ofxScene((ofxApp&) app, "Particles") {
+		ParticleScene(testApp &app) : ofxScene("Particles"), app(app) {
 			alpha = 255;
 			particles.setAutoRemove(false);	// don't remove particles if dead
+			
+			// we want setup to be called each time the scene is loaded
+			setSingleSetup(false);
 		}
 
 		// scene setup
@@ -103,6 +108,9 @@ class ParticleScene : public ofxScene {
 		// used for fade in and out
 		ofxTimer timer;
 		int alpha;
+		
+		// the parent
+		testApp& app;
 
 		// particle class		
 		class Particle : public ofxParticle {

@@ -26,7 +26,7 @@ class ofxSceneManager {
 
     public:
 
-        ofxSceneManager(ofxApp& app);
+        ofxSceneManager();
         virtual ~ofxSceneManager() {}
 		
 		/// \section Main
@@ -123,10 +123,6 @@ class ofxSceneManager {
         void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
 		void audioOut(float * output, int bufferSize, int nChannels);
 		void audioRequested(float * output, int bufferSize, int nChannels);
-		
-	protected:
-		
-		ofxApp& app;	///< the parent application reference
 		
 	private:
 	

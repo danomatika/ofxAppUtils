@@ -13,8 +13,8 @@
 /// SCENE MANAGER
 
 //--------------------------------------------------------------
-ofxSceneManager::ofxSceneManager(ofxApp& app) :
-	app(app), _currentScene(SCENE_NONE), _newScene(SCENE_NOCHANGE),
+ofxSceneManager::ofxSceneManager() :
+	_currentScene(SCENE_NONE), _newScene(SCENE_NOCHANGE),
 	_bChangeNow(false), _minChangeTimeMS(100), _bSignalledAutoChange(false)
 {
 	_sceneChangeTimer.set();

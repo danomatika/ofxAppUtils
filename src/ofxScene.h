@@ -27,8 +27,8 @@ class ofxScene : public ofBaseApp {
 		
 		/// the singleSetup bool controls whether the scene's setup function
 		/// is called only once or each time a scene change is made
-		ofxScene(ofxApp& app, std::string name, bool singleSetup=true) :
-			ofBaseApp(), app(app), mouseX(app.mouseX), mouseY(app.mouseY), 
+		ofxScene(std::string name, bool singleSetup=true) :
+			ofBaseApp(),// app(app), mouseX(app.mouseX), mouseY(app.mouseY),
 			_name(name), _bSetup(false), _bRunning(true),
             _bEntering(false), _bEnteringFirst(false),
 			_bExiting(false), _bExitingFirst(false),
@@ -96,16 +96,13 @@ class ofxScene : public ofBaseApp {
 
         /// is the scene already setup?
         inline bool isSetup()	{return _bSetup;}
+		
+		/// controls whether the scene's setup function
+		/// is called only once or each time a scene change is made
+		inline void setSingleSetup(bool single) {_bSingleSetup = single;}
+		inline bool usingSingleSetup() {return _bSingleSetup;}
         
         friend class ofxRunnerScene;  ///< used to wrap this app
-
-	protected:
-
-		ofxApp& app;	///< the parent application reference
-		
-		/// for processing heads
-		int& mouseX;
-		int& mouseY;
 
 	private:
 	

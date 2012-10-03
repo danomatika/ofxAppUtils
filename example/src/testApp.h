@@ -31,8 +31,7 @@ class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 	
 	public:
 	
-        // setup the scene manager with a reference to the parent app
-		testApp() : sceneManager(*this) {}
+		testApp()  {}
 	
 		void setup();
 		void update();

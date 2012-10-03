@@ -12,14 +12,19 @@
 
 #include <ofxAppUtils.h>
 
+#include "../testApp.h"
+
 class LineScene : public ofxScene {
 
 	public:
 
 		// takes a reference of the parent for data access,
 		// set the scene name through the base class initializer
-		LineScene(testApp &app) : ofxScene((ofxApp&) app, "Lines") {
+		LineScene(testApp &app) : ofxScene("Lines"), app(app) {
 			alpha = 255;
+			
+			// we want setup to be called each time the scene is loaded
+			setSingleSetup(false);
 		}
 
 		// scene setup
@@ -35,6 +40,7 @@ class LineScene : public ofxScene {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
+				setup();
 				timer.setAlarm(2000);
 				alpha = 0;
 				ofLogNotice() << "LineScene: update enter";
@@ -101,11 +107,15 @@ class LineScene : public ofxScene {
 				Line* l = lines[i];
 				delete l;
 			}
+			lines.clear();
 		}
 		
 		// used for fade in and out
 		ofxTimer timer;
 		int alpha;
+		
+		// the parent
+		testApp& app;
 
 		// line class		
 		class Line {

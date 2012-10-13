@@ -3,7 +3,7 @@ ofxAppUtils
 
 OpenFrameworks app utilities
 
-Copyright (c) [Dan Wilcox](danomatika.com) 2011
+Copyright (c) [Dan Wilcox](danomatika.com) 2011-2012
 
 BSD Simplified License.
 

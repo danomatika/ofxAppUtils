@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Dan Wilcox <danomatika@gmail.com>
+ * Copyright (c) 2011-2012 Dan Wilcox <danomatika@gmail.com>
  *
  * BSD Simplified License.
  * For information on usage and redistribution, and for a DISCLAIMER OF ALL
@@ -10,15 +10,14 @@
  */
 #pragma once
 
-#include "ofMain.h"
 #include "ofxTimer.h"
+#include "ofRectangle.h"
 
 /**
     \class  Particle
     \brief  a particle with a lifespan
 **/
-class ofxParticle : public ofRectangle
-{
+class ofxParticle : public ofRectangle {
     public:
 
         ofxParticle();

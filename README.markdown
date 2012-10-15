@@ -21,8 +21,8 @@ Description
 
 ofxAppUtils is a set of utilities for OpenFrameworks application development including:
 
-* ofxApp: an ofBaseApp extension with built in screen scaling, projection mapping transforms, quad warping, and an optional ofxControlPanel
-* ofxScene: a mini ofBaseApp for writing stand alone scenes
+* ofxApp: an ofBaseApp/ofxiPhoneApp extension with built in screen scaling, projection mapping transforms, quad warping, and an optional ofxControlPanel
+* ofxScene: a mini ofBaseApp/ofxiPhoneApp for writing stand alone scenes
 * ofxSceneManager: handles a list of scenes using a std::map
 * ofxTransformer: open gl transformer for origin translation, screen scaling, mirroring, and quad warping
 * ofxQuadWarper: an open gl matrix quad warper (useful for oblique projection mapping)
@@ -31,12 +31,12 @@ ofxAppUtils is a set of utilities for OpenFrameworks application development inc
 * ofxParticleSystem: an auto manager for ofxParticles
 * ofxBitmapString: a stream interface for ofDrawBitmapString
 
-All ofBaseApp callbacks are handled down to the scene level.
+All ofBaseApp & ofxiPhoneApp callbacks are handled down to the scene level.
 
 Installation
 ------------
 
-To use ofxAppUtils, first you need to download and install Open Frameworks. ofxAppUtils is currently developed against the latest version of Open Frameworks on github (007).
+To use ofxAppUtils, first you need to download and install Open Frameworks. ofxAppUtils is currently developed against the latest stable version of Open Frameworks on github.
 
 To get a copy of the repository you can download the source from [http://github.com/danomatika/ofxAppUtils/zipball/master](http://github.com/danomatika/ofxAppUtils/zipball/master) or, alternatively, you can use git clone:
 <pre>
@@ -53,16 +53,34 @@ You will may also need the following addon dependencies:
 To disable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_NO_CONTROL_PANEL` in your CFLAGS.
 To disable the xml transform load/save (and ofxXmlSettings dependency), define `OFX_APP_UTILS_NO_XML` in your CFLAGS.
 
-For Xcode, see the example project Project.xcconfig file on how to set the defines.
+For Xcode, see the example project Project.xcconfig files on how to set the defines.
 
 Running the Example Project
 -------------------------------
 
-If you're using OS X, open the Xcode project in ofxAppUtils/example/ and hit "Build and Run".
+The example projects are in the `appUtilsExample` & `appUtilsIOSExample` folders.
 
-The addon should work fine in iOS, Windows, and Linux, although there are no example build files yet.
+### OSX
 
-On iOS you will probably want to disable the control panel via the `OFX_APP_UTILS_NO_CONTROL_PANEL` define.
+Xcode3: Open the Xcode project and hit "Build and Run". You might want to choose "Release" instead of "Debug" for faster performance.
+
+Xcode4: Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
+
+### Linux
+
+Open the Code::Blocks .cbp and hit F9 to build. Optionally, you can build the example with the Makefile.
+
+To run it, use the terminal:
+<pre>
+make
+cd bin
+./example_debug
+</pre>
+
+### Windows
+
+An example Visual Studio 2010 solution as well as a Codeblocks workspace are included.
+
 
 Adding ofxAppUtils to an Existing Project
 ---------------------------------------
@@ -72,15 +90,48 @@ If you want to add ofxAppUtils to another project, you need to make sure you inc
 openFrameworks/addons/ofxAppUtils/src
 </pre>
 
-For Xcode:
+### Xcode
 
 * create a new group "ofxAppUtils"
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
 * you also need to add the following addon dependencies in a similar manner:
 	* ofxControlPanel
 	* ofxXmlSettings
+	
+On iOS you will probably want to disable the control panel via the `OFX_APP_UTILS_NO_CONTROL_PANEL` define as it is doesn't really work with touch screens.
 
-There are two changes you need to make to extend your app with the ofApputils ofxApp class:
+### For Linux (Makefiles & Codeblocks):
+
+* edit addons.make in your project folder and add the following line to the end of the file: 
+	<pre>ofxAppUtils</pre>
+* edit config.make in your project folder and update the USER_CFLAGS line if you want to disable the control panel and/or xml saving:
+	<pre>
+	USER_CFLAGS = -DOFX_APP_UTILS_NO_CONTROL_PANEL -DOFX_APP_UTILS_NO_XML
+	</pre>
+	
+### For Codeblocks (Win):
+
+* add the ofxAppUtils sources to the project:
+	* right-click on your project in the project tree
+	* select "Add Files Recursively ..."
+	* navigate and choose the ofxAppUtils/src folder
+* add defines, search paths, and libraries to link:
+	* right-click on your project in the project tree
+	* select "Build options..."
+	* make sure the project name is selected in the tree (not release or debug)
+	* select the "Compiler settings" tab, add the following to the "#defines" tab if you want to disable the control panel and/or xml saving:
+	<pre>
+	OFX_APP_UTILS_NO_CONTROL_PANEL
+	OFX_APP_UTILS_NO_XML
+	</pre>
+	* select the "Search directories" tab, click add the search paths:
+	<pre>
+	..\\..\\..\addons\ofxAppUtils\src
+	</pre>
+
+### Extending Your BaseApp
+
+There are two changes you need to make to extend your app with the ofApputils ofxApp class which handles all the *automagic*:
 
 * your base app needs to inherit from ofxApp in your testApp.h
 <pre>
@@ -96,6 +147,8 @@ ofRunAppWithAppUtils(new testApp());
 </pre>
 
 That's it. Check the example testApp::setup() for more info on startup settings.
+
+Note: this is completely optional. You can always handle the transforms etc yourself using an ofxTransformer instance, etc.
 
 DEVELOPING
 ----------

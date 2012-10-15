@@ -21,5 +21,9 @@
 inline void ofRunAppWithAppUtils(ofxApp* app) {
 
     // wrap up user app with runner
-    ofRunApp((ofBaseApp*) new ofxRunnerApp(app));
+	#ifdef TARGET_OF_IPHONE
+		ofRunApp((ofxiPhoneApp*) new ofxRunnerApp(app));
+	#else
+		ofRunApp((ofBaseApp*) new ofxRunnerApp(app));
+	#endif
 }

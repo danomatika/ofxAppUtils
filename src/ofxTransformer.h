@@ -20,7 +20,11 @@ class ofxTransformer {
 
 	public:
 	
+		/// creates render area of size 1x1, make sure to call setRnderSize()
 		ofxTransformer();
+		
+		/// clear all current transform settings and set render size to screen size
+		void clearTransforms();
 		
 		/// set the desired render size compared to the given screen (or window) size,
 		/// set handleAspectRatio to true if you want automatic letter/pillar boxing
@@ -32,7 +36,7 @@ class ofxTransformer {
 		float getScreenHeight() {return _screenHeight;}
 		
 		/// resize the render scaling to a new parent screen size
-		void resizeRender(float screenWidth, float screenHeight);
+		void setNewScreenSize(float screenWidth, float screenHeight);
 		
 		/// enable/disable the transforms
 		///

@@ -32,6 +32,7 @@ class ParticleScene : public ofxScene {
 		void setup() {
 			timer.set();
 		
+			// make some particles
 			for(unsigned int i = 0; i < 100; ++i) {
 				particles.addParticle(new Particle(app));
 			}

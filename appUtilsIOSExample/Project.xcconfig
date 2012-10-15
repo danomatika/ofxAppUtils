@@ -3,7 +3,7 @@
 OF_PATH = ../../..
 
 //THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
-#include "../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig"
+#include "../../../libs/openFrameworksCompiled/project/ios/CoreOF.xcconfig"
 
 ///////////////////////////////////////////
 // ADDONS
@@ -12,17 +12,25 @@ OF_PATH = ../../..
 ADDONS_PATH = $(OF_PATH)/addons
 
 // app utils
-// uncomment this to disable the control panel (and ofxControlPanel dependency)
-//OFX_APP_UTILS_DEFINES = OFX_APP_UTILS_NO_CONTROL_PANEL
+OFX_APP_UTILS_DEFINES = OFX_APP_UTILS_NO_CONTROL_PANEL OFX_APP_UTILS_NO_XML
 
 // all addons
 OF_ADDON_DEFINES = $(OFX_APP_UTILS_DEFINES)
-OF_ADDON_HEADERS =
+OF_ADDON_HEADERS = 
 OF_ADDON_LIBS = 
 
 ///////////////////////////////////////////
 // MAIN
 
 GCC_PREPROCESSOR_DEFINITIONS = $(OF_ADDON_DEFINES)
+OTHER_CFLAGS = 
 HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(OF_ADDON_HEADERS)
 OTHER_LDFLAGS = $(OF_CORE_LIBS) $(OF_ADDON_LIBS)
+
+///////////////////////////////////////////
+// IOS SETTINGS
+
+COMPRESS_PNG_FILES = NO
+GCC_THUMB_SUPPORT = NO
+IPHONEOS_DEPLOYMENT_TARGET = 3.1
+TARGETED_DEVICE_FAMILY = 1

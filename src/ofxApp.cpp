@@ -18,7 +18,7 @@
 /// APP
 
 //--------------------------------------------------------------
-ofxApp::ofxApp() : ofBaseApp(), _currentWarpPoint(-1) {
+ofxApp::ofxApp() : _currentWarpPoint(-1) {
 
 	bDebug = false;
 	
@@ -40,7 +40,6 @@ ofxApp::ofxApp() : ofBaseApp(), _currentWarpPoint(-1) {
 }
 
 //--------------------------------------------------------------
-
 void ofxApp::setMirror(bool mirrorX, bool mirrorY) {
 	setMirrorX(mirrorX);
 	setMirrorY(mirrorY);
@@ -179,9 +178,15 @@ void ofxApp::clearSceneManager() {
 
 //--------------------------------------------------------------
 void ofxRunnerApp::setup() {
+	
+	// set transform sizes here, since width/height aren't set yet in main.cpp
+	app->clearTransforms();
+	app->setRenderSize(ofGetWidth(), ofGetHeight());
+	
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	app->controlPanel.setup("App Controls", 1, 0, 275, app->getRenderHeight()-40);
 #endif
+	
 	app->setup();
 }
 
@@ -319,14 +324,6 @@ void ofxRunnerApp::exit() {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::windowResized(int w, int h) {
-    app->resizeRender(w, h);
-	if(app->_sceneManager)
-		app->_sceneManager->windowResized(w, h);
-    app->windowResized(w, h);
-}
-
-//--------------------------------------------------------------
 void ofxRunnerApp::keyPressed(int key) {
     if(app->_sceneManager)
 		app->_sceneManager->keyPressed(key);
@@ -445,6 +442,13 @@ void ofxRunnerApp::mouseReleased(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
+void ofxRunnerApp::windowResized(int w, int h) {
+	if(app->_sceneManager)
+		app->_sceneManager->windowResized(w, h);
+    app->windowResized(w, h);
+}
+
+//--------------------------------------------------------------
 void ofxRunnerApp::dragEvent(ofDragInfo dragInfo) {
     if(app->_sceneManager)
 		app->_sceneManager->dragEvent(dragInfo);
@@ -458,6 +462,7 @@ void ofxRunnerApp::gotMessage(ofMessage msg){
     app->gotMessage(msg);
 }
 
+// ofBaseSoundInput
 //--------------------------------------------------------------
 void ofxRunnerApp::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
     if(app->_sceneManager)
@@ -475,7 +480,8 @@ void ofxRunnerApp::audioReceived(float * input, int bufferSize, int nChannels) {
 		app->_sceneManager->audioIn(input, bufferSize, nChannels);
     app->audioIn(input, bufferSize, nChannels);
 }
-        
+
+// ofBaseSoundOutput
 //--------------------------------------------------------------
 void ofxRunnerApp::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
     if(app->_sceneManager)
@@ -494,3 +500,61 @@ void ofxRunnerApp::audioRequested(float * output, int bufferSize, int nChannels)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels);
     app->audioOut(output, bufferSize, nChannels);
 }
+
+#ifdef TARGET_OF_IPHONE
+// ofxiPhoneApp
+//--------------------------------------------------------------
+void ofxRunnerApp::touchDown(ofTouchEventArgs & touch) {
+	if(app->_sceneManager)
+		app->_sceneManager->touchDown(touch);
+    app->touchDown(touch);
+}
+
+void ofxRunnerApp::touchMoved(ofTouchEventArgs & touch) {
+	if(app->_sceneManager)
+		app->_sceneManager->touchMoved(touch);
+    app->touchMoved(touch);
+}
+
+void ofxRunnerApp::touchUp(ofTouchEventArgs & touch) {
+	if(app->_sceneManager)
+		app->_sceneManager->touchUp(touch);
+    app->touchUp(touch);
+}
+
+void ofxRunnerApp::touchDoubleTap(ofTouchEventArgs & touch) {
+	if(app->_sceneManager)
+		app->_sceneManager->touchDoubleTap(touch);
+    app->touchDoubleTap(touch);
+}
+
+void ofxRunnerApp::touchCancelled(ofTouchEventArgs & touch) {
+	if(app->_sceneManager)
+		app->_sceneManager->touchCancelled(touch);
+    app->touchCancelled(touch);
+}
+
+void ofxRunnerApp::lostFocus() {
+	if(app->_sceneManager)
+		app->_sceneManager->lostFocus();
+    app->lostFocus();
+}
+
+void ofxRunnerApp::gotFocus() {
+	if(app->_sceneManager)
+		app->_sceneManager->gotFocus();
+    app->gotFocus();
+}
+
+void ofxRunnerApp::gotMemoryWarning() {
+	if(app->_sceneManager)
+		app->_sceneManager->gotMemoryWarning();
+    app->gotMemoryWarning();
+}
+
+void ofxRunnerApp::deviceOrientationChanged(int newOrientation) {
+	if(app->_sceneManager)
+		app->_sceneManager->deviceOrientationChanged(newOrientation);
+	app->deviceOrientationChanged(newOrientation);
+}
+#endif

@@ -10,7 +10,12 @@
  */
 #pragma once
 
-#include "ofBaseApp.h"
+#include "ofConstants.h"
+#ifdef TARGET_OF_IPHONE
+	#include "ofxiPhone.h"
+#else
+	#include "ofBaseApp.h"
+#endif
 
 #ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
 	#include "ofxXmlSettings.h"
@@ -27,12 +32,19 @@ class ofxRunnerApp;
 /**
     \class  App
     \brief  application implementation with automatic transforms and projection mapping,
-			includes a built in ofxControlPanel
+			includes an optional built-in ofxControlPanel
             
-    simply inherit from this class and implement the regular ofBaseApp callbacks
+    simply inherit from this class and implement the regular app callbacks
     ie setup(), update(), draw(), etc
 **/
-class ofxApp : public ofBaseApp, public ofxTransformer {
+class ofxApp :
+
+#ifdef TARGET_OF_IPHONE
+	public ofxiPhoneApp,
+#else
+	public ofBaseApp,
+#endif
+	public ofxTransformer {
 
 	public:
 	
@@ -47,7 +59,7 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 		/// set the origin position
 		void setOrigin(float x, float y, float z=0);
 		
-		/// keep the aspect ration when scaling?
+		/// keep the aspect ratio when scaling?
 		void setAspect(bool aspect);
 		
 		/// center within the parent screen area?
@@ -193,11 +205,17 @@ class ofxApp : public ofBaseApp, public ofxTransformer {
 
 /// wrapper used to handle ofxApp magic behind the scenes ...
 /// do not use directly!
-class ofxRunnerApp : public ofBaseApp {
+class ofxRunnerApp :
 
-    public:
+#ifdef TARGET_OF_IPHONE
+	public ofxiPhoneApp {
+#else
+	public ofBaseApp {
+#endif
+    
+	public:
 
-        ofxRunnerApp(ofxApp* app) : ofBaseApp() {
+        ofxRunnerApp(ofxApp* app) {
             this->app = app;
         }
         ~ofxRunnerApp() {
@@ -210,8 +228,6 @@ class ofxRunnerApp : public ofBaseApp {
 		void draw();
 		void exit();
 
-		void windowResized(int w, int h);
-
 		void keyPressed(int key);
 		void keyReleased(int key);
 
@@ -221,10 +237,25 @@ class ofxRunnerApp : public ofBaseApp {
 		void mouseReleased();
 		void mouseReleased(int x, int y, int button);
 		
+		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);	
-        
-        // ofBaseSoundInput callbacks
+		void gotMessage(ofMessage msg);
+		
+	#ifdef TARGET_OF_IPHONE
+		// ofxIphone callbacks
+		void touchDown(ofTouchEventArgs & touch);
+        void touchMoved(ofTouchEventArgs & touch);
+        void touchUp(ofTouchEventArgs & touch);
+        void touchDoubleTap(ofTouchEventArgs & touch);
+        void touchCancelled(ofTouchEventArgs & touch);
+
+        void lostFocus();
+        void gotFocus();
+        void gotMemoryWarning();
+        void deviceOrientationChanged(int newOrientation);
+	#endif
+		
+		// ofBaseSoundInput callbacks
         void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
 		void audioIn(float * input, int bufferSize, int nChannels );
 		void audioReceived(float * input, int bufferSize, int nChannels);

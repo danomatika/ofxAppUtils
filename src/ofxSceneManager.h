@@ -89,16 +89,11 @@ class ofxSceneManager {
         /// \section Current Scene Callbacks
         
         /// these are called in the current scene
-        
-        /// ofBaseApp callbacks
-		///
-        /// exit() is called automatically on removal/clear
+		
+		/// ofBaseApp callbacks
         void update();
 		void draw();
-
-        /// this is sent to all currently loaded scenes so resize events
-        /// are handled during transtions, etc correctly
-		void windowResized(int w, int h);
+		/// exit() is called automatically on removal/clear
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -110,14 +105,35 @@ class ofxSceneManager {
 		void mouseReleased(int x, int y, int button);
 		
 		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);	
-        
-        // ofBaseSoundInput callbacks
+		void gotMessage(ofMessage msg);
+		
+		/// this is sent to all currently loaded scenes so resize events
+        /// are handled during transtions, etc correctly
+		void windowResized(int w, int h);
+		
+	#ifdef TARGET_OF_IPHONE
+		/// ofxIphone callbacks
+		void touchDown(ofTouchEventArgs & touch);
+        void touchMoved(ofTouchEventArgs & touch);
+        void touchUp(ofTouchEventArgs & touch);
+        void touchDoubleTap(ofTouchEventArgs & touch);
+        void touchCancelled(ofTouchEventArgs & touch);
+
+        void lostFocus();
+        void gotFocus();
+        void gotMemoryWarning();
+		
+		/// this is sent to all currently loaded scenes so orientation changes
+        /// are handled during transtions, etc correctly
+        void deviceOrientationChanged(int newOrientation);
+	#endif
+		
+		/// ofBaseSoundInput callbacks
         void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
 		void audioIn(float * input, int bufferSize, int nChannels );
 		void audioReceived(float * input, int bufferSize, int nChannels);
         
-        // ofBaseSoundOutput callbacks
+        /// ofBaseSoundOutput callbacks
         void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
 		void audioOut(float * output, int bufferSize, int nChannels);
 		void audioRequested(float * output, int bufferSize, int nChannels);

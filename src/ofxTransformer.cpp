@@ -17,7 +17,27 @@
 
 //--------------------------------------------------------------
 ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
+	_bScale = false;
+	_bMirrorX = false;
+	_bMirrorY = false;
+	_bTranslate = false;
+	_bHandleAspect = false;
+	_bCenter = false;
+	_bWarp = false;
+	
+	_renderWidth = 1;	// avoid /0
+	_renderHeight = 1;	// avoid /0
+	_renderScaleX = 1;
+	_renderScaleY = 1;
+	_renderAspect = 1;
+	_screenAspect = 1;
+	
+	_bTransformsPushed = false;
+	_bWarpPushed = false;
+}
 
+//--------------------------------------------------------------
+void ofxTransformer::clearTransforms() {
 	_bScale = false;
 	_bMirrorX = false;
 	_bMirrorY = false;
@@ -38,8 +58,7 @@ ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::setRenderSize(float w, float h,
-	float screenWidth, float screenHeight) {
+void ofxTransformer::setRenderSize(float w, float h, float screenWidth, float screenHeight) {
 	_renderAspect = w/h;
 	_renderWidth = w;
 	_renderHeight = h;
@@ -71,7 +90,7 @@ void ofxTransformer::setTransforms(bool translate, bool scale, bool warp, bool h
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::resizeRender(float screenWidth, float screenHeight) {
+void ofxTransformer::setNewScreenSize(float screenWidth, float screenHeight) {
 	setRenderSize(_renderWidth, _renderHeight, screenWidth, screenHeight);
 }
 
@@ -125,22 +144,22 @@ ofVec2f ofxTransformer::getWarpPoint(unsigned int index) {
 
 //--------------------------------------------------------------
 void ofxTransformer::applyRenderScale() {
-		// adjust to screen dimensions?
-		if(_bHandleAspect && _renderAspect != _screenAspect) {
-			if(_renderAspect > _screenAspect) {	// letter box
-				ofScale(_renderScaleX, _renderScaleX);
-				if(_bCenter && !_bWarp)
-					ofTranslate(0, (_screenHeight-(_renderScaleX*_renderHeight))/4);
-			}
-			else { // pillar box
-				ofScale(_renderScaleY, _renderScaleY);
-				if(_bCenter && !_bWarp)
-					ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/4, 0);
-			}
+	// adjust to screen dimensions?
+	if(_bHandleAspect && _renderAspect != _screenAspect) {
+		if(_renderAspect > _screenAspect) {	// letter box
+			if(_bCenter && !_bWarp)
+				ofTranslate(0, (_screenHeight-(_renderScaleX*_renderHeight))/2);
+			ofScale(_renderScaleX, _renderScaleX);
 		}
-		else { // basic stretch
-			ofScale(_renderScaleX, _renderScaleY);
+		else { // pillar box
+			if(_bCenter && !_bWarp)
+				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/2, 0);
+			ofScale(_renderScaleY, _renderScaleY);
 		}
+	}
+	else { // basic stretch
+		ofScale(_renderScaleX, _renderScaleY);
+	}
 }
 
 //--------------------------------------------------------------

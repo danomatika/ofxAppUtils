@@ -19,14 +19,19 @@ class ofxRunnerScene;
     \class  Scene
     \brief  application scene abstract class
 **/
-class ofxScene : public ofBaseApp {
+class ofxScene :
+
+#ifdef TARGET_OF_IPHONE
+	public ofxiPhoneApp {
+#else
+	public ofBaseApp {
+#endif
 	
 	public:
 		
 		/// the singleSetup bool controls whether the scene's setup function
 		/// is called only once or each time a scene change is made
 		ofxScene(std::string name, bool singleSetup=true) :
-			ofBaseApp(),// app(app), mouseX(app.mouseX), mouseY(app.mouseY),
 			_name(name), _bSetup(false), _bRunning(true),
             _bEntering(false), _bEnteringFirst(false),
 			_bExiting(false), _bExitingFirst(false),
@@ -111,11 +116,17 @@ class ofxScene : public ofBaseApp {
 
 /// wrapper used to handle ofxScene magic behind the scenes ...
 /// do not use directly!
-class ofxRunnerScene : public ofBaseApp {
+class ofxRunnerScene :
+
+#ifdef TARGET_OF_IPHONE
+	public ofxiPhoneApp {
+#else
+	public ofBaseApp {
+#endif
 
     public:
 
-        ofxRunnerScene(ofxScene* scene) : ofBaseApp() {
+        ofxRunnerScene(ofxScene* scene) {
             this->scene = scene;
         }
         ~ofxRunnerScene() {

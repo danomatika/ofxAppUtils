@@ -110,6 +110,7 @@ void testApp::draw() {
 	// function
 }
 
+// current scene input functions are called automatically before calling these
 //--------------------------------------------------------------
 void testApp::keyPressed(int key) {
 	
@@ -171,4 +172,11 @@ void testApp::mousePressed(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button) {
+}
+
+//--------------------------------------------------------------
+void testApp::windowResized(int w, int h) {
+
+	// set up transforms with new screen size
+	setNewScreenSize(w,h);
 }

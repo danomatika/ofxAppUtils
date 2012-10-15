@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Dan Wilcox <danomatika@gmail.com>
+ * Copyright (c) 2011-2012 Dan Wilcox <danomatika@gmail.com>
  *
  * BSD Simplified License.
  * For information on usage and redistribution, and for a DISCLAIMER OF ALL
@@ -12,13 +12,12 @@
 #include "testApp.h"
 #include "ofAppGlutWindow.h"
 
-//========================================================================
 int main(){
 
     ofAppGlutWindow window;
-	ofSetupOpenGL(&window, 800, 600, OF_WINDOW); // <-------- setup the GL context
+	ofSetupOpenGL(&window, 800, 600, OF_WINDOW);
 
-	// this replaces ofRunApp and kicks off the running of the app
+	// this replaces ofRunApp() and kicks off the running of the app
     // with the app utils
 	ofRunAppWithAppUtils(new testApp());
 }

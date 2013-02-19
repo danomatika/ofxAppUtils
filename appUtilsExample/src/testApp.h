@@ -18,6 +18,7 @@
 ///
 /// controls:
 ///     - L & R arrows to change scenes (note: wait for 2s transition)
+///		- D arrow to change to "no scene" & U arrow to return to last scene
 ///     - 'd' key to toggle debug mode and enable control panel & warp editor
 ///     - 'm' key to mirror the render area on the x axis
 ///     - 'n' key to mirror the render area on the y axis
@@ -48,4 +49,5 @@ class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 
 		// handles the scenes
 		ofxSceneManager sceneManager;
+		int lastScene;
 };

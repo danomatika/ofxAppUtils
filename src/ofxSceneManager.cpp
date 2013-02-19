@@ -212,7 +212,7 @@ ofxScene* ofxSceneManager::getCurrentScene() {
 }
 
 std::string ofxSceneManager::ofxSceneManager::getCurrentSceneName() {
-	return _currentScenePtr == NULL ? "" : _currentScenePtr->getName();
+	return _currentScenePtr == NULL ? "NO_SCENE" : _currentScenePtr->getName();
 }
 
 int ofxSceneManager::getCurrentSceneIndex() {
@@ -447,26 +447,62 @@ void ofxSceneManager::_handleSceneChanges() {
         if(_currentScene > SCENE_NONE) {
             if(_bChangeNow || !_currentScenePtr->isExiting()) {
                 _currentRunnerScenePtr->exit();
-				_currentScene = _newScene;
-                _currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
-				_currentScenePtr = _currentRunnerScenePtr->scene;
-                _newScene = SCENE_NOCHANGE; // done
-                _bSignalledAutoChange = false;
-            	_sceneChangeTimer.set();
-				ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
-					<< " \"" << _currentScenePtr->getName() << "\"";
+				changeToNewScene();
+//				_currentScene = _newScene;
+//                _currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
+//				if(_currentScene != SCENE_NONE) {
+//					_currentScenePtr = _currentRunnerScenePtr->scene;
+//					ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
+//						<< " \"" << _currentScenePtr->getName() << "\"";
+//				}
+//				else {
+//					_currentScenePtr = NULL;
+//					ofLogVerbose("ofxSceneManager") << "Changed to NO_SCENE";
+//				}
+//                _newScene = SCENE_NOCHANGE; // done
+//                _bSignalledAutoChange = false;
+//            	_sceneChangeTimer.set();
+				
 			}
         } else {   // no current scene to wait for
-			_currentScene = _newScene;
-			_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
-				_currentScenePtr = _currentRunnerScenePtr->scene;
-            _newScene = SCENE_NOCHANGE; // done
-            _bSignalledAutoChange = false;
-			_sceneChangeTimer.set();
-			ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
-					<< " \"" << _currentScenePtr->getName() << "\"";
+			changeToNewScene();
+//			_currentScene = _newScene;
+//			_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
+//			if(_currentScene != SCENE_NONE) {
+//				_currentScenePtr = _currentRunnerScenePtr->scene;
+//				ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
+//					<< " \"" << _currentScenePtr->getName() << "\"";
+//			}
+//			else {
+//				_currentScenePtr = NULL;
+//				ofLogVerbose("ofxSceneManager") << "Changed to NO_SCENE";
+//			}
+//            _newScene = SCENE_NOCHANGE; // done
+//            _bSignalledAutoChange = false;
+//			_sceneChangeTimer.set();
         }
     }
+}
+
+//--------------------------------------------------------------
+void ofxSceneManager::changeToNewScene() {
+	
+	_currentScene = _newScene;
+	_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
+	
+	if(_currentScene != SCENE_NONE) {
+		_currentScenePtr = _currentRunnerScenePtr->scene;
+		ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
+			<< " \"" << _currentScenePtr->getName() << "\"";
+	}
+	else {
+		_currentScenePtr = NULL;
+		ofLogVerbose("ofxSceneManager") << "Changed to NO_SCENE";
+	}
+	
+	_newScene = SCENE_NOCHANGE; // done
+	_bSignalledAutoChange = false;
+	_sceneChangeTimer.set();
 }
 
 //--------------------------------------------------------------

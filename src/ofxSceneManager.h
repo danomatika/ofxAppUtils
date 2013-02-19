@@ -73,7 +73,7 @@ class ofxSceneManager {
 		/// returns NULL if there is no current scene
 		ofxScene* getCurrentScene();
 		
-		/// returns empty string "" if there is no current scene
+		/// returns "NO_SCENE" if there is no current scene
         std::string getCurrentSceneName(); 
 		
 		/// returns -1 if there is no current scene
@@ -142,6 +142,9 @@ class ofxSceneManager {
 	
 		/// handle a pending scene change
 		void _handleSceneChanges();
+		
+		/// do actual scene change
+		void changeToNewScene();
 		
 		/// wrapper around iter + advance
 		ofxRunnerScene* _getRunnerSceneAt(int index);

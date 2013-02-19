@@ -55,6 +55,7 @@ void testApp::setup() {
 	// start with a specific scene
 	// set now to true in order to ignore the scene fade and change now
 	sceneManager.gotoScene("Lines", true);
+	lastScene = sceneManager.getCurrentSceneIndex();
 	
 	// attach scene manager to this ofxApp so it's called automatically,
 	// you can also call the callbacks (update, draw, keyPressed, etc) manually
@@ -97,7 +98,7 @@ void testApp::draw() {
 	// to ofDrawBitmapString
 	ofSetColor(200);
 	ofxBitmapString(12, ofGetHeight()-8)
-		<< "Current Scene: #" << sceneManager.getCurrentSceneIndex()
+		<< "Current Scene: " << sceneManager.getCurrentSceneIndex()
 		<< " " << sceneManager.getCurrentSceneName() << endl;
 	
 	// go back to the auto transform space
@@ -150,6 +151,15 @@ void testApp::keyPressed(int key) {
 			
 		case OF_KEY_RIGHT:
 			sceneManager.nextScene();
+			break;
+			
+		case OF_KEY_DOWN:
+			lastScene = sceneManager.getCurrentSceneIndex();
+			sceneManager.noScene();
+			break;
+			
+		case OF_KEY_UP:
+			sceneManager.gotoScene(lastScene);
 			break;
 	}
 }

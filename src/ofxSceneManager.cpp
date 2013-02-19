@@ -434,7 +434,7 @@ void ofxSceneManager::_handleSceneChanges() {
     if(_newScene != SCENE_NOCHANGE) {
 	
         // ignore duplicates if not done entering
-        if(_newScene == _currentScene) {
+        if(_newScene == _currentScene && _currentScene>SCENE_NONE) {
             if(_currentScenePtr->isEntering()) {
                 _newScene = SCENE_NOCHANGE;
                 ofLogWarning("ofxSceneManager") << "Ignoring duplicate scene change, "
@@ -449,7 +449,7 @@ void ofxSceneManager::_handleSceneChanges() {
                 _currentRunnerScenePtr->exit();
 				_currentScene = _newScene;
                 _currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
-				_currentScenePtr = _currentRunnerScenePtr->scene;
+				if(_currentRunnerScenePtr) _currentScenePtr = _currentRunnerScenePtr->scene;
                 _newScene = SCENE_NOCHANGE; // done
                 _bSignalledAutoChange = false;
             	_sceneChangeTimer.set();
@@ -459,12 +459,12 @@ void ofxSceneManager::_handleSceneChanges() {
         } else {   // no current scene to wait for
 			_currentScene = _newScene;
 			_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
-				_currentScenePtr = _currentRunnerScenePtr->scene;
+			if(_currentRunnerScenePtr)	_currentScenePtr = _currentRunnerScenePtr->scene;
             _newScene = SCENE_NOCHANGE; // done
             _bSignalledAutoChange = false;
 			_sceneChangeTimer.set();
 			ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
-					<< " \"" << _currentScenePtr->getName() << "\"";
+					<< " \"" << "SCENE_NONE" << "\"";
         }
     }
 }

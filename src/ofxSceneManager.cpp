@@ -433,9 +433,15 @@ void ofxSceneManager::_handleSceneChanges() {
 	// do the actual main scene change
     if(_newScene != SCENE_NOCHANGE) {
 	
-        // ignore duplicates if not done entering
+        // ignore duplicates
         if(_newScene == _currentScene) {
-            if(_currentScenePtr->isEntering()) {
+            
+			if(_newScene == SCENE_NONE) { // nothing to do
+				return;
+			}
+			
+			// not done entering
+			if(_currentScenePtr->isEntering()) {
                 _newScene = SCENE_NOCHANGE;
                 ofLogWarning("ofxSceneManager") << "Ignoring duplicate scene change, "
                           	<< "current scene is not done entering";
@@ -447,39 +453,10 @@ void ofxSceneManager::_handleSceneChanges() {
         if(_currentScene > SCENE_NONE) {
             if(_bChangeNow || !_currentScenePtr->isExiting()) {
                 _currentRunnerScenePtr->exit();
-				changeToNewScene();
-//				_currentScene = _newScene;
-//                _currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
-//				if(_currentScene != SCENE_NONE) {
-//					_currentScenePtr = _currentRunnerScenePtr->scene;
-//					ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
-//						<< " \"" << _currentScenePtr->getName() << "\"";
-//				}
-//				else {
-//					_currentScenePtr = NULL;
-//					ofLogVerbose("ofxSceneManager") << "Changed to NO_SCENE";
-//				}
-//                _newScene = SCENE_NOCHANGE; // done
-//                _bSignalledAutoChange = false;
-//            	_sceneChangeTimer.set();
-				
+				changeToNewScene();				
 			}
         } else {   // no current scene to wait for
 			changeToNewScene();
-//			_currentScene = _newScene;
-//			_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
-//			if(_currentScene != SCENE_NONE) {
-//				_currentScenePtr = _currentRunnerScenePtr->scene;
-//				ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
-//					<< " \"" << _currentScenePtr->getName() << "\"";
-//			}
-//			else {
-//				_currentScenePtr = NULL;
-//				ofLogVerbose("ofxSceneManager") << "Changed to NO_SCENE";
-//			}
-//            _newScene = SCENE_NOCHANGE; // done
-//            _bSignalledAutoChange = false;
-//			_sceneChangeTimer.set();
         }
     }
 }

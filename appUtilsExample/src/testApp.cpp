@@ -154,7 +154,9 @@ void testApp::keyPressed(int key) {
 			break;
 			
 		case OF_KEY_DOWN:
-			lastScene = sceneManager.getCurrentSceneIndex();
+			if(sceneManager.getCurrentScene()) { // returns NULL if no scene selected
+				lastScene = sceneManager.getCurrentSceneIndex();
+			}
 			sceneManager.noScene();
 			break;
 			

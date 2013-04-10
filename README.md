@@ -45,12 +45,15 @@ git clone git://github.com/danomatika/ofxAppUtils.git
 
 The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
+### Dependencies
+
 You will may also need the following addon dependencies:
 
 * ofxXmlSettings: included with OpenFrameworks (optional)
 * ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel (optional, also requires ofxXmlSettings)
 
 To disable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_NO_CONTROL_PANEL` in your CFLAGS.
+
 To disable the xml transform load/save (and ofxXmlSettings dependency), define `OFX_APP_UTILS_NO_XML` in your CFLAGS.
 
 For Xcode, see the example project Project.xcconfig files on how to set the defines.
@@ -94,9 +97,16 @@ openFrameworks/addons/ofxAppUtils/src
 
 * create a new group "ofxAppUtils"
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
-* you also need to add the following addon dependencies in a similar manner:
+* you also need to add the following addon dependencies (if you're using them) in a similar manner:
 	* ofxControlPanel
 	* ofxXmlSettings
+* add defines to the project C++FLAGS if you want to disable the control panel and/or xml saving: 
+	* Select the Project -> Build Settings -> Header Search Paths
+	* add the following:
+	<pre>
+	-DOFX_APP_UTILS_NO_CONTROL_PANEL
+	-DOFX_APP_UTILS_NO_XML
+	</pre>
 	
 On iOS you will probably want to disable the control panel via the `OFX_APP_UTILS_NO_CONTROL_PANEL` define as it is doesn't really work with touch screens.
 

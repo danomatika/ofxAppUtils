@@ -17,7 +17,7 @@
 	#include "ofBaseApp.h"
 #endif
 
-#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
 	#include "ofxXmlSettings.h"
 	#include "ofxControlPanel.h"
 #endif
@@ -104,7 +104,7 @@ class ofxApp :
 		/// void popTransforms();
 		
 		
-#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
 		///
 		/// define OFX_APP_UTILS_NO_CONTROL_PANEL to disable the control panel
 		/// (and ofxControlPanel dependency)
@@ -174,7 +174,7 @@ class ofxApp :
 	
 		bool bDebug;	///< are we in debug mode?
 
-#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
 		ofxControlPanel	controlPanel; ///< the settings control panel
 #endif
 
@@ -194,7 +194,7 @@ class ofxApp :
 		ofxSceneManager* _sceneManager;	///< optional built in scene manager
 		bool _bSceneManagerUpdate, _bSceneManagerDraw;
 		
-#ifndef OFX_APP_UTILS_NO_CONTROL_PANEL
+#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
 		bool _bTransformControls;	///< have the projection controls been added?
 		bool _bDrawControlPanel;	///< draw the control panel automatically?
 #endif

@@ -177,7 +177,17 @@ void ofxApp::clearSceneManager() {
 /// RUNNER APP
 
 //--------------------------------------------------------------
-void ofxRunnerApp::setup() {
+ofxApp::RunnerApp::RunnerApp(ofxApp* app) {
+	this->app = app;
+}
+
+//--------------------------------------------------------------
+ofxApp::RunnerApp::~RunnerApp() {
+	delete app;
+}
+
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::setup() {
 	
 	// set transform sizes here, since width/height aren't set yet in main.cpp
 	app->clearTransforms();
@@ -191,7 +201,7 @@ void ofxRunnerApp::setup() {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::update() {
+void ofxApp::RunnerApp::update() {
 
     app->mouseX = mouseX;
     app->mouseY = mouseY;
@@ -241,7 +251,7 @@ void ofxRunnerApp::update() {
 //--------------------------------------------------------------
 // TODO: changing _bAutoTransforms in the user draw function may result a missing
 // transform push/pop
-void ofxRunnerApp::draw() {
+void ofxApp::RunnerApp::draw() {
 
 	if(app->_bAutoTransforms)
 		app->pushTransforms(app->_bEditingWarpPoints);
@@ -317,14 +327,14 @@ void ofxRunnerApp::draw() {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::exit() {
+void ofxApp::RunnerApp::exit() {
 	app->exit();
 	if(app->_sceneManager)
 		app->_sceneManager->clear();
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::keyPressed(int key) {
+void ofxApp::RunnerApp::keyPressed(int key) {
     if(app->_sceneManager)
 		app->_sceneManager->keyPressed(key);
 	app->keyPressed(key);
@@ -337,21 +347,21 @@ void ofxRunnerApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::keyReleased(int key) {
+void ofxApp::RunnerApp::keyReleased(int key) {
     if(app->_sceneManager)
 		app->_sceneManager->keyReleased(key);
     app->keyReleased(key);
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::mouseMoved(int x, int y) {
+void ofxApp::RunnerApp::mouseMoved(int x, int y) {
 	if(app->_sceneManager)
 		app->_sceneManager->mouseMoved(x, y);
 	app->mouseMoved(x, y);
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::mouseDragged(int x, int y, int button) {
+void ofxApp::RunnerApp::mouseDragged(int x, int y, int button) {
 	if(app->_sceneManager)
 		app->_sceneManager->mouseDragged(x, y, button);
 	app->mouseDragged(x, y, button);
@@ -372,7 +382,7 @@ void ofxRunnerApp::mouseDragged(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::mousePressed(int x, int y, int button) {
+void ofxApp::RunnerApp::mousePressed(int x, int y, int button) {
 	if(app->_sceneManager)
 		app->_sceneManager->mousePressed(x, y, button);
 	app->mousePressed(x, y, button);
@@ -411,7 +421,7 @@ void ofxRunnerApp::mousePressed(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::mouseReleased() {
+void ofxApp::RunnerApp::mouseReleased() {
     if(app->_sceneManager)
 		app->_sceneManager->mouseReleased();
     app->mouseReleased();
@@ -426,7 +436,7 @@ void ofxRunnerApp::mouseReleased() {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::mouseReleased(int x, int y, int button) {
+void ofxApp::RunnerApp::mouseReleased(int x, int y, int button) {
 	if(app->_sceneManager)
 		app->_sceneManager->mouseReleased(x, y, button);
 	app->mouseReleased(x, y, button);
@@ -442,21 +452,21 @@ void ofxRunnerApp::mouseReleased(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::windowResized(int w, int h) {
+void ofxApp::RunnerApp::windowResized(int w, int h) {
 	if(app->_sceneManager)
 		app->_sceneManager->windowResized(w, h);
     app->windowResized(w, h);
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::dragEvent(ofDragInfo dragInfo) {
+void ofxApp::RunnerApp::dragEvent(ofDragInfo dragInfo) {
     if(app->_sceneManager)
 		app->_sceneManager->dragEvent(dragInfo);
     app->dragEvent(dragInfo);
 }
 
 //--------------------------------------------------------------
-void ofxRunnerApp::gotMessage(ofMessage msg){
+void ofxApp::RunnerApp::gotMessage(ofMessage msg){
     if(app->_sceneManager)
 		app->_sceneManager->gotMessage(msg);
     app->gotMessage(msg);
@@ -464,18 +474,18 @@ void ofxRunnerApp::gotMessage(ofMessage msg){
 
 // ofBaseSoundInput
 //--------------------------------------------------------------
-void ofxRunnerApp::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+void ofxApp::RunnerApp::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
     if(app->_sceneManager)
 		app->_sceneManager->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
     app->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
 }
 
-void ofxRunnerApp::audioIn(float * input, int bufferSize, int nChannel ) {
+void ofxApp::RunnerApp::audioIn(float * input, int bufferSize, int nChannel ) {
     if(app->_sceneManager)
 		app->_sceneManager->audioIn(input, bufferSize, nChannel);
     app->audioIn(input, bufferSize, nChannel);
 }
-void ofxRunnerApp::audioReceived(float * input, int bufferSize, int nChannels) {
+void ofxApp::RunnerApp::audioReceived(float * input, int bufferSize, int nChannels) {
     if(app->_sceneManager)
 		app->_sceneManager->audioIn(input, bufferSize, nChannels);
     app->audioIn(input, bufferSize, nChannels);
@@ -483,19 +493,19 @@ void ofxRunnerApp::audioReceived(float * input, int bufferSize, int nChannels) {
 
 // ofBaseSoundOutput
 //--------------------------------------------------------------
-void ofxRunnerApp::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+void ofxApp::RunnerApp::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
     if(app->_sceneManager)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
     app->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
 }
 
-void ofxRunnerApp::audioOut(float * output, int bufferSize, int nChannels) {
+void ofxApp::RunnerApp::audioOut(float * output, int bufferSize, int nChannels) {
     if(app->_sceneManager)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels);
     app->audioOut(output, bufferSize, nChannels);
 }
 
-void ofxRunnerApp::audioRequested(float * output, int bufferSize, int nChannels) {
+void ofxApp::RunnerApp::audioRequested(float * output, int bufferSize, int nChannels) {
     if(app->_sceneManager)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels);
     app->audioOut(output, bufferSize, nChannels);
@@ -504,55 +514,55 @@ void ofxRunnerApp::audioRequested(float * output, int bufferSize, int nChannels)
 #ifdef TARGET_OF_IPHONE
 // ofxiPhoneApp
 //--------------------------------------------------------------
-void ofxRunnerApp::touchDown(ofTouchEventArgs & touch) {
+void ofxApp::RunnerApp::touchDown(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchDown(touch);
     app->touchDown(touch);
 }
 
-void ofxRunnerApp::touchMoved(ofTouchEventArgs & touch) {
+void ofxApp::RunnerApp::touchMoved(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchMoved(touch);
     app->touchMoved(touch);
 }
 
-void ofxRunnerApp::touchUp(ofTouchEventArgs & touch) {
+void ofxApp::RunnerApp::touchUp(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchUp(touch);
     app->touchUp(touch);
 }
 
-void ofxRunnerApp::touchDoubleTap(ofTouchEventArgs & touch) {
+void ofxApp::RunnerApp::touchDoubleTap(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchDoubleTap(touch);
     app->touchDoubleTap(touch);
 }
 
-void ofxRunnerApp::touchCancelled(ofTouchEventArgs & touch) {
+void ofxApp::RunnerApp::touchCancelled(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchCancelled(touch);
     app->touchCancelled(touch);
 }
 
-void ofxRunnerApp::lostFocus() {
+void ofxApp::RunnerApp::lostFocus() {
 	if(app->_sceneManager)
 		app->_sceneManager->lostFocus();
     app->lostFocus();
 }
 
-void ofxRunnerApp::gotFocus() {
+void ofxApp::RunnerApp::gotFocus() {
 	if(app->_sceneManager)
 		app->_sceneManager->gotFocus();
     app->gotFocus();
 }
 
-void ofxRunnerApp::gotMemoryWarning() {
+void ofxApp::RunnerApp::gotMemoryWarning() {
 	if(app->_sceneManager)
 		app->_sceneManager->gotMemoryWarning();
     app->gotMemoryWarning();
 }
 
-void ofxRunnerApp::deviceOrientationChanged(int newOrientation) {
+void ofxApp::RunnerApp::deviceOrientationChanged(int newOrientation) {
 	if(app->_sceneManager)
 		app->_sceneManager->deviceOrientationChanged(newOrientation);
 	app->deviceOrientationChanged(newOrientation);

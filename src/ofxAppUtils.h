@@ -22,8 +22,13 @@ inline void ofRunAppWithAppUtils(ofxApp* app) {
 
     // wrap up user app with runner
 	#ifdef TARGET_OF_IPHONE
-		ofRunApp((ofxiPhoneApp*) new ofxRunnerApp(app));
+		ofRunApp((ofxiPhoneApp*) new ofxApp::RunnerApp(app));
 	#else
-		ofRunApp((ofBaseApp*) new ofxRunnerApp(app));
+		ofRunApp((ofBaseApp*) new ofxApp::RunnerApp(app));
 	#endif
+}
+
+//
+inline ofxApp* ofxGetAppPtr() {
+	return ((ofxApp::RunnerApp*) ofGetAppPtr())->getAppPtr();
 }

@@ -12,15 +12,12 @@
 
 #include <ofxAppUtils.h>
 
-#include "../testApp.h"
-
 class LineScene : public ofxScene {
 
 	public:
 
-		// takes a reference of the parent for data access,
 		// set the scene name through the base class initializer
-		LineScene(testApp &app) : ofxScene("Lines"), app(app) {
+		LineScene() : ofxScene("Lines"){
 			alpha = 255;
 			
 			// we want setup to be called each time the scene is loaded
@@ -31,8 +28,8 @@ class LineScene : public ofxScene {
 		void setup() {
 			timer.set();
 			
-			lines.push_back(new Line(app, Line::HORZ));
-			lines.push_back(new Line(app, Line::VERT));
+			lines.push_back(new Line(Line::HORZ));
+			lines.push_back(new Line(Line::VERT));
 		}
 
 		// called when scene is entering
@@ -113,35 +110,39 @@ class LineScene : public ofxScene {
 		// used for fade in and out
 		ofxTimer timer;
 		int alpha;
-		
-		// the parent
-		testApp& app;
 
 		// line class		
 		class Line {
 
 			public:
 			
-				// takes a reference of the parent app for data access,
-				// here used to get the size of the render area
-				// you can also cast the ofxApp reference to your own derived
-				// class to pass custom data:
-				//
-				// TestApp& testApp = static_cast<TestApp&> (app);
-				//
-				Line(ofxApp &app, int type) : app(app) {
+				Line(int type) {
 					this->type = (Type) type;
 				}
 				
 				void update() {
+				
+					// get a pointer to the parent app for data access,
+					// here used to get the size of the render area
+					// you can also cast the ofxApp reference to your own derived
+					// class to pass custom data:
+					//
+					// TestApp* testApp = (TestApp*) (ofxGetAppPtr());
+					//
+					// NOTE: you must use "ofxGetAppPtr()" <-- note the "x",
+					// this is a replacement for "ofGetAppPtr()" which does not
+					// return the pointer to the correct app instance
+					//
+					ofxApp *app = ofxGetAppPtr();
+					
 					switch(type) {
 						case HORZ:
-							pos1.set(0, ofNoise(ofGetElapsedTimef())*app.getRenderHeight());
-							pos2.set(app.getRenderWidth(), ofNoise(ofGetElapsedTimef())*app.getRenderHeight());
+							pos1.set(0, ofNoise(ofGetElapsedTimef())*app->getRenderHeight());
+							pos2.set(app->getRenderWidth(), ofNoise(ofGetElapsedTimef())*app->getRenderHeight());
 							break;
 						case VERT:
-							pos1.set(ofNoise(ofGetElapsedTimef())*app.getRenderHeight(), 0);
-							pos2.set(ofNoise(ofGetElapsedTimef())*app.getRenderHeight(), app.getRenderHeight());
+							pos1.set(ofNoise(ofGetElapsedTimef())*app->getRenderHeight(), 0);
+							pos2.set(ofNoise(ofGetElapsedTimef())*app->getRenderHeight(), app->getRenderHeight());
 							break;
 					}
 				}
@@ -156,8 +157,7 @@ class LineScene : public ofxScene {
 				};
 				int type;
 				
-				ofVec2f pos1, pos2;
-				ofxApp& app;				
+				ofVec2f pos1, pos2;				
 		};
 		
 		// lines

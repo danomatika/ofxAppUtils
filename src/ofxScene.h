@@ -13,8 +13,6 @@
 #include "ofxApp.h"
 #include "ofxTimer.h"
 
-class ofxRunnerScene;
-
 /**
     \class  Scene
     \brief  application scene abstract class
@@ -105,40 +103,37 @@ class ofxScene :
 		inline void setSingleSetup(bool single) {_bSingleSetup = single;}
 		inline bool usingSingleSetup() {return _bSingleSetup;}
         
-        friend class ofxRunnerScene;  ///< used to wrap this app
-
 	private:
 	
 		std::string _name;		///< the name of this scene
 		bool _bSetup, _bRunning, _bEntering, _bEnteringFirst,
 			 _bExiting, _bExitingFirst, _bDone, _bSingleSetup;
-};
 
-/// wrapper used to handle ofxScene magic behind the scenes ...
-/// do not use directly!
-class ofxRunnerScene :
+	public:
+	
+		/// wrapper used to handle ofxScene magic behind the scenes ...
+		/// do not use directly!
+		class RunnerScene :
 
-#ifdef TARGET_OF_IPHONE
-	public ofxiPhoneApp {
-#else
-	public ofBaseApp {
-#endif
+		#ifdef TARGET_OF_IPHONE
+			public ofxiPhoneApp {
+		#else
+			public ofBaseApp {
+		#endif
 
-    public:
+			public:
 
-        ofxRunnerScene(ofxScene* scene) {
-            this->scene = scene;
-        }
-        ~ofxRunnerScene() {
-            if(scene != NULL)
-                delete scene;
-        }
+				RunnerScene(ofxScene* scene);
+				~RunnerScene();
 
-        // need these for proper entering/exit, etc
-        void setup();
-		void update();
-		void draw();
-		void exit();
-        
-        ofxScene* scene;
+				// need these for proper entering/exit, etc
+				void setup();
+				void update();
+				void draw();
+				void exit();
+				
+				ofxScene* scene;
+		};
+		
+		friend class RunnerScene;  ///< used to wrap this app
 };

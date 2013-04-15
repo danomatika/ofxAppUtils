@@ -27,7 +27,6 @@
 #include "ofxTimer.h"
 
 class ofxSceneManager;
-class ofxRunnerApp;
 
 /**
     \class  App
@@ -170,8 +169,6 @@ class ofxApp :
 		
 		/// is debug mode on? (show control panel and fps, allow editing of warper)
 		inline bool isDebug()	{return bDebug;}
-        
-        friend class ofxRunnerApp;  ///< used to wrap this app
 
 	protected:
 	
@@ -201,69 +198,73 @@ class ofxApp :
 		bool _bTransformControls;	///< have the projection controls been added?
 		bool _bDrawControlPanel;	///< draw the control panel automatically?
 #endif
-};
 
-/// wrapper used to handle ofxApp magic behind the scenes ...
-/// do not use directly!
-class ofxRunnerApp :
-
-#ifdef TARGET_OF_IPHONE
-	public ofxiPhoneApp {
-#else
-	public ofBaseApp {
-#endif
-    
 	public:
 
-        ofxRunnerApp(ofxApp* app) {
-            this->app = app;
-        }
-        ~ofxRunnerApp() {
-            delete app;
-        }
+		/// wrapper used to handle ofxApp magic behind the scenes ...
+		/// do not use directly!
+		class RunnerApp :
 
-        // ofBaseApp callbacks
-        void setup();
-		void update();
-		void draw();
-		void exit();
+		#ifdef TARGET_OF_IPHONE
+			public ofxiPhoneApp {
+		#else
+			public ofBaseApp {
+		#endif
+			
+			public:
 
-		void keyPressed(int key);
-		void keyReleased(int key);
+				RunnerApp(ofxApp* app);
+				~RunnerApp();
 
-		void mouseMoved(int x, int y);
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased();
-		void mouseReleased(int x, int y, int button);
+				// ofBaseApp callbacks
+				void setup();
+				void update();
+				void draw();
+				void exit();
+
+				void keyPressed(int key);
+				void keyReleased(int key);
+
+				void mouseMoved(int x, int y);
+				void mouseDragged(int x, int y, int button);
+				void mousePressed(int x, int y, int button);
+				void mouseReleased();
+				void mouseReleased(int x, int y, int button);
+				
+				void windowResized(int w, int h);
+				void dragEvent(ofDragInfo dragInfo);
+				void gotMessage(ofMessage msg);
+				
+			#ifdef TARGET_OF_IPHONE
+				// ofxIphone callbacks
+				void touchDown(ofTouchEventArgs & touch);
+				void touchMoved(ofTouchEventArgs & touch);
+				void touchUp(ofTouchEventArgs & touch);
+				void touchDoubleTap(ofTouchEventArgs & touch);
+				void touchCancelled(ofTouchEventArgs & touch);
+
+				void lostFocus();
+				void gotFocus();
+				void gotMemoryWarning();
+				void deviceOrientationChanged(int newOrientation);
+			#endif
+				
+				// ofBaseSoundInput callbacks
+				void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+				void audioIn(float * input, int bufferSize, int nChannels );
+				void audioReceived(float * input, int bufferSize, int nChannels);
+				
+				// ofBaseSoundOutput callbacks
+				void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+				void audioOut(float * output, int bufferSize, int nChannels);
+				void audioRequested(float * output, int bufferSize, int nChannels);
+				
+				ofxApp* getAppPtr() {return app;}
+				
+			private:
+			
+				ofxApp* app;
+		};
 		
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
-	#ifdef TARGET_OF_IPHONE
-		// ofxIphone callbacks
-		void touchDown(ofTouchEventArgs & touch);
-        void touchMoved(ofTouchEventArgs & touch);
-        void touchUp(ofTouchEventArgs & touch);
-        void touchDoubleTap(ofTouchEventArgs & touch);
-        void touchCancelled(ofTouchEventArgs & touch);
-
-        void lostFocus();
-        void gotFocus();
-        void gotMemoryWarning();
-        void deviceOrientationChanged(int newOrientation);
-	#endif
-		
-		// ofBaseSoundInput callbacks
-        void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-		void audioIn(float * input, int bufferSize, int nChannels );
-		void audioReceived(float * input, int bufferSize, int nChannels);
-        
-        // ofBaseSoundOutput callbacks
-        void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-		void audioOut(float * output, int bufferSize, int nChannels);
-		void audioRequested(float * output, int bufferSize, int nChannels);
-        
-        ofxApp* app;
+		friend class RunnerApp;  ///< used to wrap this app
 };

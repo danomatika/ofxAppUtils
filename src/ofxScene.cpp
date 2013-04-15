@@ -13,7 +13,18 @@
 /// RUNNER SCENE
 
 //--------------------------------------------------------------
-void ofxRunnerScene::setup() {
+ofxScene::RunnerScene::RunnerScene(ofxScene* scene) {
+	this->scene = scene;
+}
+
+//--------------------------------------------------------------
+ofxScene::RunnerScene::~RunnerScene() {
+	if(scene != NULL)
+		delete scene;
+}
+
+//--------------------------------------------------------------
+void ofxScene::RunnerScene::setup() {
 	if(!scene->_bSetup) {
 		scene->setup();
 		scene->_bSetup = true;
@@ -21,7 +32,7 @@ void ofxRunnerScene::setup() {
 }
 
 //--------------------------------------------------------------
-void ofxRunnerScene::update() {
+void ofxScene::RunnerScene::update() {
  	if(!scene->_bSetup || !scene->_bRunning)
 		return;
 
@@ -39,14 +50,14 @@ void ofxRunnerScene::update() {
 }
 		
 //--------------------------------------------------------------
-void ofxRunnerScene::draw() {
+void ofxScene::RunnerScene::draw() {
 	if(!scene->_bSetup)
 		return;
 	scene->draw();			
 }
 
 //--------------------------------------------------------------
-void ofxRunnerScene::exit() {
+void ofxScene::RunnerScene::exit() {
 	scene->exit();
 	if(!scene->_bSingleSetup) {
 		scene->_bSetup = false;

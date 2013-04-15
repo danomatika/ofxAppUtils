@@ -160,6 +160,12 @@ That's it. Check the example testApp::setup() for more info on startup settings.
 
 Note: this is completely optional. You can always handle the transforms etc yourself using an ofxTransformer instance, etc.
 
+#### ofxGetAppPtr
+
+Internally, calling `ofRunAppWithAppUtils` actually creates a wrapper ofBaseApp which then runs the given ofxApp. As a result, **calling `ofGetAppPtr()` does not work correctly** as it returns a pointer to the wrapper and not the app itself.
+
+In order to fix this, there is a new function added with ofxAppUtils called `ofxGetAppPtr()` (note the "x") which returns the correct pointer. If you are porting existing code, make sure to change any `ofGetAppPtr()` calls to `ofxGetAppPtr()`.
+
 DEVELOPING
 ----------
 

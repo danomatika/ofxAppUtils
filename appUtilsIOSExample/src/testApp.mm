@@ -41,12 +41,12 @@ void testApp::setup(){
 	//setTransforms(false, true, false, true, true);
 	
 	// load scenes
-	sceneManager.add(new TextScene(*this, "Scene One", "1"));
-	sceneManager.add(new TextScene(*this, "Scene Two", "2"));
-	sceneManager.add(new TextScene(*this, "Scene Three", "3"));
-	sceneManager.add(new TextScene(*this, "Scene A", "A"));
-	sceneManager.add(new TextScene(*this, "Scene B", "B"));
-	sceneManager.add(new TextScene(*this, "Scene C", "C"));
+	sceneManager.add(new TextScene("Scene One", "1"));
+	sceneManager.add(new TextScene("Scene Two", "2"));
+	sceneManager.add(new TextScene("Scene Three", "3"));
+	sceneManager.add(new TextScene("Scene A", "A"));
+	sceneManager.add(new TextScene("Scene B", "B"));
+	sceneManager.add(new TextScene("Scene C", "C"));
 	sceneManager.setup();
 	ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 	

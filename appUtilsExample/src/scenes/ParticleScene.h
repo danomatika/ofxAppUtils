@@ -12,15 +12,12 @@
 
 #include <ofxAppUtils.h>
 
-#include "../testApp.h"
-
 class ParticleScene : public ofxScene {
 
 	public:
 
-		// takes a reference of the parent app for data access,
 		// set the scene name through the base class initializer
-		ParticleScene(testApp &app) : ofxScene("Particles"), app(app) {
+		ParticleScene() : ofxScene("Particles") {
 			alpha = 255;
 			particles.setAutoRemove(false);	// don't remove particles if dead
 			
@@ -34,7 +31,7 @@ class ParticleScene : public ofxScene {
 		
 			// make some particles
 			for(unsigned int i = 0; i < 100; ++i) {
-				particles.addParticle(new Particle(app));
+				particles.addParticle(new Particle());
 			}
 		}
 
@@ -109,30 +106,33 @@ class ParticleScene : public ofxScene {
 		// used for fade in and out
 		ofxTimer timer;
 		int alpha;
-		
-		// the parent
-		testApp& app;
 
 		// particle class		
 		class Particle : public ofxParticle {
 
 			public:
 			
-				// takes a reference of the parent app for data access,
-				// here used to get the size of the render area
-				// you can also cast the ofxApp reference to your own derived
-				// class to pass custom data:
-				//
-				// TestApp& testApp = static_cast<TestApp&> (app);
-				//
-				Particle(ofxApp& app) : app(app) {
+				Particle() {
+				
+					// get a pointer to the parent app for data access,
+					// here used to get the size of the render area
+					// you can also cast the ofxApp reference to your own derived
+					// class to pass custom data:
+					//
+					// TestApp* testApp = (TestApp*) (ofxGetAppPtr());
+					//
+					// NOTE: you must use "ofxGetAppPtr()" <-- note the "x",
+					// this is a replacement for "ofGetAppPtr()" which does not
+					// return the pointer to the correct app instance
+					//
+					app = ofxGetAppPtr();
 				
 					// ofxParticle is derived from ofRectangle
 					// so these variables are built in
 					width = ofRandom(10, 40);
 					height = width;
-					x = ofRandom(width/2, app.getRenderWidth());
-					y = ofRandom(height/2, app.getRenderHeight());
+					x = ofRandom(width/2, app->getRenderWidth());
+					y = ofRandom(height/2, app->getRenderHeight());
 					
 					vel.set(ofRandom(-5, 5), ofRandom(-5, 5));
 				}
@@ -148,8 +148,8 @@ class ParticleScene : public ofxScene {
 						x = width/2;
 						vel.x = -vel.x;
 					}
-					else if(x > app.getRenderWidth()-width/2) {
-						x = app.getRenderWidth()-width/2;
+					else if(x > app->getRenderWidth()-width/2) {
+						x = app->getRenderWidth()-width/2;
 						vel.x = -vel.x;
 					}
 					
@@ -158,8 +158,8 @@ class ParticleScene : public ofxScene {
 						y = height/2;
 						vel.y = -vel.y;
 					}
-					else if(y > app.getRenderHeight()-height/2) {
-						y = app.getRenderHeight()-height/2;
+					else if(y > app->getRenderHeight()-height/2) {
+						y = app->getRenderHeight()-height/2;
 						vel.y = -vel.y;
 					}
 				}
@@ -168,8 +168,8 @@ class ParticleScene : public ofxScene {
 					ofRect(*this);	// <- use this object as an ofRectangle
 				}
 				
+				ofxApp *app;
 				ofVec2f vel;
-				ofxApp& app;
 		};
 		
 		// particle manager to wrangle our little ones

@@ -13,8 +13,6 @@
 #include "ofMain.h"
 #include "ofxAppUtils.h"
 
-#include "testApp.h"
-
 // a simple scene that displays some BIG TEXT in the center of the screen
 class TextScene : public ofxScene {
 	
@@ -22,7 +20,7 @@ class TextScene : public ofxScene {
 
 		// takes a reference of the parent for data access,
 		// set the scene name through the base class initializer
-		TextScene(testApp &app, string name, string t) : app(app), ofxScene(name) {
+		TextScene(string name, string t) : ofxScene(name) {
 			text = t;
 			alpha = 255;
 //			// we want setup to be called each time the scene is loaded
@@ -91,11 +89,14 @@ class TextScene : public ofxScene {
 
 		// draw
         void draw() {
+		
+			ofxApp *app = ofxGetAppPtr();
+		
 			ofEnableAlphaBlending();
 			ofSetColor(255, 255, 255, alpha);	// alpha for fade in/out
 			font.drawString(text,
-				app.getRenderWidth()/2-bbox.width/2,
-				app.getRenderHeight()/2+bbox.height/2);
+				app->getRenderWidth()/2-bbox.width/2,
+				app->getRenderHeight()/2+bbox.height/2);
 			ofDisableAlphaBlending();
 		}
 		
@@ -145,9 +146,6 @@ class TextScene : public ofxScene {
 		// used for fade in and out
 		ofxTimer timer;
 		int alpha;
-		
-		// the parent
-		testApp& app;
 };
 
 // statics

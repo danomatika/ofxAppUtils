@@ -47,8 +47,8 @@ void testApp::setup() {
     loadWarpSettings();
 	
 	// load scenes
-	sceneManager.add(new ParticleScene(*this));
-	sceneManager.add(new LineScene(*this));
+	sceneManager.add(new ParticleScene());
+	sceneManager.add(new LineScene());
 	sceneManager.setup(true);	// true = setup all the scenes now (not on the fly)
 	ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 	

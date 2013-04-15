@@ -79,6 +79,9 @@ class ofxSceneManager {
 		/// returns -1 if there is no current scene
 		int getCurrentSceneIndex();
 		
+		/// returns the current number of scenes
+		int getNumScenes()	{return _scenes.size();}
+		
 		// \section Util
 		
 		/// get/set the minimum allowed time between scene changes in ms
@@ -147,7 +150,7 @@ class ofxSceneManager {
 		void changeToNewScene();
 		
 		/// wrapper around iter + advance
-		ofxRunnerScene* _getRunnerSceneAt(int index);
+		ofxScene::RunnerScene* _getRunnerSceneAt(int index);
 	
 		/// valid scene index value enums
         enum {
@@ -156,12 +159,12 @@ class ofxSceneManager {
         };
 	
 		ofxScene*	_currentScenePtr;       ///< pointer to the current scene
-        ofxRunnerScene* _currentRunnerScenePtr;  ///< pointer to the current runner scene
+        ofxScene::RunnerScene* _currentRunnerScenePtr;  ///< pointer to the current runner scene
 		int _currentScene;	///< the current scene, < 0 if none
 		int _newScene;		///< scene to change to
 		bool _bChangeNow;	///< ignore enter and exit when changing scenes?
 		
-		std::map<std::string, ofxRunnerScene*> _scenes;	///< scenes
+		std::map<std::string, ofxScene::RunnerScene*> _scenes;	///< scenes
 	
 		bool _bSignalledAutoChange;		///< has an automatic change been called?
 		unsigned int _minChangeTimeMS;	///< minimum ms to wait before accepting scene change commands

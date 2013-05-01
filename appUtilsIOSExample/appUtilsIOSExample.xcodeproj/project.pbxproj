@@ -10,7 +10,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		3048CFE6162C21F1007F82AF /* data in Resources */ = {isa = PBXBuildFile; fileRef = 3048CFE5162C21F1007F82AF /* data */; };
+		302455AB173160620016583B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302455AA173160620016583B /* Default-568h@2x.png */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		57178b2f9865d0f7a2408d49162c4bb7 /* ofxParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55b76645e4d8d78efd4175aebd95546f /* ofxParticle.cpp */; };
@@ -60,9 +60,7 @@
 		1D6058910D05DD3D006BFB54 /* appUtilsIOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appUtilsIOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		3048CFE3162C21E6007F82AF /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
-		3048CFE4162C21E6007F82AF /* TextScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextScene.h; sourceTree = "<group>"; };
-		3048CFE5162C21F1007F82AF /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
+		302455AA173160620016583B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhone_Prefix.pch; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -74,6 +72,7 @@
 		6ba8a23114597204d5c6876730b1b0e7 /* ofxSceneManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSceneManager.h; path = ../../../addons/ofxAppUtils/src/ofxSceneManager.h; sourceTree = SOURCE_ROOT; };
 		75ff1054d5948d7eddd30e442ed0d1c7 /* ofxTransformer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxTransformer.cpp; path = ../../../addons/ofxAppUtils/src/ofxTransformer.cpp; sourceTree = SOURCE_ROOT; };
 		83527a3e3c29064bb9b26ac52c4f62df /* ofxSceneManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSceneManager.cpp; path = ../../../addons/ofxAppUtils/src/ofxSceneManager.cpp; sourceTree = SOURCE_ROOT; };
+		8a7335d8bf4a40e1d18aa1264dcf2a48 /* Button.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Button.h; path = src/Button.h; sourceTree = SOURCE_ROOT; };
 		917e84e4f57957f7a5bd76f7d895f5be /* ofxTimer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTimer.h; path = ../../../addons/ofxAppUtils/src/ofxTimer.h; sourceTree = SOURCE_ROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB16EBD80F2B2AB500518274 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -93,6 +92,7 @@
 		ad4ed35c34c7716523e3f68ed553596c /* ofxApp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxApp.h; path = ../../../addons/ofxAppUtils/src/ofxApp.h; sourceTree = SOURCE_ROOT; };
 		b8171158aaaa0027520eeaf7170937a7 /* ofxParticleManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxParticleManager.h; path = ../../../addons/ofxAppUtils/src/ofxParticleManager.h; sourceTree = SOURCE_ROOT; };
 		cfe9ee9d8e455627cea7347f341c5157 /* ofxTransformer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxTransformer.h; path = ../../../addons/ofxAppUtils/src/ofxTransformer.h; sourceTree = SOURCE_ROOT; };
+		d31033f359a4b7a975a031b444c6f197 /* TextScene.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TextScene.h; path = src/TextScene.h; sourceTree = SOURCE_ROOT; };
 		ea11f25c2eedd0cc8b994e63023aab87 /* ofxParticle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxParticle.h; path = ../../../addons/ofxAppUtils/src/ofxParticle.h; sourceTree = SOURCE_ROOT; };
 		fc7e9b4a22d8921421c51e3c083de4a1 /* ofxScene.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxScene.cpp; path = ../../../addons/ofxAppUtils/src/ofxScene.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -157,7 +157,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				3048CFE5162C21F1007F82AF /* data */,
+				302455AA173160620016583B /* Default-568h@2x.png */,
 				E4D8936A11527B74007E1F53 /* src */,
 				BB24E1F710DAA51900E9C588 /* openFrameworks */,
 				BB16F26B0F2B646B00518274 /* addons */,
@@ -242,11 +242,11 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				3048CFE3162C21E6007F82AF /* Button.h */,
-				3048CFE4162C21E6007F82AF /* TextScene.h */,
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				8a7335d8bf4a40e1d18aa1264dcf2a48 /* Button.h */,
+				d31033f359a4b7a975a031b444c6f197 /* TextScene.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -321,7 +321,7 @@
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
-				3048CFE6162C21F1007F82AF /* data in Resources */,
+				302455AB173160620016583B /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +377,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -388,7 +390,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
@@ -420,6 +424,10 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DOFX_APP_UTILS_NO_XML",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -453,6 +461,10 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DOFX_APP_UTILS_NO_XML",
+				);
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -467,7 +467,7 @@ void ofxSceneManager::changeToNewScene() {
 	_currentScene = _newScene;
 	_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
 	
-	if(_currentScene != SCENE_NONE) {
+	if(_currentRunnerScenePtr) {
 		_currentScenePtr = _currentRunnerScenePtr->scene;
 		ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
 			<< " \"" << _currentScenePtr->getName() << "\"";

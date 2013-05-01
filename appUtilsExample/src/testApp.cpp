@@ -191,5 +191,5 @@ void testApp::mouseReleased(int x, int y, int button) {
 void testApp::windowResized(int w, int h) {
 
 	// set up transforms with new screen size
-	setNewScreenSize(w,h);
+	setNewScreenSize(w, h);
 }

@@ -23,8 +23,6 @@ class TextScene : public ofxScene {
 		TextScene(string name, string t) : ofxScene(name) {
 			text = t;
 			alpha = 255;
-//			// we want setup to be called each time the scene is loaded
-//			setSingleSetup(false);
 		}
 
 		// scene setup

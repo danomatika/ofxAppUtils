@@ -39,6 +39,7 @@ void testApp::setup() {
 	// load saved control panel settings
 	// loads and saves to "controlPanelSettings.xml" in the data folder
 	// or use your own filename
+	// note: this may override what was set with setTransforms
 	loadControlSettings();
     
     // load saved quad warper settings

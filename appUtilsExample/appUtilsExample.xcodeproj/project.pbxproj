@@ -318,9 +318,9 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */,
 				545a41ea96119ebe7256c4855cd4bef0 /* ofxAppUtils */,
 				3598f21374bfca3edce76f188ab795da /* ofxControlPanel */,
-				1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -557,6 +557,10 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
+				63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */,
+				933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */,
+				9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */,
+				5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */,
 				e82eba1255fe3ac639fca904fac42b75 /* ofxApp.cpp in Sources */,
 				57178b2f9865d0f7a2408d49162c4bb7 /* ofxParticle.cpp in Sources */,
 				d8c70db2bc6120d71ebf23dc1d153805 /* ofxQuadWarper.cpp in Sources */,
@@ -590,10 +594,6 @@
 				8a230fb96662fb1ab1611b8abe9f6648 /* simpleColor.cpp in Sources */,
 				9fef7afad4ddffd2a55aa54a1c323431 /* simpleFileLister.cpp in Sources */,
 				d41b30cf66da734f99a45d5e96d168e4 /* simpleLogger.cpp in Sources */,
-				63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */,
-				933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */,
-				9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */,
-				5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,18 +632,20 @@
 					"$(OF_CORE_HEADERS)",
 					src,
 					src/scenes,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 					../../../addons/ofxAppUtils/libs,
 					../../../addons/ofxAppUtils/src,
 					../../../addons/ofxControlPanel/libs,
 					../../../addons/ofxControlPanel/src,
-					../../../addons/ofxXmlSettings/libs,
-					../../../addons/ofxXmlSettings/src,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 					"-mtune=native",
+					"-DOFX_APP_UTILS_USE_CONTROL_PANEL",
 				);
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -672,18 +674,20 @@
 					"$(OF_CORE_HEADERS)",
 					src,
 					src/scenes,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 					../../../addons/ofxAppUtils/libs,
 					../../../addons/ofxAppUtils/src,
 					../../../addons/ofxControlPanel/libs,
 					../../../addons/ofxControlPanel/src,
-					../../../addons/ofxXmlSettings/libs,
-					../../../addons/ofxXmlSettings/src,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 					"-mtune=native",
+					"-DOFX_APP_UTILS_USE_CONTROL_PANEL",
 				);
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -767,12 +771,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"-D__MACOSX_CORE__",
-					"-lpthread",
-					"-mtune=native",
-					"-DOFX_APP_UTILS_USE_CONTROL_PANEL",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
@@ -859,12 +857,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"-D__MACOSX_CORE__",
-					"-lpthread",
-					"-mtune=native",
-					"-DOFX_APP_UTILS_USE_CONTROL_PANEL",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

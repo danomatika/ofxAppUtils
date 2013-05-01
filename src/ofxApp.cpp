@@ -110,15 +110,15 @@ void ofxApp::addTransformControls(int panelNum, int panelCol) {
 		controlPanel.setWhichPanel(panelNum);
 	}
 	controlPanel.setWhichColumn(panelCol);
-	controlPanel.addSlider2D("position", "transformPosition", 0, 0,
+	controlPanel.addSlider2D("position", "transformPosition", getOriginX(), getOriginY(),
 							 -getRenderWidth(), getRenderWidth(),
 							 -getRenderHeight(), getRenderHeight(), false);
-	controlPanel.addSlider("z", "transformZ", 0, -1000, 200, false);
-	controlPanel.addToggle("keep aspect", "transformAspect", false);
-	controlPanel.addToggle("center rendering", "transformCenter", false);
-	controlPanel.addToggle("mirror x", "transformMirrorX", false);
-	controlPanel.addToggle("mirror y", "transformMirrorY", false);
-	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", false);
+	controlPanel.addSlider("z", "transformZ", getOriginZ(), -1000, 200, false);
+	controlPanel.addToggle("keep aspect", "transformAspect", getOriginTranslate());
+	controlPanel.addToggle("center rendering", "transformCenter", getCentering());
+	controlPanel.addToggle("mirror x", "transformMirrorX", getMirrorX());
+	controlPanel.addToggle("mirror y", "transformMirrorY", getMirrorY());
+	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", getWarp());
 	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
 	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
 	_bTransformControls = true;

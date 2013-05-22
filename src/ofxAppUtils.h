@@ -20,7 +20,7 @@
 /// replace ofRunApp with this in main.cpp ...
 inline void ofRunAppWithAppUtils(ofxApp* app) {
 
-    // wrap up user app with runner
+	// wrap up user app with runner
 	#ifdef TARGET_OF_IPHONE
 		ofRunApp((ofxiPhoneApp*) new ofxApp::RunnerApp(app));
 	#else

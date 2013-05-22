@@ -33,7 +33,7 @@ void ofxScene::RunnerScene::setup() {
 
 //--------------------------------------------------------------
 void ofxScene::RunnerScene::update() {
- 	if(!scene->_bSetup || !scene->_bRunning)
+	if(!scene->_bSetup || !scene->_bRunning)
 		return;
 
 	if(scene->_bEntering) {

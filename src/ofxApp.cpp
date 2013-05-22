@@ -203,14 +203,14 @@ void ofxApp::RunnerApp::setup() {
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::update() {
 
-    app->mouseX = mouseX;
-    app->mouseY = mouseY;
+	app->mouseX = mouseX;
+	app->mouseY = mouseY;
 
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-    ofxControlPanel& controlPanel = app->controlPanel;
+	ofxControlPanel& controlPanel = app->controlPanel;
 
 	if(app->_bTransformControls) {
-    
+	
 		// grab control panel variables
 		app->_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
 						 controlPanel.getValueF("transformPosition", 1),	// y
@@ -297,17 +297,17 @@ void ofxApp::RunnerApp::draw() {
 	}
 	
 	if(app->bDebug) {
-        stringstream text;
+		stringstream text;
 		
 		// draw the quad warper editor
 		if(app->_bEditingWarpPoints) {
 		
 			ofSetHexColor(0x00FF00);
 			text << "Quad Warper Edit Mode" << endl
-                 << "Drag from the corners of the screen" << endl
-                 << "Click center rectangle to exit";
-            ofDrawBitmapString(text.str(), 28, 28);
-            text.str("");
+				 << "Drag from the corners of the screen" << endl
+				 << "Click center rectangle to exit";
+			ofDrawBitmapString(text.str(), 28, 28);
+			text.str("");
 				
 			// draw center exit box
 			ofNoFill();
@@ -335,22 +335,22 @@ void ofxApp::RunnerApp::exit() {
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::keyPressed(int key) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->keyPressed(key);
 	app->keyPressed(key);
 
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-    if(app->bDebug) {
-        app->controlPanel.keyPressed(key);
-    }
+	if(app->bDebug) {
+		app->controlPanel.keyPressed(key);
+	}
 #endif
 }
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::keyReleased(int key) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->keyReleased(key);
-    app->keyReleased(key);
+	app->keyReleased(key);
 }
 
 //--------------------------------------------------------------
@@ -422,12 +422,12 @@ void ofxApp::RunnerApp::mousePressed(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::mouseReleased() {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->mouseReleased();
-    app->mouseReleased();
+	app->mouseReleased();
 
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-    if(app->bDebug) {
+	if(app->bDebug) {
 		if(!app->_bEditingWarpPoints) {
 			app->controlPanel.mouseReleased();
 		}
@@ -455,60 +455,60 @@ void ofxApp::RunnerApp::mouseReleased(int x, int y, int button) {
 void ofxApp::RunnerApp::windowResized(int w, int h) {
 	if(app->_sceneManager)
 		app->_sceneManager->windowResized(w, h);
-    app->windowResized(w, h);
+	app->windowResized(w, h);
 }
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::dragEvent(ofDragInfo dragInfo) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->dragEvent(dragInfo);
-    app->dragEvent(dragInfo);
+	app->dragEvent(dragInfo);
 }
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::gotMessage(ofMessage msg){
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->gotMessage(msg);
-    app->gotMessage(msg);
+	app->gotMessage(msg);
 }
 
 // ofBaseSoundInput
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
-    app->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+	app->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
 }
 
 void ofxApp::RunnerApp::audioIn(float * input, int bufferSize, int nChannel ) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->audioIn(input, bufferSize, nChannel);
-    app->audioIn(input, bufferSize, nChannel);
+	app->audioIn(input, bufferSize, nChannel);
 }
 void ofxApp::RunnerApp::audioReceived(float * input, int bufferSize, int nChannels) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->audioIn(input, bufferSize, nChannels);
-    app->audioIn(input, bufferSize, nChannels);
+	app->audioIn(input, bufferSize, nChannels);
 }
 
 // ofBaseSoundOutput
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
-    app->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+	app->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
 }
 
 void ofxApp::RunnerApp::audioOut(float * output, int bufferSize, int nChannels) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels);
-    app->audioOut(output, bufferSize, nChannels);
+	app->audioOut(output, bufferSize, nChannels);
 }
 
 void ofxApp::RunnerApp::audioRequested(float * output, int bufferSize, int nChannels) {
-    if(app->_sceneManager)
+	if(app->_sceneManager)
 		app->_sceneManager->audioOut(output, bufferSize, nChannels);
-    app->audioOut(output, bufferSize, nChannels);
+	app->audioOut(output, bufferSize, nChannels);
 }
 
 #ifdef TARGET_OF_IPHONE
@@ -517,49 +517,49 @@ void ofxApp::RunnerApp::audioRequested(float * output, int bufferSize, int nChan
 void ofxApp::RunnerApp::touchDown(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchDown(touch);
-    app->touchDown(touch);
+	app->touchDown(touch);
 }
 
 void ofxApp::RunnerApp::touchMoved(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchMoved(touch);
-    app->touchMoved(touch);
+	app->touchMoved(touch);
 }
 
 void ofxApp::RunnerApp::touchUp(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchUp(touch);
-    app->touchUp(touch);
+	app->touchUp(touch);
 }
 
 void ofxApp::RunnerApp::touchDoubleTap(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchDoubleTap(touch);
-    app->touchDoubleTap(touch);
+	app->touchDoubleTap(touch);
 }
 
 void ofxApp::RunnerApp::touchCancelled(ofTouchEventArgs & touch) {
 	if(app->_sceneManager)
 		app->_sceneManager->touchCancelled(touch);
-    app->touchCancelled(touch);
+	app->touchCancelled(touch);
 }
 
 void ofxApp::RunnerApp::lostFocus() {
 	if(app->_sceneManager)
 		app->_sceneManager->lostFocus();
-    app->lostFocus();
+	app->lostFocus();
 }
 
 void ofxApp::RunnerApp::gotFocus() {
 	if(app->_sceneManager)
 		app->_sceneManager->gotFocus();
-    app->gotFocus();
+	app->gotFocus();
 }
 
 void ofxApp::RunnerApp::gotMemoryWarning() {
 	if(app->_sceneManager)
 		app->_sceneManager->gotMemoryWarning();
-    app->gotMemoryWarning();
+	app->gotMemoryWarning();
 }
 
 void ofxApp::RunnerApp::deviceOrientationChanged(int newOrientation) {

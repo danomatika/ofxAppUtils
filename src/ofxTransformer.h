@@ -13,8 +13,8 @@
 #include "ofxQuadWarper.h"
 
 /**
-    \class  Transformer
-    \brief  a render transformer
+	\class  Transformer
+	\brief  a render transformer
 **/
 class ofxTransformer {
 

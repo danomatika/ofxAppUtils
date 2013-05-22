@@ -13,8 +13,8 @@
 #include "ofVectorMath.h"
 
 /**
-    \class  QuadWarper
-    \brief  a gl matrix transform quad warper
+	\class  QuadWarper
+	\brief  a gl matrix transform quad warper
 **/
 class ofxQuadWarper {
 
@@ -50,5 +50,5 @@ class ofxQuadWarper {
 		
 		// projection warping matrices
 		double _warpMatrix[3][3];
-        GLfloat _glWarpMatrix[16];
+		GLfloat _glWarpMatrix[16];
 };

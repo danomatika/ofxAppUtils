@@ -22,19 +22,20 @@ ofxSceneManager::ofxSceneManager() :
 }
 
 //--------------------------------------------------------------
-void ofxSceneManager::add(ofxScene* scene) {
+ofxScene* ofxSceneManager::add(ofxScene* scene) {
 	if(scene == NULL) {
 		ofLogWarning("ofxSceneManager") << "Cannot add NULL scene";
-		return;
+		return NULL;
 	}
 
 	if(_scenes.find(scene->getName()) != _scenes.end()) {
 		ofLogWarning("ofxSceneManager") << "Scene \"" << scene->getName()
 									 << "\" already added, only unique names allowed";
-		return;
+		return NULL;
 	}
 	
 	_scenes.insert(_scenes.end(), pair<std::string,ofxScene::RunnerScene*>(scene->getName(), new ofxScene::RunnerScene(scene)));
+	return scene;
 }
 		
 //--------------------------------------------------------------
@@ -83,11 +84,11 @@ void ofxSceneManager::setup(bool loadAll) {
 			ofxScene::RunnerScene* s = (*iter).second;
 			s->setup();
 		}
-    } else {	// load the current one only
-        if(!_scenes.empty() && _currentScene >= 0) {
+	} else {	// load the current one only
+		if(!_scenes.empty() && _currentScene >= 0) {
 			_currentRunnerScenePtr->setup();
-        }
-    }
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -96,7 +97,7 @@ void ofxSceneManager::run(bool run) {
 		_currentScenePtr->run(run);
 		ofLogVerbose("ofxSceneManager") << "SCENE " << _currentScenePtr->getName()
 					  << " RUN: " << _currentScenePtr->isRunning();
-    }
+	}
 }
 
 //--------------------------------------------------------------
@@ -128,26 +129,26 @@ void ofxSceneManager::noScene(bool now) {
 //--------------------------------------------------------------
 void ofxSceneManager::nextScene(bool now) {
 	if(_currentScene+1 >= (int) _scenes.size()) {
-        gotoScene(0, now);
-    } else {
-        gotoScene(_currentScene+1, now);
-    }
+		gotoScene(0, now);
+	} else {
+		gotoScene(_currentScene+1, now);
+	}
 }
 
 //--------------------------------------------------------------
 void ofxSceneManager::prevScene(bool now) {
 	if(_currentScene-1 < 0) {
-        gotoScene(_scenes.size()-1, now);
-    } else {
-        gotoScene(_currentScene-1, now);
-    }
+		gotoScene(_scenes.size()-1, now);
+	} else {
+		gotoScene(_currentScene-1, now);
+	}
 }
 
 //--------------------------------------------------------------
 void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 	if(_scenes.empty() || index >= _scenes.size() ||
 	   _sceneChangeTimer.getDiff() < _minChangeTimeMS)
-        return;
+		return;
 
 	ofxScene* s;
 	if(_currentScene == (int) index) {
@@ -306,11 +307,11 @@ void ofxSceneManager::mouseReleased(int x, int y, int button) {
 
 // call resize on all scenes
 void ofxSceneManager::windowResized(int w, int h) {
-    map<std::string,ofxScene::RunnerScene*>::iterator iter;
-    for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-        ofxScene::RunnerScene* s = (*iter).second;
-        s->windowResized(w, h);
-    }
+	map<std::string,ofxScene::RunnerScene*>::iterator iter;
+	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
+		ofxScene::RunnerScene* s = (*iter).second;
+		s->windowResized(w, h);
+	}
 }
 
 void ofxSceneManager::dragEvent(ofDragInfo dragInfo) {
@@ -320,7 +321,7 @@ void ofxSceneManager::dragEvent(ofDragInfo dragInfo) {
 }
 
 void ofxSceneManager::gotMessage(ofMessage msg){
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->gotMessage(msg);
 	}
 }
@@ -379,28 +380,28 @@ void ofxSceneManager::gotMemoryWarning() {
 // call on all scenes
 void ofxSceneManager::deviceOrientationChanged(int newOrientation) {
 	map<std::string,ofxScene::RunnerScene*>::iterator iter;
-    for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-        ofxScene::RunnerScene* s = (*iter).second;
-        s->deviceOrientationChanged(newOrientation);
-    }
+	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
+		ofxScene::RunnerScene* s = (*iter).second;
+		s->deviceOrientationChanged(newOrientation);
+	}
 }
 #endif
 
 // ofBaseSoundInput
 //--------------------------------------------------------------
 void ofxSceneManager::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
 	}
 }
 
 void ofxSceneManager::audioIn(float * input, int bufferSize, int nChannel ) {
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannel);
 	}
 }
 void ofxSceneManager::audioReceived(float * input, int bufferSize, int nChannels) {
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannels);
 	}
 }
@@ -408,19 +409,19 @@ void ofxSceneManager::audioReceived(float * input, int bufferSize, int nChannels
 // ofBaseSoundOutput
 //--------------------------------------------------------------
 void ofxSceneManager::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
 	}
 }
 
 void ofxSceneManager::audioOut(float * output, int bufferSize, int nChannels) {
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels);
 	}
 }
 
 void ofxSceneManager::audioRequested(float * output, int bufferSize, int nChannels) {
-    if(!_scenes.empty() && _currentScene >= 0) {
+	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels);
 	}
 }
@@ -431,34 +432,34 @@ void ofxSceneManager::audioRequested(float * output, int bufferSize, int nChanne
 void ofxSceneManager::_handleSceneChanges() {
 
 	// do the actual main scene change
-    if(_newScene != SCENE_NOCHANGE) {
+	if(_newScene != SCENE_NOCHANGE) {
 	
-        // ignore duplicates
-        if(_newScene == _currentScene) {
-            
+		// ignore duplicates
+		if(_newScene == _currentScene) {
+			
 			if(_newScene == SCENE_NONE) { // nothing to do
 				return;
 			}
 			
 			// not done entering
 			if(_currentScenePtr->isEntering()) {
-                _newScene = SCENE_NOCHANGE;
-                ofLogWarning("ofxSceneManager") << "Ignoring duplicate scene change, "
-                          	<< "current scene is not done entering";
+				_newScene = SCENE_NOCHANGE;
+				ofLogWarning("ofxSceneManager") << "Ignoring duplicate scene change, "
+							<< "current scene is not done entering";
 				_sceneChangeTimer.set();
 			}
-        }
+		}
 
-        // only change to the new scene if the old scene is done exiting
-        if(_currentScene > SCENE_NONE) {
-            if(_bChangeNow || !_currentScenePtr->isExiting()) {
-                _currentRunnerScenePtr->exit();
+		// only change to the new scene if the old scene is done exiting
+		if(_currentScene > SCENE_NONE) {
+			if(_bChangeNow || !_currentScenePtr->isExiting()) {
+				_currentRunnerScenePtr->exit();
 				changeToNewScene();				
 			}
-        } else {   // no current scene to wait for
+		} else {   // no current scene to wait for
 			changeToNewScene();
-        }
-    }
+		}
+	}
 }
 
 //--------------------------------------------------------------

@@ -30,13 +30,13 @@ class ParticleScene : public ofxScene {
 			timer.set();
 		
 			// make some particles
-			for(unsigned int i = 0; i < 100; ++i) {
+			for(unsigned int i = 0; i < s_maxNumParticles/2; ++i) {
 				particles.addParticle(new Particle());
 			}
 		}
 
 		// called when scene is entering
-       	void updateEnter() {
+		void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
@@ -59,12 +59,12 @@ class ParticleScene : public ofxScene {
 		}
 
 		// normal update
-        void update() {
+		void update() {
 			particles.update();
 		}
 
 		// called when scene is exiting
-        void updateExit() {
+		void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
@@ -87,7 +87,7 @@ class ParticleScene : public ofxScene {
 		}
 
 		// draw
-        void draw() {
+		void draw() {
 			ofEnableAlphaBlending();
 			ofFill();
 			ofSetRectMode(OF_RECTMODE_CENTER);
@@ -101,6 +101,19 @@ class ParticleScene : public ofxScene {
 		// cleanup
 		void exit() {
 			particles.clear();
+		}
+		
+		// add/remove particles
+		void addOneParticle() {
+			if(particles.size() < s_maxNumParticles) {
+				particles.addParticle(new Particle());
+			}
+		}
+		
+		void removeOneParticle() {
+			if(particles.size() > 1) { // leave 1 lonely particle ...
+				particles.popNewestParticle();
+			}
 		}
 		
 		// used for fade in and out
@@ -174,4 +187,7 @@ class ParticleScene : public ofxScene {
 		
 		// particle manager to wrangle our little ones
 		ofxParticleManager particles;
+		
+		// max number of allowed particles
+		static const int s_maxNumParticles = 100;
 };

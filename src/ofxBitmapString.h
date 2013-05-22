@@ -31,7 +31,7 @@
 class ofxBitmapString
 {
 
-    public:
+	public:
 
 		ofxBitmapString(const ofPoint & p) {
 			pos = p;
@@ -42,28 +42,28 @@ class ofxBitmapString
 		}
 		
 		/// does the actual printing on when the ostream is done
-        ~ofxBitmapString() {
+		~ofxBitmapString() {
 			ofDrawBitmapString(message.str(), pos.x, pos.y, pos.z);
 		}
 		
 		/// catch the << ostream with a template class to read any type of data
-        template <class T> 
+		template <class T> 
 		ofxBitmapString& operator<<(const T& value) {
-            message << value;
-            return *this;
-        }
+			message << value;
+			return *this;
+		}
 
-        /// catch the << ostream function pointers such as std::endl and std::hex
-        ofxBitmapString& operator<<(std::ostream& (*func)(std::ostream&)) {
+		/// catch the << ostream function pointers such as std::endl and std::hex
+		ofxBitmapString& operator<<(std::ostream& (*func)(std::ostream&)) {
 			func(message);
-            return *this;
-        }
+			return *this;
+		}
 		
 	private:
 	
 		ofPoint pos;				///< temp position
-        std::ostringstream message;	///< temp buffer
+		std::ostringstream message;	///< temp buffer
 		
 		ofxBitmapString(ofxBitmapString const&) {}        		// not defined, not copyable
-        ofxBitmapString& operator=(ofxBitmapString& from) {return *this;}	// not defined, not assignable
+		ofxBitmapString& operator=(ofxBitmapString& from) {return *this;}	// not defined, not assignable
 };

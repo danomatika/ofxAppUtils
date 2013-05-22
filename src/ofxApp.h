@@ -29,12 +29,12 @@
 class ofxSceneManager;
 
 /**
-    \class  App
-    \brief  application implementation with automatic transforms and projection mapping,
+	\class  App
+	\brief  application implementation with automatic transforms and projection mapping,
 			includes an optional built-in ofxControlPanel
-            
-    simply inherit from this class and implement the regular app callbacks
-    ie setup(), update(), draw(), etc
+			
+	simply inherit from this class and implement the regular app callbacks
+	ie setup(), update(), draw(), etc
 **/
 class ofxApp :
 
@@ -49,7 +49,7 @@ class ofxApp :
 	
 		ofxApp();
 		virtual ~ofxApp() {}
-        
+		
 		/// screen mirroring
 		void setMirror(bool mirrorX, bool mirrorY);
 		void setMirrorX(bool mirrorX);

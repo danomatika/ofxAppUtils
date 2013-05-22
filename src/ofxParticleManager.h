@@ -13,85 +13,107 @@
 #include "ofxParticle.h"
 
 /**
-    \class  ofxParticleManager
-    \brief  base class that creates, manages, and destroys particles
+	\class  ofxParticleManager
+	\brief  base class that creates, manages, and destroys particles
 **/
 class ofxParticleManager {
-    public:
+	public:
 
-        ofxParticleManager(bool autoRemove=true) : bAutoRemove(autoRemove) {}
-        virtual ~ofxParticleManager() {
-            clear();    // cleanup
-        }
+		ofxParticleManager(bool autoRemove=true) : bAutoRemove(autoRemove) {}
+		virtual ~ofxParticleManager() {
+			clear();    // cleanup
+		}
 
-        /// add a particle to the particle list,
-        /// note: the particle will be destroyed by this object
-        void addParticle(ofxParticle* particle) {
-            if(particle == NULL) {
+		/// add a particle to the particle list,
+		/// note: the particle will be destroyed by this object
+		void addParticle(ofxParticle* particle) {
+			if(particle == NULL) {
 				ofLogWarning("ofxParticleManager") << "Cannot add NULL particle";
 				return;
 			}
-            particleList.push_back(particle);
-        }
+			particleList.push_back(particle);
+		}
+		
+		void popOldestParticle() {
+			if(!particleList.empty()) {
+				particleList.erase(particleList.begin());
+			}
+		}
+		
+		void popNewestParticle() {
+			if(!particleList.empty()) {
+				particleList.pop_back();
+			}
+		}
 
-        /// clear (delete) all particles in the particle list
-        void clear() {
-            std::vector<ofxParticle*> ::iterator iter;
-            for(iter = particleList.begin(); iter != particleList.end(); ++iter) {
-                if((*iter) != NULL) {
-                    delete (*iter);
-                }
-            }
-            particleList.clear();
-        }
+		/// clear (delete) all particles in the particle list
+		void clear() {
+			std::vector<ofxParticle*> ::iterator iter;
+			for(iter = particleList.begin(); iter != particleList.end(); ++iter) {
+				if((*iter) != NULL) {
+					delete (*iter);
+				}
+			}
+			particleList.clear();
+		}
+		
+		// get the number of particles
+		unsigned int size() {
+			return particleList.size();
+		}
+		
+		// are there any particles at all?
+		bool empty() {
+			return particleList.empty();
+		}
 
-        /// automatically remove (delete) dead particles?
-        inline bool getAutoRemove() {return bAutoRemove;}
-        void setAutoRemove(bool yesno) {bAutoRemove = yesno;}
+		/// automatically remove (delete) dead particles?
+		inline bool getAutoRemove() {return bAutoRemove;}
+		void setAutoRemove(bool yesno) {bAutoRemove = yesno;}
 
-        /// update all particles
-        virtual void update() {
-            std::vector<ofxParticle*> ::iterator iter;
-            for(iter = particleList.begin(); iter != particleList.end();) {
-                // remove particle if it's NULL
-                if((*iter) == NULL) {
-                    ofLogWarning("ofxParticleManager") << "update(): removing NULL particle";
-                    iter = particleList.erase(iter);
-                }
-                else {
-                    // auto remove dead particles?
-                    if(bAutoRemove && !(*iter)->isAlive()) {
-                        delete (*iter);
-                        iter = particleList.erase(iter);
-                    }
-                    else {
-                        (*iter)->update();
-                        ++iter; // increment iter
-                    }
-                }
-            }
+		/// update all particles
+		virtual void update() {
+			std::vector<ofxParticle*> ::iterator iter;
+			for(iter = particleList.begin(); iter != particleList.end();) {
+				// remove particle if it's NULL
+				if((*iter) == NULL) {
+					ofLogWarning("ofxParticleManager") << "update(): removing NULL particle";
+					iter = particleList.erase(iter);
+				}
+				else {
+					// auto remove dead particles?
+					if(bAutoRemove && !(*iter)->isAlive()) {
+						delete (*iter);
+						iter = particleList.erase(iter);
+					}
+					else {
+						(*iter)->update();
+						++iter; // increment iter
+					}
+				}
+			}
 
-        }
+		}
 
-        /// draw all the particles
-        virtual void draw() {
-            std::vector<ofxParticle*> ::iterator iter;
-            for(iter = particleList.begin(); iter != particleList.end();){
-                // remove particle if it's NULL
-                if((*iter) == NULL) {
+		/// draw all the particles
+		virtual void draw() {
+			std::vector<ofxParticle*> ::iterator iter;
+			for(iter = particleList.begin(); iter != particleList.end();){
+				// remove particle if it's NULL
+				if((*iter) == NULL) {
 					ofLogWarning("ofxParticleManager") << "draw(): removing NULL particle";
-                    iter = particleList.erase(iter);
-                }
-                else {
-                    (*iter)->draw();
-                    ++iter; // increment iter
-                }
-            }
-        }
+					iter = particleList.erase(iter);
+				}
+				else {
+					(*iter)->draw();
+					++iter; // increment iter
+				}
+			}
+		}
 
-    protected:
+	protected:
 
-        bool bAutoRemove;   ///< automatically remove dead particles?
+		bool bAutoRemove;   ///< automatically remove dead particles?
 
-        std::vector<ofxParticle*> particleList;    ///< current particles
+		std::vector<ofxParticle*> particleList;    ///< current particles
 };

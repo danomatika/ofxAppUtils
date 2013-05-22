@@ -14,6 +14,10 @@
 
 #include "ofxAppUtils.h"
 
+// we only specify a pointer to the Particle Scene here, so tell the compiler
+// that it exists as a class and we can include the class header in testApp.cpp
+class ParticleScene;
+
 /// make sure you check out main.cpp for how to run this app with app utils!
 ///
 /// controls:
@@ -27,6 +31,7 @@
 ///           is on and the quad warper is off
 ///     - 'q' key to toggle to quad warper
 ///     - 'f' to toggle fullscreen mode
+///		- '-' & '=': remove/add particles when the particle scene is running
 ///
 class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 	
@@ -50,4 +55,7 @@ class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 		// handles the scenes
 		ofxSceneManager sceneManager;
 		int lastScene;
+		
+		// keep a pointer to the Particle Scene, so we can modify it more easily
+		ParticleScene *particleScene;
 };

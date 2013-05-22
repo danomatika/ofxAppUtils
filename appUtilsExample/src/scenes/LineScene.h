@@ -33,7 +33,7 @@ class LineScene : public ofxScene {
 		}
 
 		// called when scene is entering
-       	void updateEnter() {
+		void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
@@ -57,14 +57,14 @@ class LineScene : public ofxScene {
 		}
 
 		// normal update
-        void update() {
+		void update() {
 			for(unsigned int i = 0; i < lines.size(); ++i) {
 				lines[i]->update();
 			}
 		}
 
 		// called when scene is exiting
-        void updateExit() {
+		void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
@@ -87,7 +87,7 @@ class LineScene : public ofxScene {
 		}
 
 		// draw
-        void draw() {
+		void draw() {
 			ofEnableAlphaBlending();
 			ofSetLineWidth(5);
 			ofSetColor(255, 255, 255, alpha);	// alpha for fade in/out

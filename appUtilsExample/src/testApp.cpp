@@ -31,9 +31,9 @@ void testApp::setup() {
 	// all the settings manually here
 
 	// add the built in transform control to control panel (adds new panel)
-    //
-    // loads and saves control panel settings to "controlPanelSettings.xml"
-    // in the data folder 
+	//
+	// loads and saves control panel settings to "controlPanelSettings.xml"
+	// in the data folder 
 	addTransformControls();
 	
 	// load saved control panel settings
@@ -41,14 +41,14 @@ void testApp::setup() {
 	// or use your own filename
 	// note: this may override what was set with setTransforms
 	loadControlSettings();
-    
-    // load saved quad warper settings
-    // loads and saves to "quadWarper.xml" in the data folder
+	
+	// load saved quad warper settings
+	// loads and saves to "quadWarper.xml" in the data folder
 	// or use your own filename
-    loadWarpSettings();
+	loadWarpSettings();
 	
 	// load scenes
-	sceneManager.add(new ParticleScene());
+	particleScene = (ParticleScene*) sceneManager.add(new ParticleScene()); // save pointer
 	sceneManager.add(new LineScene());
 	sceneManager.setup(true);	// true = setup all the scenes now (not on the fly)
 	ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
@@ -60,7 +60,7 @@ void testApp::setup() {
 	
 	// attach scene manager to this ofxApp so it's called automatically,
 	// you can also call the callbacks (update, draw, keyPressed, etc) manually
-    // if you don't set it
+	// if you don't set it
 	//
 	// you can also turn off the auto sceneManager update and draw calls with:
 	// setSceneManagerUpdate(false);
@@ -164,6 +164,18 @@ void testApp::keyPressed(int key) {
 		case OF_KEY_UP:
 			sceneManager.gotoScene(lastScene);
 			break;
+			
+		case '-':
+			if(sceneManager.getCurrentScene() == particleScene) {
+				particleScene->removeOneParticle();
+			}
+			break;
+			
+		case '=':
+			if(sceneManager.getCurrentScene() == particleScene) {
+				particleScene->addOneParticle();
+			}
+			break;	
 	}
 }
 

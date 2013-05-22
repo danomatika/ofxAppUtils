@@ -50,7 +50,7 @@ class ofxApp :
 		ofxApp();
 		virtual ~ofxApp() {}
 		
-	/// \section ransform Controls
+	/// \section Transform Controls
 		
 		/// screen mirroring
 		void setMirror(bool mirrorX, bool mirrorY);

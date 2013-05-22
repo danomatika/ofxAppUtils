@@ -28,9 +28,7 @@
 /// how to catch std::endl (which is actually a func pointer):
 /// 	http://yvan.seth.id.au/Entries/Technology/Code/std__endl.html
 ///
-class ofxBitmapString
-{
-
+class ofxBitmapString {
 	public:
 
 		ofxBitmapString(const ofPoint & p) {

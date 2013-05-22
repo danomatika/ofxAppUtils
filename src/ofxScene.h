@@ -36,7 +36,7 @@ class ofxScene :
 			_bDone(false), _bSingleSetup(singleSetup) {}
 		virtual ~ofxScene() {}
 		
-		/// \section Main
+	/// \section Main
 		
 		/// implement the regular ofBaseApp clalbacks functions
 		/// ie setup(), update(), draw(), etc
@@ -50,7 +50,7 @@ class ofxScene :
 		/// called when exiting
 		virtual void updateExit()	{finishedExiting();};
 
-		// \section Transitional Control
+	/// \section Transitional Control
 
 		/// start entering
 		inline void startEntering()     {_bEntering = true; _bEnteringFirst = true; _bDone = false;}
@@ -82,7 +82,7 @@ class ofxScene :
 		/// does this scene want to exit?
 		inline bool isDone()    		{return _bDone;}
 		
-		/// \section Util
+	/// \section Util
 		
 		/// run/pause
 		inline void run(bool yesno) {_bRunning = yesno;}

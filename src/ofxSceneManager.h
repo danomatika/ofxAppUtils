@@ -21,13 +21,12 @@
 	\brief	a map based scene manager
 **/
 class ofxSceneManager {
-
 	public:
 
 		ofxSceneManager();
 		virtual ~ofxSceneManager() {}
 		
-		/// \section Main
+	/// \section Main
 		
 		/// add a scene
 		/// returns a pointer to the scene or NULL if the scene could not be added
@@ -45,7 +44,7 @@ class ofxSceneManager {
 		/// unloaded scenes are automatically loaded on their first update
 		void setup(bool loadAll=true);
 		
-		/// \section Scene Control
+	/// \section Scene Control
 		
 		/// play/pause the current scene
 		void run(bool run);
@@ -83,14 +82,14 @@ class ofxSceneManager {
 		/// returns the current number of scenes
 		int getNumScenes()	{return _scenes.size();}
 		
-		// \section Util
+	/// \section Util
 		
 		/// get/set the minimum allowed time between scene changes in ms
 		/// note: this is ignored it the change is done "now"
 		unsigned int getMinChangeTime();
 		void setMinChangeTime(unsigned int time);
 		
-		/// \section Current Scene Callbacks
+	/// \section Current Scene Callbacks
 		
 		/// these are called in the current scene
 		

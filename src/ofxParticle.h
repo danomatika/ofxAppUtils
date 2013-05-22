@@ -33,7 +33,7 @@ class ofxParticle : public ofRectangle {
 		ofxParticle& operator=(const ofxParticle& from);
 
 
-		/// \section Main
+	/// \section Main
 
 		/// update the particles age, ignores time between frames longer then
 		/// the frame timeout
@@ -50,7 +50,7 @@ class ofxParticle : public ofRectangle {
 		virtual void draw() = 0;
 
 
-		/// \section Status
+	/// \section Status
 
 		/// bring this particle to life
 		void reset() {bAlive = true; lifeTimer.set();}
@@ -74,7 +74,7 @@ class ofxParticle : public ofRectangle {
 		inline void kill()  {bAlive = false; age = 0;}
 
 
-		/// \section Util
+	/// \section Util
 
 		/// get/set the particles lifespan in ms
 		inline unsigned int getLifespan()           {return lifespan;}

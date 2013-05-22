@@ -17,7 +17,6 @@
 	\brief  a render transformer
 **/
 class ofxTransformer {
-
 	public:
 	
 		/// creates render area of size 1x1, make sure to call setRnderSize()

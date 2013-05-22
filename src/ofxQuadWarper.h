@@ -17,7 +17,6 @@
 	\brief  a gl matrix transform quad warper
 **/
 class ofxQuadWarper {
-
 	public:
 	
 		ofxQuadWarper();

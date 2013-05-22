@@ -50,6 +50,8 @@ class ofxApp :
 		ofxApp();
 		virtual ~ofxApp() {}
 		
+	/// \section ransform Controls
+		
 		/// screen mirroring
 		void setMirror(bool mirrorX, bool mirrorY);
 		void setMirrorX(bool mirrorX);
@@ -103,12 +105,13 @@ class ofxApp :
 		/// void pushTransforms();
 		/// void popTransforms();
 		
-		
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		///
-		/// define OFX_APP_UTILS_NO_CONTROL_PANEL to disable the control panel
-		/// (and ofxControlPanel dependency)
-		///
+
+	/// \section Control Panel (optional) 
+	///
+	/// define OFX_APP_UTILS_USE_CONTROL_PANEL to enable the control panel
+	/// (and ofxControlPanel dependency)
+	///
 		
 		/// add transform controls to the ofxControlPanel (optional)
 		/// set panelNum to choose which to add the controls to, otherwise a
@@ -137,6 +140,8 @@ class ofxApp :
 		void drawControlPanel();
 #endif
 
+	/// \section Drawing the Framerate (as text, default lower right corner)
+
 		/// draw the framerate automatically in debug mode? (on by default)
 		virtual void setDrawFramerate(bool draw)	{_bDrawFramerate = draw;}
 		bool getDrawFramerate()						{return _bDrawFramerate;}
@@ -147,6 +152,8 @@ class ofxApp :
 		/// draw the framerate text manually
 		void drawFramerate(float x, float y);
 
+	/// \section SceneManager
+	
 		/// set the built in SceneManager (optional)
 		///
 		/// the scene manager's update, draw, and input callback functions are
@@ -166,7 +173,9 @@ class ofxApp :
 		bool getSceneManagerUpdate()			{return _bSceneManagerUpdate;} 
 		void setSceneManagerDraw(bool draw)		{_bSceneManagerDraw = draw;}
 		bool getSceneManagerDraw()				{return _bSceneManagerDraw;} 
-		
+	
+	/// \section Util
+			
 		/// is debug mode on? (show control panel and fps, allow editing of warper)
 		inline bool isDebug()	{return bDebug;}
 

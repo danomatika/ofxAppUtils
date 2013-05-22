@@ -24,6 +24,8 @@ class ofxParticleManager {
 			clear();    // cleanup
 		}
 
+	/// \section Particle Conctrol
+
 		/// add a particle to the particle list,
 		/// note: the particle will be destroyed by this object
 		void addParticle(ofxParticle* particle) {
@@ -57,19 +59,11 @@ class ofxParticleManager {
 			particleList.clear();
 		}
 		
-		// get the number of particles
-		unsigned int size() {
-			return particleList.size();
-		}
-		
-		// are there any particles at all?
-		bool empty() {
-			return particleList.empty();
-		}
-
 		/// automatically remove (delete) dead particles?
 		inline bool getAutoRemove() {return bAutoRemove;}
 		void setAutoRemove(bool yesno) {bAutoRemove = yesno;}
+		
+	/// \section Update & Draw
 
 		/// update all particles
 		virtual void update() {
@@ -109,6 +103,18 @@ class ofxParticleManager {
 					++iter; // increment iter
 				}
 			}
+		}
+		
+			/// \section Util
+		
+		// get the number of particles
+		unsigned int size() {
+			return particleList.size();
+		}
+		
+		// are there any particles at all?
+		bool empty() {
+			return particleList.empty();
 		}
 
 	protected:

@@ -30,7 +30,7 @@ class ofxParticleManager {
 		/// note: the particle will be destroyed by this object
 		void addParticle(ofxParticle* particle) {
 			if(particle == NULL) {
-				ofLogWarning("ofxParticleManager") << "Cannot add NULL particle";
+				ofLogWarning("ofxParticleManager") << "cannot add NULL particle";
 				return;
 			}
 			particleList.push_back(particle);

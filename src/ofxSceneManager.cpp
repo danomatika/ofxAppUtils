@@ -24,12 +24,12 @@ ofxSceneManager::ofxSceneManager() :
 //--------------------------------------------------------------
 ofxScene* ofxSceneManager::add(ofxScene* scene) {
 	if(scene == NULL) {
-		ofLogWarning("ofxSceneManager") << "Cannot add NULL scene";
+		ofLogWarning("ofxSceneManager") << "cannot add NULL scene";
 		return NULL;
 	}
 
 	if(_scenes.find(scene->getName()) != _scenes.end()) {
-		ofLogWarning("ofxSceneManager") << "Scene \"" << scene->getName()
+		ofLogWarning("ofxSceneManager") << "scene \"" << scene->getName()
 									 << "\" already added, only unique names allowed";
 		return NULL;
 	}
@@ -41,7 +41,7 @@ ofxScene* ofxSceneManager::add(ofxScene* scene) {
 //--------------------------------------------------------------
 void ofxSceneManager::remove(ofxScene* scene) {
 	if(scene == NULL) {
-		ofLogWarning("ofxSceneManager") << "Cannot remove NULL scene";
+		ofLogWarning("ofxSceneManager") << "cannot remove NULL scene";
 		return;
 	}
 	
@@ -152,7 +152,7 @@ void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 
 	ofxScene* s;
 	if(_currentScene == (int) index) {
-		ofLogWarning("ofxSceneManager") << "Ignoring duplicate goto scene change";
+		ofLogWarning("ofxSceneManager") << "ignoring duplicate goto scene change";
 		return;
 	}
 
@@ -179,7 +179,7 @@ void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 void ofxSceneManager::gotoScene(std::string name, bool now) {
 	map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
 	if(iter == _scenes.end()) {
-		ofLogWarning("ofxSceneManager") << "Could not find \"" << name << "\"";
+		ofLogWarning("ofxSceneManager") << "could not find \"" << name << "\"";
 		return;
 	}
 	gotoScene(std::distance(_scenes.begin(), iter), now);
@@ -444,7 +444,7 @@ void ofxSceneManager::_handleSceneChanges() {
 			// not done entering
 			if(_currentScenePtr->isEntering()) {
 				_newScene = SCENE_NOCHANGE;
-				ofLogWarning("ofxSceneManager") << "Ignoring duplicate scene change, "
+				ofLogWarning("ofxSceneManager") << "ignoring duplicate scene change, "
 							<< "current scene is not done entering";
 				_sceneChangeTimer.set();
 			}
@@ -470,12 +470,12 @@ void ofxSceneManager::changeToNewScene() {
 	
 	if(_currentRunnerScenePtr) {
 		_currentScenePtr = _currentRunnerScenePtr->scene;
-		ofLogVerbose("ofxSceneManager") << "Changed to " << _currentScene
+		ofLogVerbose("ofxSceneManager") << "changed to " << _currentScene
 			<< " \"" << _currentScenePtr->getName() << "\"";
 	}
 	else {
 		_currentScenePtr = NULL;
-		ofLogVerbose("ofxSceneManager") << "Changed to NO_SCENE";
+		ofLogVerbose("ofxSceneManager") << "changed to NO_SCENE";
 	}
 	
 	_newScene = SCENE_NOCHANGE; // done

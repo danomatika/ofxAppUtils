@@ -39,7 +39,7 @@ class ofxSceneManager;
 class ofxApp :
 
 #ifdef TARGET_OF_IPHONE
-	public ofxiPhoneApp,
+	public ofxiOSApp,
 #else
 	public ofBaseApp,
 #endif
@@ -215,7 +215,7 @@ class ofxApp :
 		class RunnerApp :
 
 		#ifdef TARGET_OF_IPHONE
-			public ofxiPhoneApp {
+			public ofxiOSApp {
 		#else
 			public ofBaseApp {
 		#endif

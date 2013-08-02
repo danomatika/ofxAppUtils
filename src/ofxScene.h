@@ -20,7 +20,7 @@
 class ofxScene :
 
 #ifdef TARGET_OF_IPHONE
-	public ofxiPhoneApp {
+	public ofxiOSApp {
 #else
 	public ofBaseApp {
 #endif
@@ -116,7 +116,7 @@ class ofxScene :
 		class RunnerScene :
 
 		#ifdef TARGET_OF_IPHONE
-			public ofxiPhoneApp {
+			public ofxiOSApp {
 		#else
 			public ofBaseApp {
 		#endif

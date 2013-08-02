@@ -166,7 +166,7 @@ void testApp::gotMemoryWarning(){
 void testApp::deviceOrientationChanged(int newOrientation){
 	
 	// rotate graphics world ...
-	ofxiPhoneSetOrientation((ofOrientation) newOrientation);
+	ofSetOrientation((ofOrientation) newOrientation);
 	
 	// set up transforms with new screen size
 	setNewScreenSize(ofGetWidth(), ofGetHeight());

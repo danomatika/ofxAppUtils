@@ -3,7 +3,7 @@ ofxAppUtils
 
 OpenFrameworks app utilities
 
-Copyright (c) [Dan Wilcox](danomatika.com) 2011-2012
+Copyright (c) [Dan Wilcox](danomatika.com) 2011-2013
 
 BSD Simplified License.
 
@@ -31,7 +31,7 @@ ofxAppUtils is a set of utilities for OpenFrameworks application development inc
 * ofxParticleSystem: an auto manager for ofxParticles
 * ofxBitmapString: a stream interface for ofDrawBitmapString
 
-All ofBaseApp & ofxiPhoneApp callbacks are handled down to the scene level.
+All ofBaseApp & ofxiOSApp callbacks are handled down to the scene level.
 
 Installation
 ------------
@@ -65,9 +65,7 @@ The example projects are in the `appUtilsExample` & `appUtilsIOSExample` folders
 
 ### OSX
 
-Xcode3: Open the Xcode project and hit "Build and Run". You might want to choose "Release" instead of "Debug" for faster performance.
-
-Xcode4: Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
+Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
 
 ### Linux
 
@@ -82,7 +80,7 @@ cd bin
 
 ### Windows
 
-An example Visual Studio 2010 solution as well as a Codeblocks workspace are included.
+An example Visual Studio solution as well as a Codeblocks workspace are included.
 
 
 Adding ofxAppUtils to an Existing Project
@@ -102,7 +100,7 @@ openFrameworks/addons/ofxAppUtils/src
 	* ofxXmlSettings
 * make sure to remove any of the example folders in the Xcode project tree for any of the addons you've added manually
 * add defines to the project C++FLAGS if you want to disable the control panel and/or xml saving: 
-	* Select the Project -> Build Settings -> Header Search Paths
+	* Select the Project -> Build Settings -> Other C++ Flags
 	* add the following to enable the control panel:
 	<pre>
 	-DOFX_APP_UTILS_USE_CONTROL_PANEL

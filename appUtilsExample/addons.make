@@ -1,3 +1,3 @@
-ofxXmlSettings
 ofxAppUtils
 ofxControlPanel
+ofxXmlSettings

@@ -71,11 +71,10 @@ Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
 
 Open the Code::Blocks .cbp and hit F9 to build. Optionally, you can build the example with the Makefile.
 
-To run it, use the terminal:
+To build and run it on the terminal:
 <pre>
 make
-cd bin
-./appUtilsExample_debug
+make run
 </pre>
 
 ### Windows

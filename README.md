@@ -149,6 +149,26 @@ On iOS you will probably don't want to enable the control panel via the `OFX_APP
 	<pre>
 	..\\..\\..\addons\ofxAppUtils\src
 	</pre>
+	
+### For Visual Studio:
+
+* drag the ofxApputils/src folder onto the project tree
+* right click on the project in the project tree and select Properties
+* set the Configuration to All Configurations
+* add the defines and searhc paths:
+  * add the following to Configuration Properties->C/C++->Preprocessor->Preprocessor Definitions:
+    * enable the control panel:
+	<pre>
+	OFX_APP_UTILS_USE_CONTROL_PANEL
+	</pre>
+	* disable the transform xml saving:
+	<pre>
+	OFX_APP_UTILS_NO_XML
+	</pre>
+  * add to the search paths in Configuration Properties->C/C++->General->Additonal INclude DIrectories:
+  <pre>
+  ..\\..\\..\\addons\ofxAppUtils\src
+  </pre>
 
 ### Extending Your BaseApp
 

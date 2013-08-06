@@ -40,7 +40,7 @@ class LineScene : public ofxScene {
 				setup();
 				timer.setAlarm(2000);
 				alpha = 0;
-				ofLogNotice("LineScene") << update enter";
+				ofLogNotice("LineScene") << "update enter";
 			}
 		
 			// calc alpha amount based on alarm time diff

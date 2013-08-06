@@ -212,7 +212,7 @@ ofxScene* ofxSceneManager::getCurrentScene() {
 	return _currentScenePtr;
 }
 
-std::string ofxSceneManager::ofxSceneManager::getCurrentSceneName() {
+std::string ofxSceneManager::getCurrentSceneName() {
 	return _currentScenePtr == NULL ? "NO_SCENE" : _currentScenePtr->getName();
 }
 

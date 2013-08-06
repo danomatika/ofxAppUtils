@@ -14,8 +14,19 @@ build
 
 # codeblocks
 *.layout
-example/obj
+appUtilsExample/obj
 
 # Win
 *.exe
 *.dll
+*.lib
+
+# Codeblocks
+*.depend
+
+# Visual Studio
+*.exp
+*.ilk
+*.pdb
+*.sdf
+*.v11.suo

@@ -11,6 +11,7 @@
 #pragma once
 
 #include <map>
+#include <climits>
 
 #include "ofxApp.h"
 #include "ofxScene.h"

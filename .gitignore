@@ -1,4 +1,14 @@
-*.mode1v3
+# libs
+*.a
+
+# OSX
+.DS_Store
+*.app
+
+# win
+*.exe
+*.dll
+*.lib
 
 # xcode
 *.pbxuser
@@ -6,27 +16,22 @@
 xcuserdata
 xcshareddata
 build
-*.app
-*.a
-
-# OSX
-.DS_Store
+*.mode1v3
 
 # codeblocks
 *.layout
-appUtilsExample/obj
-
-# Win
-*.exe
-*.dll
-*.lib
-
-# Codeblocks
 *.depend
 
-# Visual Studio
+# visual studio
 *.exp
 *.ilk
 *.pdb
 *.sdf
 *.v11.suo
+
+# examples
+appUtilsExample/obj
+appUtilsExample/bin/libs
+appUtilsExample/bin/appUtilsExample
+appUtilsExample/bin/appUtilsExample_debug
+

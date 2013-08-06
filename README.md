@@ -75,7 +75,7 @@ To run it, use the terminal:
 <pre>
 make
 cd bin
-./example_debug
+./appUtilsExample_debug
 </pre>
 
 ### Windows

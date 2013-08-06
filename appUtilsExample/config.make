@@ -88,7 +88,7 @@
 #
 #   Note: Leave a leading space when adding list items with the += operator
 ################################################################################
-# PROJECT_DEFINES = 
+PROJECT_DEFINES = OFX_APP_UTILS_USE_CONTROL_PANEL 
 
 ################################################################################
 # PROJECT CFLAGS
@@ -105,7 +105,7 @@
 #
 #   Note: Leave a leading space when adding list items with the += operator
 ################################################################################
-# PROJECT_CFLAGS = 
+#PROJECT_CFLAGS =
 
 ################################################################################
 # PROJECT OPTIMIZATION CFLAGS

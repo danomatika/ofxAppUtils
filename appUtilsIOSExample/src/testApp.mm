@@ -19,7 +19,6 @@ void testApp::setup(){
 	ofxAccelerometer.setup();
 	
 	// setup for nice jaggy-less rendering
-	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground(0, 0, 0);
 

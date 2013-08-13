@@ -1,7 +1,7 @@
 ofxAppUtils
 ===========
 <p align="center">
-<img src="https://raw.github.com/danomatika/ofxAppUtils/master/ofxaddons_thumbnail.png"/>
+<img src="https://raw.github.com/danomatika/ofxAppUtils/master/res/logo.png"/>
 </p>
 
 OpenFrameworks app utilities

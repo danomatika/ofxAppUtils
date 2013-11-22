@@ -88,6 +88,8 @@ An example Visual Studio solution as well as a Codeblocks workspace are included
 Adding ofxAppUtils to an Existing Project
 ---------------------------------------
 
+_Note: These instructions are for manually adding ofxAppUtils to an existing project. You do not need to follow these steps if you use the ProjecGenerator app, except for adding the OFX_APP_UTILS defines._
+
 If you want to add ofxAppUtils to another project, you need to make sure you include the src folders:
 <pre>
 openFrameworks/addons/ofxAppUtils/src

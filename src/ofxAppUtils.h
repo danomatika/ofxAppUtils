@@ -10,6 +10,8 @@
  */
 #pragma once
 
+#include "ofAppRunner.h"
+
 #include "ofxApp.h"
 #include "ofxScene.h"
 #include "ofxSceneManager.h"

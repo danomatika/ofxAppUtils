@@ -293,12 +293,6 @@ void ofxSceneManager::mousePressed(int x, int y, int button) {
 	}
 }
 
-void ofxSceneManager::mouseReleased() {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->mouseReleased();
-	}
-}
-
 void ofxSceneManager::mouseReleased(int x, int y, int button) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->mouseReleased(x, y, button);

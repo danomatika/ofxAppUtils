@@ -421,21 +421,6 @@ void ofxApp::RunnerApp::mousePressed(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void ofxApp::RunnerApp::mouseReleased() {
-	if(app->_sceneManager)
-		app->_sceneManager->mouseReleased();
-	app->mouseReleased();
-
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(app->bDebug) {
-		if(!app->_bEditingWarpPoints) {
-			app->controlPanel.mouseReleased();
-		}
-	}
-#endif
-}
-
-//--------------------------------------------------------------
 void ofxApp::RunnerApp::mouseReleased(int x, int y, int button) {
 	if(app->_sceneManager)
 		app->_sceneManager->mouseReleased(x, y, button);

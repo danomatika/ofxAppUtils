@@ -118,7 +118,7 @@ class ofxApp :
 		/// new panel is added
 		///
 		/// the controls are (xmlName, type):
-		///	- transformPos              float slider2D
+		/// - transformPos              float slider2D
 		/// - transformZ                float slider
 		/// - transformMirrorX          bool toggle
 		/// - transformMirrorY          bool toggle

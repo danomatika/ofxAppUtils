@@ -92,9 +92,9 @@ class ofxParticle : public ofRectangle {
 		double lifespan;    ///< how long this particle should live in ms
 		double age;         ///< how old the particle is
 
-		ofxTimer lifeTimer;    ///< used to time the age between frames
+		ofxTimer lifeTimer; ///< used to time the age between frames
 
 	private:
 
-		static unsigned int _frameTimeout;  ///< how long to wait between frames
+		static unsigned int _frameTimeout; ///< how long to wait between frames
 };

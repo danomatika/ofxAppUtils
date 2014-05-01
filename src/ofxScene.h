@@ -77,10 +77,10 @@ class ofxScene :
 		inline bool isExitingFirst()    {return _bExitingFirst;}
 
 		/// this scene is done and wants to start exiting, note: does not start exiting
-		inline void done()      		{_bDone = true;}
+		inline void done()              {_bDone = true;}
 
 		/// does this scene want to exit?
-		inline bool isDone()    		{return _bDone;}
+		inline bool isDone()            {return _bDone;}
 		
 	/// \section Util
 		
@@ -96,16 +96,16 @@ class ofxScene :
 		inline bool isRunning() {return _bRunning;}
 
 		/// is the scene already setup?
-		inline bool isSetup()	{return _bSetup;}
+		inline bool isSetup()   {return _bSetup;}
 		
 		/// controls whether the scene's setup function
 		/// is called only once or each time a scene change is made
 		inline void setSingleSetup(bool single) {_bSingleSetup = single;}
-		inline bool usingSingleSetup() {return _bSingleSetup;}
+		inline bool usingSingleSetup()          {return _bSingleSetup;}
 		
 	private:
 	
-		std::string _name;		///< the name of this scene
+		std::string _name; ///< the name of this scene
 		bool _bSetup, _bRunning, _bEntering, _bEnteringFirst,
 			 _bExiting, _bExitingFirst, _bDone, _bSingleSetup;
 
@@ -135,5 +135,5 @@ class ofxScene :
 				ofxScene* scene;
 		};
 		
-		friend class RunnerScene;  ///< used to wrap this app
+		friend class RunnerScene; ///< used to wrap this app
 };

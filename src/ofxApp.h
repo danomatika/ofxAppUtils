@@ -69,7 +69,7 @@ class ofxApp :
 		/// set/edit the projection warping
 		void setWarp(bool warp);
 		void setEditWarp(bool edit) {_bEditingWarpPoints = edit;}
-		bool getEditWarp()			{return _bEditingWarpPoints;}
+		bool getEditWarp()          {return _bEditingWarpPoints;}
 		
 		/// enable/disable automatically applying the transforms
 		///
@@ -85,8 +85,8 @@ class ofxApp :
 		///          change the setWarp within your draw function as an extra
 		///          push or pop may ocurr which could muck up your transforms
 		///
-		void setAutoTransforms(bool apply)	{_bAutoTransforms = apply;}
-		bool getAutoTransforms()			{return _bAutoTransforms;}
+		void setAutoTransforms(bool apply) {_bAutoTransforms = apply;}
+		bool getAutoTransforms()           {return _bAutoTransforms;}
 		
 		/// manually push/pop the transforms
 		///
@@ -118,13 +118,13 @@ class ofxApp :
 		/// new panel is added
 		///
 		/// the controls are (xmlName, type):
-		///	- transformPos 				float slider2D
-		/// - transformZ 				float slider
-		/// - transformMirrorX			bool toggle
-		/// - transformMirrorY			bool toggle
-		/// - transformEnableQuadWarper	bool toggle
-		/// - transformEditQuadWarper	bool toggle (button)
-		/// - transformSaveQuadWarper	bool toggle (button)
+		///	- transformPos              float slider2D
+		/// - transformZ                float slider
+		/// - transformMirrorX          bool toggle
+		/// - transformMirrorY          bool toggle
+		/// - transformEnableQuadWarper bool toggle
+		/// - transformEditQuadWarper   bool toggle (button)
+		/// - transformSaveQuadWarper   bool toggle (button)
 		///
 		void addTransformControls(int panelNum=-1, int panelCol=0);
 		
@@ -143,11 +143,11 @@ class ofxApp :
 	/// \section Drawing the Framerate (as text, default lower right corner)
 
 		/// draw the framerate automatically in debug mode? (on by default)
-		virtual void setDrawFramerate(bool draw)	{_bDrawFramerate = draw;}
-		bool getDrawFramerate()						{return _bDrawFramerate;}
+		virtual void setDrawFramerate(bool draw) {_bDrawFramerate = draw;}
+		bool getDrawFramerate()                  {return _bDrawFramerate;}
 		
 		/// reference to the framerate text color
-		ofColor& getFramerateColorRef()	{return _framerateColor;}
+		ofColor& getFramerateColorRef() {return _framerateColor;}
 		
 		/// draw the framerate text manually
 		void drawFramerate(float x, float y);
@@ -169,19 +169,19 @@ class ofxApp :
 		/// disable these in order to set your own update/draw order,
 		/// simply call sceneManager.update() and/or sceneManager.draw()
 		/// manually
-		void setSceneManagerUpdate(bool update)	{_bSceneManagerUpdate = update;}
-		bool getSceneManagerUpdate()			{return _bSceneManagerUpdate;} 
-		void setSceneManagerDraw(bool draw)		{_bSceneManagerDraw = draw;}
-		bool getSceneManagerDraw()				{return _bSceneManagerDraw;} 
+		void setSceneManagerUpdate(bool update) {_bSceneManagerUpdate = update;}
+		bool getSceneManagerUpdate()            {return _bSceneManagerUpdate;} 
+		void setSceneManagerDraw(bool draw)     {_bSceneManagerDraw = draw;}
+		bool getSceneManagerDraw()              {return _bSceneManagerDraw;} 
 	
 	/// \section Util
 			
 		/// is debug mode on? (show control panel and fps, allow editing of warper)
-		inline bool isDebug()	{return bDebug;}
+		inline bool isDebug() {return bDebug;}
 
 	protected:
 	
-		bool bDebug;	///< are we in debug mode?
+		bool bDebug; ///< are we in debug mode?
 
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
 		ofxControlPanel	controlPanel; ///< the settings control panel
@@ -190,22 +190,22 @@ class ofxApp :
 	private:
 		
 		ofxTransformer _transformer;
-		bool _bAutoTransforms;		///< apply the transforms automatically?
+		bool _bAutoTransforms;      ///< apply the transforms automatically?
 		
 		/// quad warper
-		int _currentWarpPoint;		///< currently selected projection point
-		bool _bEditingWarpPoints;	///< are we currently editing the warp points?
-		ofMatrix4x4 _warpTransform;	///< warp transform matrix needed for mouse picking
+		int _currentWarpPoint;      ///< currently selected projection point
+		bool _bEditingWarpPoints;   ///< are we currently editing the warp points?
+		ofMatrix4x4 _warpTransform; ///< warp transform matrix needed for mouse picking
 		
-		bool _bDrawFramerate;		///< draw the dramerate in debug mode?
-		ofColor _framerateColor;	///< framerate text color
+		bool _bDrawFramerate;       ///< draw the dramerate in debug mode?
+		ofColor _framerateColor;    ///< framerate text color
 		
-		ofxSceneManager* _sceneManager;	///< optional built in scene manager
+		ofxSceneManager* _sceneManager; ///< optional built in scene manager
 		bool _bSceneManagerUpdate, _bSceneManagerDraw;
 		
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		bool _bTransformControls;	///< have the projection controls been added?
-		bool _bDrawControlPanel;	///< draw the control panel automatically?
+		bool _bTransformControls;   ///< have the projection controls been added?
+		bool _bDrawControlPanel;    ///< draw the control panel automatically?
 #endif
 
 	public:
@@ -274,5 +274,5 @@ class ofxApp :
 				ofxApp* app;
 		};
 		
-		friend class RunnerApp;  ///< used to wrap this app
+		friend class RunnerApp; ///< used to wrap this app
 };

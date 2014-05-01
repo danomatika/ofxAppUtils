@@ -49,7 +49,7 @@ void testApp::setup() {
 	// load scenes
 	particleScene = (ParticleScene*) sceneManager.add(new ParticleScene()); // save pointer
 	sceneManager.add(new LineScene());
-	sceneManager.setup(true);	// true = setup all the scenes now (not on the fly)
+	sceneManager.setup(true); // true = setup all the scenes now (not on the fly)
 	ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 	
 	// start with a specific scene

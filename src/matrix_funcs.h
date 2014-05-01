@@ -52,8 +52,8 @@ double adjointMatrix(double a[3][3], double b[3][3]) {
 #define MATRIX_ZERO(x) ((x)<MATRIX_TOLERANCE && (x)>-MATRIX_TOLERANCE)
 
 // calculate matrix for unit square to quad mapping
-void mapSquareToQuad(double quad[4][2],  // vertices of quadrilateral
-					double SQ[3][3]) {   // square->quad transform
+void mapSquareToQuad(double quad[4][2],    // vertices of quadrilateral
+                     double   SQ[3][3]) {  // square->quad transform
 	double px, py;
 
 	px = quad[0][0]-quad[1][0]+quad[2][0]-quad[3][0];
@@ -93,9 +93,9 @@ void mapSquareToQuad(double quad[4][2],  // vertices of quadrilateral
 }
 
 // calculate matrix for general quad to quad mapping
-void mapQuadToQuad( double in[4][2],    // starting quad
-					double out[4][2],   // target quad
-					double ST[3][3]) {	// the matrix (returned)
+void mapQuadToQuad(double  in[4][2],    // starting quad
+                   double out[4][2],    // target quad
+                   double  ST[3][3]) {  // the matrix (returned)
 					
 	double quad[4][2], MS[3][3];
 	double SM[3][3], MT[3][3];

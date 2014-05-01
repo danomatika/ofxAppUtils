@@ -70,7 +70,7 @@ class ofxTimer {
 		
 	protected:
 	
-		unsigned int alarmMS;	///< length of alarm
-		unsigned int timestamp;	///< current timestamp
+		unsigned int alarmMS;    ///< length of alarm
+		unsigned int timestamp;  ///< current timestamp
 		unsigned int alarmstamp; ///< future timestamp
 };

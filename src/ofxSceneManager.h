@@ -50,7 +50,7 @@ class ofxSceneManager {
 		/// play/pause the current scene
 		void run(bool run);
 		void runToggle();
-		bool isRunning();	///< is the current scene running?
+		bool isRunning(); ///< is the current scene running?
 		
 		/// scene transport
 		void noScene(bool now=false);
@@ -81,7 +81,7 @@ class ofxSceneManager {
 		int getCurrentSceneIndex();
 		
 		/// returns the current number of scenes
-		int getNumScenes()	{return _scenes.size();}
+		int getNumScenes() {return _scenes.size();}
 		
 	/// \section Util
 		
@@ -158,16 +158,16 @@ class ofxSceneManager {
 			SCENE_NONE = -1,
 		};
 	
-		ofxScene*	_currentScenePtr;       ///< pointer to the current scene
-		ofxScene::RunnerScene* _currentRunnerScenePtr;  ///< pointer to the current runner scene
-		int _currentScene;	///< the current scene, < 0 if none
-		int _newScene;		///< scene to change to
-		bool _bChangeNow;	///< ignore enter and exit when changing scenes?
+		ofxScene*	_currentScenePtr; ///< pointer to the current scene
+		ofxScene::RunnerScene* _currentRunnerScenePtr; ///< pointer to the current runner scene
+		int _currentScene; ///< the current scene, < 0 if none
+		int _newScene;     ///< scene to change to
+		bool _bChangeNow;  ///< ignore enter and exit when changing scenes?
 		
-		std::map<std::string, ofxScene::RunnerScene*> _scenes;	///< scenes
+		std::map<std::string, ofxScene::RunnerScene*> _scenes; ///< scenes
 	
-		bool _bSignalledAutoChange;		///< has an automatic change been called?
-		unsigned int _minChangeTimeMS;	///< minimum ms to wait before accepting scene change commands
+		bool _bSignalledAutoChange;    ///< has an automatic change been called?
+		unsigned int _minChangeTimeMS; ///< minimum ms to wait before accepting scene change commands
 
-		ofxTimer _sceneChangeTimer;	///< timers to keep track of change times
+		ofxTimer _sceneChangeTimer;    ///< timers to keep track of change times
 };

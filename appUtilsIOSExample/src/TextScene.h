@@ -16,7 +16,7 @@
 // a simple scene that displays some BIG TEXT in the center of the screen
 class TextScene : public ofxScene {
 	
-    public:
+	public:
 
 		// takes a reference of the parent for data access,
 		// set the scene name through the base class initializer
@@ -91,7 +91,7 @@ class TextScene : public ofxScene {
 			ofxApp *app = ofxGetAppPtr();
 		
 			ofEnableAlphaBlending();
-			ofSetColor(255, 255, 255, alpha);	// alpha for fade in/out
+			ofSetColor(255, 255, 255, alpha); // alpha for fade in/out
 			font.drawString(text,
 				app->getRenderWidth()/2-bbox.width/2,
 				app->getRenderHeight()/2+bbox.height/2);

@@ -21,7 +21,7 @@ class ofxParticleManager {
 
 		ofxParticleManager(bool autoRemove=true) : bAutoRemove(autoRemove) {}
 		virtual ~ofxParticleManager() {
-			clear();    // cleanup
+			clear(); // cleanup
 		}
 
 	/// \section Particle Conctrol
@@ -105,7 +105,7 @@ class ofxParticleManager {
 			}
 		}
 		
-			/// \section Util
+	/// \section Util
 		
 		// get the number of particles
 		unsigned int size() {
@@ -119,7 +119,7 @@ class ofxParticleManager {
 
 	protected:
 
-		bool bAutoRemove;   ///< automatically remove dead particles?
+		bool bAutoRemove; ///< automatically remove dead particles?
 
-		std::vector<ofxParticle*> particleList;    ///< current particles
+		std::vector<ofxParticle*> particleList; ///< current particles
 };

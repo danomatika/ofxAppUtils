@@ -25,8 +25,8 @@ ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
 	_bCenter = false;
 	_bWarp = false;
 	
-	_renderWidth = 1;	// avoid /0
-	_renderHeight = 1;	// avoid /0
+	_renderWidth = 1;  // avoid /0
+	_renderHeight = 1; // avoid /0
 	_renderScaleX = 1;
 	_renderScaleY = 1;
 	_renderAspect = 1;

@@ -24,9 +24,9 @@
 /// Usage: ofxBitmapString(10, 10) << "a string" << 100 << 20.234f;
 ///
 /// class idea from:
-/// 	http://www.gamedev.net/community/forums/topic.asp?topic_id=525405&whichpage=1&#3406418
+///     http://www.gamedev.net/community/forums/topic.asp?topic_id=525405&whichpage=1&#3406418
 /// how to catch std::endl (which is actually a func pointer):
-/// 	http://yvan.seth.id.au/Entries/Technology/Code/std__endl.html
+///     http://yvan.seth.id.au/Entries/Technology/Code/std__endl.html
 ///
 class ofxBitmapString {
 	public:
@@ -59,9 +59,9 @@ class ofxBitmapString {
 		
 	private:
 	
-		ofPoint pos;				///< temp position
-		std::ostringstream message;	///< temp buffer
+		ofPoint pos;                ///< temp position
+		std::ostringstream message; ///< temp buffer
 		
-		ofxBitmapString(ofxBitmapString const&) {}        		// not defined, not copyable
-		ofxBitmapString& operator=(ofxBitmapString& from) {return *this;}	// not defined, not assignable
+		ofxBitmapString(ofxBitmapString const&) {} // not defined, not copyable
+		ofxBitmapString& operator=(ofxBitmapString& from) {return *this;} // not defined, not assignable
 };

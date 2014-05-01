@@ -178,7 +178,7 @@ class ParticleScene : public ofxScene {
 				}
 				
 				void draw() {
-					ofRect(*this);	// <- use this object as an ofRectangle
+					ofRect(*this); // <- use this object as an ofRectangle
 				}
 				
 				ofxApp *app;

@@ -64,17 +64,17 @@ void ofxQuadWarper::apply(float width, float height) {
 	mapQuadToQuad(src, dest, _warpMatrix);
 
 	// copy the values
-	_glWarpMatrix[0]	= _warpMatrix[0][0];
-	_glWarpMatrix[1]	= _warpMatrix[0][1];
-	_glWarpMatrix[3]	= _warpMatrix[0][2];
+	_glWarpMatrix[0] = _warpMatrix[0][0];
+	_glWarpMatrix[1] = _warpMatrix[0][1];
+	_glWarpMatrix[3] = _warpMatrix[0][2];
 
-	_glWarpMatrix[4]	= _warpMatrix[1][0];
-	_glWarpMatrix[5]	= _warpMatrix[1][1];
-	_glWarpMatrix[7]	= _warpMatrix[1][2];
+	_glWarpMatrix[4] = _warpMatrix[1][0];
+	_glWarpMatrix[5] = _warpMatrix[1][1];
+	_glWarpMatrix[7] = _warpMatrix[1][2];
 
-	_glWarpMatrix[12]	= _warpMatrix[2][0];
-	_glWarpMatrix[13]	= _warpMatrix[2][1];
-	_glWarpMatrix[15]	= _warpMatrix[2][2];
+	_glWarpMatrix[12] = _warpMatrix[2][0];
+	_glWarpMatrix[13] = _warpMatrix[2][1];
+	_glWarpMatrix[15] = _warpMatrix[2][2];
 
 	// finally lets multiply our matrix
 	glMultMatrixf(_glWarpMatrix);
@@ -110,17 +110,17 @@ bool ofxQuadWarper::loadSettings(const string xmlFile) {
 	if(!xml.loadFile(xmlFile))
 		return false;
 		
-	_warpPoints[0].x	= xml.getValue("quad:upperLeft:x", 0.0);
-	_warpPoints[0].y	= xml.getValue("quad:upperLeft:y", 0.0);
+	_warpPoints[0].x = xml.getValue("quad:upperLeft:x", 0.0);
+	_warpPoints[0].y = xml.getValue("quad:upperLeft:y", 0.0);
 	
-	_warpPoints[1].x	= xml.getValue("quad:upperRight:x", 1.0);
-	_warpPoints[1].y	= xml.getValue("quad:upperRight:y", 0.0);
+	_warpPoints[1].x = xml.getValue("quad:upperRight:x", 1.0);
+	_warpPoints[1].y = xml.getValue("quad:upperRight:y", 0.0);
 	
-	_warpPoints[2].x	= xml.getValue("quad:lowerRight:x", 1.0);
-	_warpPoints[2].y	= xml.getValue("quad:lowerRight:y", 1.0);
+	_warpPoints[2].x = xml.getValue("quad:lowerRight:x", 1.0);
+	_warpPoints[2].y = xml.getValue("quad:lowerRight:y", 1.0);
 	
-	_warpPoints[3].x	= xml.getValue("quad:lowerLeft:x", 0.0);
-	_warpPoints[3].y	= xml.getValue("quad:lowerLeft:y", 1.0);
+	_warpPoints[3].x = xml.getValue("quad:lowerLeft:x", 0.0);
+	_warpPoints[3].y = xml.getValue("quad:lowerLeft:y", 1.0);
 	
 	return true;
 }

@@ -53,7 +53,7 @@ void ofxScene::RunnerScene::update() {
 void ofxScene::RunnerScene::draw() {
 	if(!scene->_bSetup)
 		return;
-	scene->draw();			
+	scene->draw();
 }
 
 //--------------------------------------------------------------

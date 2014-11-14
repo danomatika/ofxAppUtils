@@ -35,6 +35,10 @@ void ofxScene::RunnerScene::setup() {
 void ofxScene::RunnerScene::update() {
 	if(!scene->_bSetup || !scene->_bRunning)
 		return;
+    
+    // update mouse pos for processing heads
+    scene->mouseX = ofGetMouseX();
+    scene->mouseY = ofGetMouseY();
 
 	if(scene->_bEntering) {
 		scene->updateEnter();

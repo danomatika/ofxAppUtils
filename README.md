@@ -52,14 +52,9 @@ The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
 You will may also need the following addon dependencies:
 
-* ofxXmlSettings: included with OpenFrameworks (optional)
 * ofxControlPanel: https://github.com/kylemcdonald/ofxControlPanel (optional, also requires ofxXmlSettings)
 
-To enable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_USE_CONTROL_PANEL` in your CFLAGS.
-
-To disable the xml transform load/save (and ofxXmlSettings dependency), define `OFX_APP_UTILS_NO_XML` in your CFLAGS.
-
-For Xcode, see the example project Project.xcconfig files on how to set the defines.
+To enable the control panel (and ofxControlPanel dependency), define `OFX_APP_UTILS_USE_CONTROL_PANEL` in your C++ FLAGS.
 
 Running the Example Project
 -------------------------------
@@ -101,17 +96,12 @@ openFrameworks/addons/ofxAppUtils/src
 * drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
 * you also need to add the following addon dependencies (if you're using them) in a similar manner:
 	* ofxControlPanel
-	* ofxXmlSettings
 * make sure to remove any of the example folders in the Xcode project tree for any of the addons you've added manually
 * add defines to the project C++FLAGS if you want to disable the control panel and/or xml saving: 
 	* Select the Project -> Build Settings -> Other C++ Flags
 	* add the following to enable the control panel:
 	<pre>
 	-DOFX_APP_UTILS_USE_CONTROL_PANEL
-	</pre>
-	* add the following to disable transform xml saving:
-	<pre>
-	-DOFX_APP_UTILS_NO_XML
 	</pre>
 	
 On iOS you will probably don't want to enable the control panel via the `OFX_APP_UTILS_USE_CONTROL_PANEL` define as it doesn't really work with touch screens.
@@ -124,10 +114,6 @@ On iOS you will probably don't want to enable the control panel via the `OFX_APP
   *  if you want to enable the control panel:
 	<pre>
 	USER_CFLAGS = -DOFX_APP_UTILS_USE_CONTROL_PANEL
-	</pre>
-  *  if you want to disable the transform xml saving:
-	<pre>
-	USER_CFLAGS = -DOFX_APP_UTILS_NO_XML
 	</pre>
 	
 ### For Codeblocks (Win):
@@ -145,10 +131,6 @@ On iOS you will probably don't want to enable the control panel via the `OFX_APP
 	<pre>
 	OFX_APP_UTILS_USE_CONTROL_PANEL
 	</pre>
-	* add the following to the "#defines" tab if you want to disable the transform xml saving:
-	<pre>
-	OFX_APP_UTILS_NO_XML
-	</pre>
 	* select the "Search directories" tab, click add the search paths:
 	<pre>
 	..\\..\\..\addons\ofxAppUtils\src
@@ -165,11 +147,7 @@ On iOS you will probably don't want to enable the control panel via the `OFX_APP
 	<pre>
 	OFX_APP_UTILS_USE_CONTROL_PANEL
 	</pre>
-	* disable the transform xml saving:
-	<pre>
-	OFX_APP_UTILS_NO_XML
-	</pre>
-  * add to the search paths in Configuration Properties->C/C++->General->Additonal INclude DIrectories:
+  * add to the search paths in Configuration Properties->C/C++->General->Additonal Include DIrectories:
   <pre>
   ..\\..\\..\\addons\ofxAppUtils\src
   </pre>

@@ -187,3 +187,8 @@ You can help develop ofxAppUtils on GitHub: [https://github.com/danomatika/ofxAp
 Create an account, clone or fork the repo, then request a push/merge.
 
 If you find any bugs or suggestions please log them to GitHub as well.
+
+TODO
+----
+
+* removeal ofxControlPanel dependency, replace with ofxGui

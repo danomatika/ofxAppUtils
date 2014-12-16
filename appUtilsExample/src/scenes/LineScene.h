@@ -37,7 +37,6 @@ class LineScene : public ofxScene {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
-				setup();
 				timer.setAlarm(2000);
 				alpha = 0;
 				ofLogNotice("LineScene") << "update enter";

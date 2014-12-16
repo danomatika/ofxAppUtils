@@ -24,7 +24,7 @@ class ofxParticleManager {
 			clear(); // cleanup
 		}
 
-	/// \section Particle Conctrol
+	/// \section Particle Control
 
 		/// add a particle to the particle list,
 		/// note: the particle will be destroyed by this object
@@ -36,13 +36,13 @@ class ofxParticleManager {
 			particleList.push_back(particle);
 		}
 		
-		void popOldestParticle() {
+		void popFirstParticle() {
 			if(!particleList.empty()) {
 				particleList.erase(particleList.begin());
 			}
 		}
 		
-		void popNewestParticle() {
+		void popLastParticle() {
 			if(!particleList.empty()) {
 				particleList.pop_back();
 			}
@@ -62,6 +62,35 @@ class ofxParticleManager {
 		/// automatically remove (delete) dead particles?
 		inline bool getAutoRemove() {return bAutoRemove;}
 		void setAutoRemove(bool yesno) {bAutoRemove = yesno;}
+    
+    /// \section Particle Access
+    
+        /// get a particle by index, returns NULL if index is out of bounds
+        /// note: this pointer be invalidated if the particle is destroyed
+        ofxParticle* getParticle(unsigned int index) {
+            if(index < particleList.size()) {
+                return particleList.at(index);
+            }
+            return NULL;
+        }
+    
+        /// get the first particle, returns NULL if list is empty
+        /// note: this pointer be invalidated if the particle is destroyed
+        ofxParticle* getFirstParticle() {
+            if(!particleList.empty()) {
+                return particleList.front();
+            }
+            return NULL;
+        }
+    
+        /// get the last particle, returns NULL if list is empty
+        /// note: this pointer be invalidated if the particle is destroyed
+        ofxParticle* getLastParticle() {
+            if(!particleList.empty()) {
+                return particleList.back();
+            }
+            return NULL;
+        }
 		
 	/// \section Update & Draw
 

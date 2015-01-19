@@ -46,3 +46,4 @@ appUtilsIOSExample/addons.make
 appUtilsIOSExample/appUtilsIOSExample.xcodeproj/
 appUtilsIOSExample/ofxiOS-Info.plist
 appUtilsIOSExample/ofxiOS_Prefix.pch
+appUtilsIOExample/bin/data/*.png

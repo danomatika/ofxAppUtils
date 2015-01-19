@@ -28,7 +28,7 @@
 ///
 /// this example also handles rotation
 ///
-class testApp : public ofxApp{
+class ofApp : public ofxApp{
 	
 	public:
 

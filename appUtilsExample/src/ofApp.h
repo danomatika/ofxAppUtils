@@ -33,11 +33,11 @@ class ParticleScene;
 ///     - 'f' to toggle fullscreen mode
 ///     - '-' & '=': remove/add particles when the particle scene is running
 ///
-class testApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
+class ofApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 	
 	public:
 	
-		testApp()  {}
+		ofApp()  {}
 	
 		void setup();
 		void update();

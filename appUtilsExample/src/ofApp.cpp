@@ -8,12 +8,12 @@
  * See https://github.com/danomatika/ofxAppUtils for documentation
  *
  */
-#include "testApp.h"
+#include "ofApp.h"
 
 #include "scenes/scenes.h"
 
 //--------------------------------------------------------------
-void testApp::setup() {
+void ofApp::setup() {
 
 	// setup for nice jaggy-less rendering
 	ofSetVerticalSync(true);
@@ -71,14 +71,14 @@ void testApp::setup() {
 }
 
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
 
 	// the control panel and current scene are automatically updated before
 	// this function
 }
 
 //--------------------------------------------------------------
-void testApp::draw() {
+void ofApp::draw() {
 
 	// the current scene is automatically drawn before this function
 
@@ -113,7 +113,7 @@ void testApp::draw() {
 
 // current scene input functions are called automatically before calling these
 //--------------------------------------------------------------
-void testApp::keyPressed(int key) {
+void ofApp::keyPressed(int key) {
 	
 	switch (key) {
 	
@@ -179,27 +179,27 @@ void testApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key) {
+void ofApp::keyReleased(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y) {
+void ofApp::mouseMoved(int x, int y) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button) {
+void ofApp::mouseDragged(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button) {
+void ofApp::mousePressed(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button) {
+void ofApp::mouseReleased(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h) {
+void ofApp::windowResized(int w, int h) {
 
 	// set up transforms with new screen size
 	setNewScreenSize(w, h);

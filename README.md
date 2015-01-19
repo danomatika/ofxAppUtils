@@ -63,7 +63,7 @@ The example projects are in the `appUtilsExample` & `appUtilsIOSExample` folders
 
 Project files for the examples are not included so you will need to generate the project files for your operating system and development environment using the OF ProjectGenerator which is included with the OpenFrameworks distribution.
 
-Point the ProjectGenerator to `addons/ofxAppUtils`, change the project name to the **exact** name of the example you want to generate (ie `appUtilsExample`), and make sure to choose `ofxLua` from the addons. Hitting "Generate Project" will populate that example with the project files you will need to build it.
+Point the ProjectGenerator to `addons/ofxAppUtils`, change the project name to the **exact** name of the example you want to generate (ie `appUtilsExample`), and make sure to choose `ofxAppUtils` (& `ofxControlPanel` for appUtilsExample) from the addons. Hitting "Generate Project" will populate that example with the project files you will need to build it.
 
 ### OSX
 

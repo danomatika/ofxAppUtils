@@ -11,10 +11,8 @@
 #include "ofxQuadWarper.h"
 
 #include "ofConstants.h"
+#include "ofXml.h"
 
-#ifndef OFX_APP_UTILS_NO_XML
-	#include <ofxXmlSettings.h>
-#endif
 #include "matrix_funcs.h"
 
 /// QUAD WARPER
@@ -102,61 +100,56 @@ void ofxQuadWarper::reset() {
 }
 
 //--------------------------------------------------------------
-#ifndef OFX_APP_UTILS_NO_XML
-
 bool ofxQuadWarper::loadSettings(const string xmlFile) {
 	
-	ofxXmlSettings xml;
-	if(!xml.loadFile(xmlFile))
+	ofXml xml;
+	if(!xml.load(xmlFile))
 		return false;
-		
-	_warpPoints[0].x = xml.getValue("quad:upperLeft:x", 0.0);
-	_warpPoints[0].y = xml.getValue("quad:upperLeft:y", 0.0);
+    xml.setTo("quad");
+    
+	_warpPoints[0].x = xml.getValue("upperLeft/x", 0.0f);
+	_warpPoints[0].y = xml.getValue("upperLeft/y", 0.0f);
 	
-	_warpPoints[1].x = xml.getValue("quad:upperRight:x", 1.0);
-	_warpPoints[1].y = xml.getValue("quad:upperRight:y", 0.0);
+	_warpPoints[1].x = xml.getValue("upperRight/x", 1.0);
+	_warpPoints[1].y = xml.getValue("upperRight/y", 0.0);
 	
-	_warpPoints[2].x = xml.getValue("quad:lowerRight:x", 1.0);
-	_warpPoints[2].y = xml.getValue("quad:lowerRight:y", 1.0);
+	_warpPoints[2].x = xml.getValue("lowerRight/x", 1.0);
+	_warpPoints[2].y = xml.getValue("lowerRight/y", 1.0);
 	
-	_warpPoints[3].x = xml.getValue("quad:lowerLeft:x", 0.0);
-	_warpPoints[3].y = xml.getValue("quad:lowerLeft:y", 1.0);
+	_warpPoints[3].x = xml.getValue("lowerLeft/x", 0.0);
+	_warpPoints[3].y = xml.getValue("lowerLeft/y", 1.0);
 	
 	return true;
 }
 
 void ofxQuadWarper::saveSettings(const string xmlFile) {
 
-	ofxXmlSettings xml;
-	
-	xml.addTag("quad");
-	xml.pushTag("quad");
-	
-	xml.addTag("upperLeft");
-	xml.pushTag("upperLeft");
-	xml.addValue("x", _warpPoints[0].x);
-	xml.addValue("y", _warpPoints[0].y);
-	xml.popTag();
-	
-	xml.addTag("upperRight");
-	xml.pushTag("upperRight");
-	xml.addValue("x", _warpPoints[1].x);
-	xml.addValue("y", _warpPoints[1].y);
-	xml.popTag();
-	
-	xml.addTag("lowerRight");
-	xml.pushTag("lowerRight");
-	xml.addValue("x", _warpPoints[2].x);
-	xml.addValue("y", _warpPoints[2].y);
-	xml.popTag();
-	
-	xml.addTag("lowerLeft");
-	xml.pushTag("lowerLeft");
-	xml.addValue("x", _warpPoints[3].x);
-	xml.addValue("y", _warpPoints[3].y);
-	xml.popTag();
-	
-	xml.saveFile(xmlFile);
+	ofXml xml;
+	xml.addChild("quad");
+    
+    xml.addChild("upperLeft");
+    xml.setTo("upperLeft");
+        xml.addValue("x",  _warpPoints[0].x);
+        xml.addValue("y",  _warpPoints[0].y);
+    xml.setToParent();
+    
+    xml.addChild("upperRight");
+    xml.setTo("upperRight");
+        xml.addValue("x", _warpPoints[1].x);
+        xml.addValue("y", _warpPoints[1].y);
+    xml.setToParent();
+    
+    xml.addChild("lowerRight");
+    xml.setTo("lowerRight");
+        xml.addValue("x",  _warpPoints[2].x);
+        xml.addValue("y",  _warpPoints[2].y);
+    xml.setToParent();
+    
+    xml.addChild("lowerLeft");
+    xml.setTo("lowerLeft");
+        xml.addValue("x",  _warpPoints[3].x);
+        xml.addValue("y",  _warpPoints[3].y);
+	xml.setToParent();
+    
+	xml.save(xmlFile);
 }
-
-#endif

@@ -112,7 +112,7 @@ class ParticleScene : public ofxScene {
 		
 		void removeOneParticle() {
 			if(particles.size() > 1) { // leave 1 lonely particle ...
-				particles.popNewestParticle();
+				particles.popLastParticle();
 			}
 		}
 		

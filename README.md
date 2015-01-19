@@ -66,6 +66,10 @@ Running the Example Project
 
 The example projects are in the `appUtilsExample` & `appUtilsIOSExample` folders.
 
+Project files for the examples are not included so you will need to generate the project files for your operating system and development environment using the OF ProjectGenerator which is included with the OpenFrameworks distribution.
+
+Point the ProjectGenerator to `addons/ofxAppUtils`, change the project name to the **exact** name of the example you want to generate (ie `appUtilsExample`), and make sure to choose `ofxLua` from the addons. Hitting "Generate Project" will populate that example with the project files you will need to build it.
+
 ### OSX
 
 Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
@@ -87,6 +91,14 @@ An example Visual Studio solution as well as a Codeblocks workspace are included
 
 Adding ofxAppUtils to an Existing Project
 ---------------------------------------
+
+### ProjectGenerator
+
+Select ofxAppUtils and other addons used by your project from the available addons in the ProjectGenerator, select the parent folder of your project, and set the *exact* name of the existing project in the text box. This will overwrite the existing project files with new ones that now include ofxAppUtils.
+
+*Note: you will lose any custom settings you've added manually to your project.*
+
+### Manual Method
 
 _Note: These instructions are for manually adding ofxAppUtils to an existing project. You do not need to follow these steps if you use the ProjecGenerator app, except for adding the OFX_APP_UTILS defines._
 

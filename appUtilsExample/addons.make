@@ -1,3 +1,0 @@
-ofxXmlSettings
-ofxAppUtils
-ofxControlPanel

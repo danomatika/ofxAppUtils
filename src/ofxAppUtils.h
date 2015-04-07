@@ -16,6 +16,7 @@
 #include "ofxScene.h"
 #include "ofxSceneManager.h"
 #include "ofxTimer.h"
+#include "ofxMovingAverage.h"
 #include "ofxParticleManager.h"
 #include "ofxBitmapString.h"
 

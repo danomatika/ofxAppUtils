@@ -152,7 +152,7 @@ void ofxApp::drawControlPanel() {
 //--------------------------------------------------------------
 void ofxApp::drawFramerate(float x, float y) {
 	ofSetColor(_framerateColor);
-	ofDrawBitmapString("fps: "+ofToString(ofGetFrameRate()), x, y);
+	ofDrawBitmapStringHighlight("fps: "+ofToString(ceil(ofGetFrameRate())), x, y);
 }
 
 //--------------------------------------------------------------
@@ -322,7 +322,7 @@ void ofxApp::RunnerApp::draw() {
 		}
 #endif
 		if(app->_bDrawFramerate)
-			app->drawFramerate(ofGetWidth()-100, ofGetHeight()-6);
+			app->drawFramerate(ofGetWidth()-60, ofGetHeight()-6);
 	}
 }
 

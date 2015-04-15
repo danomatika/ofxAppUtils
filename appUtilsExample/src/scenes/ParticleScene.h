@@ -12,48 +12,39 @@
 
 #include <ofxAppUtils.h>
 
-class ParticleScene : public ofxScene {
+class ParticleScene : public ofxFadeScene {
 
 	public:
 
 		// set the scene name through the base class initializer
-		ParticleScene() : ofxScene("Particles") {
-			alpha = 255;
+		ParticleScene() : ofxFadeScene("Particles") {
 			particles.setAutoRemove(false);	// don't remove particles if dead
-			
-			// we want setup to be called each time the scene is loaded
-			setSingleSetup(false);
+			setSingleSetup(false); // call setup each time the scene is loaded
+			setFade(1000, 1000); // 1 second fade in/out
 		}
 
 		// scene setup
 		void setup() {
-			timer.set();
-		
 			// make some particles
 			for(unsigned int i = 0; i < s_maxNumParticles/2; ++i) {
 				particles.addParticle(new Particle());
 			}
 		}
 
-		// called when scene is entering
+		// called when scene is entering, this is just a demo and this
+		// implementation is not required for this class
 		void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
-				timer.setAlarm(2000);
-				alpha = 0;
 				ofLogNotice("ParticleScene") << "update enter";
 			}
 		
-			// calc alpha amount based on alarm time diff
-			alpha = 255*timer.getDiffN();
+			// fade scene calculates normalized alpha value for us
+			ofxFadeScene::updateEnter();
 			
-			update();
-		
-			// call finishedEntering() to indicate scne is done entering
-			if(timer.alarm()) {
-				finishedEntering();
-				alpha = 255;
+			// finished entering?
+			if(!isEntering()) {
 				ofLogNotice("ParticleScene") << "update enter done";
 			}
 		}
@@ -63,25 +54,20 @@ class ParticleScene : public ofxScene {
 			particles.update();
 		}
 
-		// called when scene is exiting
+		// called when scene is exiting, this is just a demo and this
+		// implementation is not required for this class
 		void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
-				timer.setAlarm(2000);
-				alpha = 0;
 				ofLogNotice("ParticleScene") << "update exit";
 			}
 			
-			// calc alpha amount based on alarm time diff
-			alpha = 255*abs(timer.getDiffN()-1.0);
+			// fade scene calculates normalized alpha value for us
+			ofxFadeScene::updateExit();
 			
-			update();
-		
-			// call finishedExiting() to indicate scene is done exiting
-			if(timer.alarm()) {
-				finishedExiting();
-				alpha = 0;
+			// finished exiting?
+			if(!isExiting()) {
 				ofLogNotice("ParticleScene") << "update exit done";
 			}
 		}
@@ -91,7 +77,7 @@ class ParticleScene : public ofxScene {
 			ofEnableAlphaBlending();
 			ofFill();
 			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofSetColor(255, 0, 0, alpha);
+			ofSetColor(255, 0, 0, 255*alpha);
 			
 			particles.draw();
 				
@@ -115,10 +101,6 @@ class ParticleScene : public ofxScene {
 				particles.popLastParticle();
 			}
 		}
-		
-		// used for fade in and out
-		ofxTimer timer;
-		int alpha;
 
 		// particle class		
 		class Particle : public ofxParticle {

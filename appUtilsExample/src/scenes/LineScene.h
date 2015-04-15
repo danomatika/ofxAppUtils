@@ -12,45 +12,36 @@
 
 #include <ofxAppUtils.h>
 
-class LineScene : public ofxScene {
+class LineScene : public ofxFadeScene {
 
 	public:
 
 		// set the scene name through the base class initializer
-		LineScene() : ofxScene("Lines"){
-			alpha = 255;
-			
-			// we want setup to be called each time the scene is loaded
-			setSingleSetup(false);
+		LineScene() : ofxFadeScene("Lines"){
+			setSingleSetup(false); // call setup each time the scene is loaded
+			setFade(1000, 1000); // 1 second fade in/out
 		}
 
 		// scene setup
 		void setup() {
-			timer.set();
-			
 			lines.push_back(new Line(Line::HORZ));
 			lines.push_back(new Line(Line::VERT));
 		}
 
-		// called when scene is entering
+		// called when scene is entering, this is just a demo and this
+		// implementation is not required for this class
 		void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
-				timer.setAlarm(2000);
-				alpha = 0;
 				ofLogNotice("LineScene") << "update enter";
 			}
 		
-			// calc alpha amount based on alarm time diff
-			alpha = 255*timer.getDiffN();
+			// fade scene calculates normalized alpha value for us
+			ofxFadeScene::updateEnter();
 			
-			update();
-		
-			// call finishedEntering() to indicate scene is done entering
-			if(timer.alarm()) {
-				finishedEntering();
-				alpha = 255;
+			// finished entering?
+			if(!isEntering()) {
 				ofLogNotice("LineScene") << "update enter done";
 			}
 		}
@@ -62,25 +53,20 @@ class LineScene : public ofxScene {
 			}
 		}
 
-		// called when scene is exiting
+		// called when scene is exiting, this is just a demo and this
+		// implementation is not required for this class
 		void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
-				timer.setAlarm(2000);
-				alpha = 0;
 				ofLogNotice("LineScene") << "update exit";
 			}
 			
-			// calc alpha amount based on alarm time diff
-			alpha = 255*abs(timer.getDiffN()-1.0);
+			// fade scene calculates normalized alpha value for us
+			ofxFadeScene::updateExit();
 			
-			update();
-		
-			// call finishedExiting() to indicate scene is done exiting
-			if(timer.alarm()) {
-				finishedExiting();
-				alpha = 0;
+			// finished exiting?
+			if(!isExiting()) {
 				ofLogNotice("LineScene") << "update exit done";
 			}
 		}
@@ -89,7 +75,7 @@ class LineScene : public ofxScene {
 		void draw() {
 			ofEnableAlphaBlending();
 			ofSetLineWidth(5);
-			ofSetColor(255, 255, 255, alpha);	// alpha for fade in/out
+			ofSetColor(255, 255, 255, 255*alpha);	// alpha member variable for fade in/out
 			for(unsigned int i = 0; i < lines.size(); ++i) {
 				lines[i]->draw();
 			}
@@ -105,10 +91,6 @@ class LineScene : public ofxScene {
 			}
 			lines.clear();
 		}
-		
-		// used for fade in and out
-		ofxTimer timer;
-		int alpha;
 
 		// line class		
 		class Line {

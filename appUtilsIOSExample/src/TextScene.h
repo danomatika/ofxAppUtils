@@ -14,15 +14,15 @@
 #include "ofxAppUtils.h"
 
 // a simple scene that displays some BIG TEXT in the center of the screen
-class TextScene : public ofxScene {
+class TextScene : public ofxFadeScene {
 	
 	public:
 
 		// takes a reference of the parent for data access,
 		// set the scene name through the base class initializer
-		TextScene(string name, string t) : ofxScene(name) {
+		TextScene(string name, string t) : ofxFadeScene(name) {
 			text = t;
-			alpha = 255;
+			setFade(500, 500); // half second fade in/out
 		}
 
 		// scene setup
@@ -34,27 +34,20 @@ class TextScene : public ofxScene {
 			bbox = font.getStringBoundingBox(text, 0, 0);
 		}
 
-		// called when scene is entering
-       	void updateEnter() {
+		// called when scene is entering, this is just a demo and this
+		// implementation is not required for this class
+		void updateEnter() {
 		
 			// called on first enter update
 			if(isEnteringFirst()) {
-				setup();
-				timer.set();
-				timer.setAlarm(500);
-				alpha = 0;
 				ofLogNotice() << getName() << ": update enter";
 			}
 		
-			// calc alpha amount based on alarm time diff
-			alpha = 255*timer.getDiffN();
+			// fade scene calculates normalized alpha value for us
+			ofxFadeScene::updateEnter();
 			
-			update();
-		
-			// call finishedEntering() to indicate scene is done entering
-			if(timer.alarm()) {
-				finishedEntering();
-				alpha = 255;
+			// finished entering?
+			if(!isEntering()) {
 				ofLogNotice() << getName() << ": update enter done";
 			}
 		}
@@ -62,25 +55,20 @@ class TextScene : public ofxScene {
 		// normal update
         void update() {}
 
-		// called when scene is exiting
-        void updateExit() {
+		// called when scene is exiting, this is just a demo and this
+		// implementation is not required for this class
+		void updateExit() {
 		
 			// called on first exit update
 			if(isExitingFirst()) {
-				timer.setAlarm(500);
-				alpha = 0;
 				ofLogNotice() << getName() << ": update exit";
 			}
 			
-			// calc alpha amount based on alarm time diff
-			alpha = 255*abs(timer.getDiffN()-1.0);
+			// fade scene calculates normalized alpha value for us
+			ofxFadeScene::updateExit();
 			
-			update();
-		
-			// call finishedExiting() to indicate scene is done exiting
-			if(timer.alarm()) {
-				finishedExiting();
-				alpha = 0;
+			// finished exiting?
+			if(!isExiting()) {
 				ofLogNotice() << getName() << ": update exit done";
 			}
 		}
@@ -91,7 +79,7 @@ class TextScene : public ofxScene {
 			ofxApp *app = ofxGetAppPtr();
 		
 			ofEnableAlphaBlending();
-			ofSetColor(255, 255, 255, alpha); // alpha for fade in/out
+			ofSetColor(255, 255, 255, 255*alpha); // alpha member variable for fade in/out
 			font.drawString(text,
 				app->getRenderWidth()/2-bbox.width/2,
 				app->getRenderHeight()/2+bbox.height/2);
@@ -140,10 +128,6 @@ class TextScene : public ofxScene {
 		ofRectangle bbox; // bounding box of the text
 		
 		static ofTrueTypeFont font; // shared font
-
-		// used for fade in and out
-		ofxTimer timer;
-		int alpha;
 };
 
 // statics

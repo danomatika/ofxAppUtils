@@ -135,3 +135,70 @@ class ofxScene :
 		
 		friend class RunnerScene; //< used to wrap this app
 };
+
+///	\class  FadeScene
+///	\brief  application scene abstract class with calculated alpha fade
+///
+/// note: this only automates calculating a normalized alpha value, it's up to
+///       you to use this in your drawing code and call ofEnableAlphaBlending()
+class ofxFadeScene : public ofxScene {
+
+	public:
+	
+		ofxFadeScene(const string& name) : ofxScene(name) {
+			fadeIn = 0;
+			fadeOut = 0;
+			fadeTimer.set();
+			alpha = 1.0;
+		}
+	
+		/// calculates fade in
+		void updateEnter() {
+			if(isEnteringFirst()) {
+				fadeTimer.setAlarm(fadeIn*0.5);
+				alpha = 0.0;
+			}
+			alpha = fadeTimer.getDiffN();
+			update();
+			if(fadeTimer.alarm()) {
+				finishedEntering();
+				alpha = 1.0;
+			}
+		}
+	
+		/// calculates fade out
+		void updateExit() {
+			if(isExitingFirst()) {
+				fadeTimer.setAlarm(fadeOut*0.5);
+				alpha = 1.0;
+			}
+			alpha = abs(fadeTimer.getDiffN()-1.0);
+			update();
+			if(fadeTimer.alarm()) {
+				finishedExiting();
+				alpha = 0.0;
+			}
+		}
+	
+		/// set transition fade in and out times (ms)
+		void setFade(unsigned int fadeInMS, unsigned int fadeOutMS) {
+			fadeIn = fadeInMS;
+			fadeOut = fadeOutMS;
+		}
+		void setFadeIn(unsigned int fadeInMS)  {fadeIn = fadeInMS;}
+		void setFadeOut(unsigned int fadeOutMS) {fadeOut = fadeOutMS;}
+	
+		/// get transition fade in time (ms)
+		unsigned int getFadeIn() {return fadeIn;}
+	
+		/// get transition fade out time (ms)
+		unsigned int getFadeOut() {return fadeOut;}
+
+	protected:
+	
+		unsigned int fadeIn;  //< scene transition fade in (ms), default: 0
+		unsigned int fadeOut; //< scene transition fade out (ms), default: 0
+	
+		ofxTimer fadeTimer; //< for calculating transition fade
+		float alpha; //< calculated fade alpha value, normalized 0-1.0
+};

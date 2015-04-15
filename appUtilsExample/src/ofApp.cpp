@@ -57,6 +57,9 @@ void ofApp::setup() {
 	sceneManager.gotoScene("Lines", true);
 	lastScene = sceneManager.getCurrentSceneIndex();
 	
+	// overlap scenes when transitioning
+	sceneManager.setOverlap(true);
+	
 	// attach scene manager to this ofxApp so it's called automatically,
 	// you can also call the callbacks (update, draw, keyPressed, etc) manually
 	// if you don't set it

@@ -54,8 +54,9 @@ ofxParticle& ofxParticle::operator=(const ofxParticle& from) {
 
 //--------------------------------------------------------------
 void ofxParticle::updateAge() {
-	if(!bAlive)
+	if(!bAlive) {
 		return;
+	}
 
 	// ignore if time from last frame was too long
 	if(lifeTimer.getDiff() < _frameTimeout) {
@@ -63,16 +64,18 @@ void ofxParticle::updateAge() {
 		age += lifeTimer.getDiff();
 
 		// check if too old
-		if(age >= lifespan)
+		if(age >= lifespan) {
 			kill();
+		}
 	}
 	lifeTimer.set();
 }
 
 //--------------------------------------------------------------
 double ofxParticle::getAgeN() {
-	if(lifespan == 0)
+	if(lifespan == 0) {
 		return 0;
+	}
 	return age/lifespan;
 }
 

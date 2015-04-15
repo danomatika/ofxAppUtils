@@ -143,13 +143,15 @@ void ofxTransformer::applyRenderScale() {
 	// adjust to screen dimensions?
 	if(_bHandleAspect && _renderAspect != _screenAspect) {
 		if(_renderAspect > _screenAspect) {	// letter box
-			if(_bCenter && !_bWarp)
+			if(_bCenter && !_bWarp) {
 				ofTranslate(0, (_screenHeight-(_renderScaleX*_renderHeight))/2);
+			}
 			ofScale(_renderScaleX, _renderScaleX);
 		}
 		else { // pillar box
-			if(_bCenter && !_bWarp)
+			if(_bCenter && !_bWarp) {
 				ofTranslate((_screenWidth-(_renderScaleY*_renderWidth))/2, 0);
+			}
 			ofScale(_renderScaleY, _renderScaleY);
 		}
 	}
@@ -182,44 +184,36 @@ void ofxTransformer::applyWarp() {
 
 //--------------------------------------------------------------
 void ofxTransformer::pushTransforms(bool forceWarp) {
-	// don't push twice
-	if(_bTransformsPushed)
-		return;
-
+	if(_bTransformsPushed) {
+		return; // don't push twice
+	}
 	ofPushMatrix();
-
 	if(_bScale) {
 		applyRenderScale();
 	}
-
 	if(_bTranslate) {
 		applyOriginTranslate();
 	}
-	
 	if(_bWarp || forceWarp) {
 		applyWarp();
 		ofPushMatrix();
 		_bWarpPushed = true;
 	}
-	
 	if(_bMirrorX) {
 		applyMirrorX();
 	}
-	
 	if(_bMirrorY) {
 		applyMirrorY();
 	}
-	
 	_bTransformsPushed = true;
 }
 
 // TODO: an extra pop would occur if warp was set to false in the user
 // draw function ...
 void ofxTransformer::popTransforms() {
-	// avoid extra pops
-	if(!_bTransformsPushed)
-		return;
-		
+	if(!_bTransformsPushed) {
+		return; // avoid extra pops
+	}
 	if(_bWarp && _bWarpPushed == true) {
 		ofPopMatrix();
 		_bWarpPushed = false;

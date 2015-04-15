@@ -28,14 +28,13 @@
 
 class ofxSceneManager;
 
-/**
-	\class  App
-	\brief  application implementation with automatic transforms and projection mapping,
-			includes an optional built-in ofxControlPanel
-			
-	simply inherit from this class and implement the regular app callbacks
-	ie setup(), update(), draw(), etc
-**/
+
+///	\class  App
+///	\brief  application implementation with automatic transforms and projection mapping,
+///			includes an optional built-in ofxControlPanel
+///
+///	simply inherit from this class and implement the regular app callbacks
+///	ie setup(), update(), draw(), etc
 class ofxApp :
 
 #ifdef TARGET_OF_IPHONE
@@ -181,31 +180,32 @@ class ofxApp :
 
 	protected:
 	
-		bool bDebug; ///< are we in debug mode?
+		bool bDebug; //< are we in debug mode?
 
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		ofxControlPanel	controlPanel; ///< the settings control panel
+		ofxControlPanel	controlPanel; //< the settings control panel
 #endif
 
 	private:
 		
 		ofxTransformer _transformer;
-		bool _bAutoTransforms;      ///< apply the transforms automatically?
+		bool _bAutoTransforms;      //< apply the transforms automatically?
 		
 		/// quad warper
-		int _currentWarpPoint;      ///< currently selected projection point
-		bool _bEditingWarpPoints;   ///< are we currently editing the warp points?
-		ofMatrix4x4 _warpTransform; ///< warp transform matrix needed for mouse picking
+		int _currentWarpPoint;      //< currently selected projection point
+		bool _bEditingWarpPoints;   //< are we currently editing the warp points?
+		ofMatrix4x4 _warpTransform; //< warp transform matrix needed for mouse picking
 		
-		bool _bDrawFramerate;       ///< draw the dramerate in debug mode?
-		ofColor _framerateColor;    ///< framerate text color
+		bool _bDrawFramerate;       //< draw the dramerate in debug mode?
+		ofColor _framerateColor;    //< framerate text color
 		
-		ofxSceneManager* _sceneManager; ///< optional built in scene manager
-		bool _bSceneManagerUpdate, _bSceneManagerDraw;
+		ofxSceneManager* _sceneManager; //< optional built in scene manager
+		bool _bSceneManagerUpdate; //< call scene manager update automatically?
+		bool _bSceneManagerDraw; //< call scene manager draw automatically?
 		
 #ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		bool _bTransformControls;   ///< have the projection controls been added?
-		bool _bDrawControlPanel;    ///< draw the control panel automatically?
+		bool _bTransformControls;   //< have the projection controls been added?
+		bool _bDrawControlPanel;    //< draw the control panel automatically?
 #endif
 
 	public:
@@ -244,7 +244,7 @@ class ofxApp :
 				void gotMessage(ofMessage msg);
 				
 			#ifdef TARGET_OF_IPHONE
-				// ofxIphone callbacks
+				// ofxIOS callbacks
 				void touchDown(ofTouchEventArgs & touch);
 				void touchMoved(ofTouchEventArgs & touch);
 				void touchUp(ofTouchEventArgs & touch);

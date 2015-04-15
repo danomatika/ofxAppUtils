@@ -19,8 +19,9 @@ ofxScene::RunnerScene::RunnerScene(ofxScene* scene) {
 
 //--------------------------------------------------------------
 ofxScene::RunnerScene::~RunnerScene() {
-	if(scene != NULL)
+	if(scene != NULL) {
 		delete scene;
+	}
 }
 
 //--------------------------------------------------------------
@@ -33,8 +34,9 @@ void ofxScene::RunnerScene::setup() {
 
 //--------------------------------------------------------------
 void ofxScene::RunnerScene::update() {
-	if(!scene->_bSetup || !scene->_bRunning)
+	if(!scene->_bSetup || !scene->_bRunning) {
 		return;
+	}
     
     // update mouse pos for processing heads
     scene->mouseX = ofGetMouseX();
@@ -55,8 +57,9 @@ void ofxScene::RunnerScene::update() {
 		
 //--------------------------------------------------------------
 void ofxScene::RunnerScene::draw() {
-	if(!scene->_bSetup)
+	if(!scene->_bSetup) {
 		return;
+	}
 	scene->draw();
 }
 

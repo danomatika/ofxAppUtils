@@ -13,10 +13,8 @@
 #include "ofxApp.h"
 #include "ofxTimer.h"
 
-/**
-	\class  Scene
-	\brief  application scene abstract class
-**/
+///	\class  Scene
+///	\brief  application scene abstract class
 class ofxScene :
 
 #ifdef TARGET_OF_IPHONE
@@ -135,5 +133,5 @@ class ofxScene :
 				ofxScene* scene;
 		};
 		
-		friend class RunnerScene; ///< used to wrap this app
+		friend class RunnerScene; //< used to wrap this app
 };

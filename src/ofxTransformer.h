@@ -12,10 +12,8 @@
 
 #include "ofxQuadWarper.h"
 
-/**
-	\class  Transformer
-	\brief  a render transformer
-**/
+///	\class  Transformer
+///	\brief  a render transformer
 class ofxTransformer {
 	public:
 	
@@ -130,14 +128,14 @@ class ofxTransformer {
 	protected:
 		
 		bool _bScale, _bMirrorX, _bMirrorY, _bTranslate, _bHandleAspect, _bCenter, _bWarp;
-		float _screenWidth, _screenHeight;  ///< parent render size (screen or window)
-		float _renderWidth, _renderHeight;  ///< render size
-		float _renderScaleX, _renderScaleY; ///< render scale
-		float _renderAspect, _screenAspect;
+		float _screenWidth, _screenHeight;  //< parent render size (screen or window)
+		float _renderWidth, _renderHeight;  //< render size
+		float _renderScaleX, _renderScaleY; //< render scale
+		float _renderAspect, _screenAspect; //< computed aspect ratios (w/h)
 		ofVec3f _origin;
 		
 		ofxQuadWarper _quadWarper;
 		
-		bool _bTransformsPushed; ///< have the transforms been pushed?
-		bool _bWarpPushed;       ///< was the warp transform pushed?
+		bool _bTransformsPushed; //< have the transforms been pushed?
+		bool _bWarpPushed;       //< was the warp transform pushed?
 };

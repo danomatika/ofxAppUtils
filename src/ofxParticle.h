@@ -13,10 +13,9 @@
 #include "ofxTimer.h"
 #include "ofRectangle.h"
 
-/**
-	\class  Particle
-	\brief  a particle with a lifespan
-**/
+
+///	\class  Particle
+///	\brief  a particle with a lifespan, inherit this to add vel, acc, & behavior
 class ofxParticle : public ofRectangle {
 	public:
 
@@ -87,14 +86,14 @@ class ofxParticle : public ofRectangle {
 
 	protected:
 
-		bool bAlive;        ///< is this particle alive?
+		bool bAlive;        //< is this particle alive?
 
-		double lifespan;    ///< how long this particle should live in ms
-		double age;         ///< how old the particle is
+		double lifespan;    //< how long this particle should live in ms
+		double age;         //< how old the particle is
 
-		ofxTimer lifeTimer; ///< used to time the age between frames
+		ofxTimer lifeTimer; //< used to time the age between frames
 
 	private:
 
-		static unsigned int _frameTimeout; ///< how long to wait between frames
+		static unsigned int _frameTimeout; //< how long to wait between frames
 };

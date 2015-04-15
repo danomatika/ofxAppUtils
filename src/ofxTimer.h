@@ -12,10 +12,8 @@
 
 #include "ofUtils.h"
 
-/**
-	\class	Timer
-	\brief	a simple millis timer/alarm
-*/
+///	\class	Timer
+///	\brief	a simple millis timer/alarm
 class ofxTimer {
 	public:
 	
@@ -70,7 +68,7 @@ class ofxTimer {
 		
 	protected:
 	
-		unsigned int alarmMS;    ///< length of alarm
-		unsigned int timestamp;  ///< current timestamp
-		unsigned int alarmstamp; ///< future timestamp
+		unsigned int alarmMS;    //< length of alarm
+		unsigned int timestamp;  //< current timestamp
+		unsigned int alarmstamp; //< future timestamp
 };

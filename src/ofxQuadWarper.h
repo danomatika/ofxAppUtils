@@ -12,10 +12,8 @@
 
 #include "ofVectorMath.h"
 
-/**
-	\class  QuadWarper
-	\brief  a gl matrix transform quad warper
-**/
+///	\class  QuadWarper
+///	\brief  a gl matrix transform quad warper
 class ofxQuadWarper {
 	public:
 	

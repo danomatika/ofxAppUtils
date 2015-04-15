@@ -13,7 +13,6 @@
 #include "ofGraphics.h"
 #include "ofVectorMath.h"
 
-//------------------------------------------------------------------------------
 /// \class ofxBitmapStream
 /// \brief a stream interface to ofDrawBitmapStream
 ///
@@ -59,8 +58,8 @@ class ofxBitmapString {
 		
 	private:
 	
-		ofPoint pos;                ///< temp position
-		std::ostringstream message; ///< temp buffer
+		ofPoint pos;                //< temp position
+		std::ostringstream message; //< temp buffer
 		
 		ofxBitmapString(ofxBitmapString const&) {} // not defined, not copyable
 		ofxBitmapString& operator=(ofxBitmapString& from) {return *this;} // not defined, not assignable

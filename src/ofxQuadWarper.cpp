@@ -32,8 +32,12 @@ void ofxQuadWarper::apply(float width, float height) {
 	// we set it to the default - 0 translation
 	// and 1.0 scale for x y z and w
 	for(int i = 0; i < 16; i++) {
-		if(i % 5 != 0) _glWarpMatrix[i] = 0.0;
-		else _glWarpMatrix[i] = 1.0;
+		if(i % 5 != 0) {
+			_glWarpMatrix[i] = 0.0;
+		}
+		else {
+			_glWarpMatrix[i] = 1.0;
+		}
 	}
 
 	// source and destination points
@@ -75,19 +79,21 @@ void ofxQuadWarper::apply(float width, float height) {
 	_glWarpMatrix[15] = _warpMatrix[2][2];
 
 	// finally lets multiply our matrix
-	glMultMatrixf(_glWarpMatrix);
+	ofMultMatrix(_glWarpMatrix);
 }
 
 //--------------------------------------------------------------
 void ofxQuadWarper::setPoint(unsigned int index, ofVec2f point) {
-	if(index > 3)
+	if(index > 3) {
 		return;
+	}
 	_warpPoints[index] = point;
 }
 
 ofVec2f ofxQuadWarper::getPoint(unsigned int index) {
-	if(index > 3)
+	if(index > 3) {
 		return ofVec2f();
+	}
 	return _warpPoints[index];
 }
 
@@ -103,8 +109,9 @@ void ofxQuadWarper::reset() {
 bool ofxQuadWarper::loadSettings(const string xmlFile) {
 	
 	ofXml xml;
-	if(!xml.load(xmlFile))
+	if(!xml.load(xmlFile)) {
 		return false;
+	}
     xml.setTo("quad");
     
 	_warpPoints[0].x = xml.getValue("upperLeft/x", 0.0f);

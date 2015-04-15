@@ -13,11 +13,13 @@
 /// SCENE MANAGER
 
 //--------------------------------------------------------------
-ofxSceneManager::ofxSceneManager() :
-	_currentScene(SCENE_NONE), _newScene(SCENE_NOCHANGE),
-	_bChangeNow(false), _minChangeTimeMS(100), _bOverlap(false),
-	_bSignalledAutoChange(false)
-{
+ofxSceneManager::ofxSceneManager() {
+	_currentScene = SCENE_NONE;
+	_newScene = SCENE_NOCHANGE;
+	_bChangeNow = false;
+	_minChangeTimeMS = 100;
+	_bOverlap = false;
+	_bSignalledAutoChange = false;
 	_sceneChangeTimer.set();
 	_currentScenePtr = NULL;
 }
@@ -28,13 +30,11 @@ ofxScene* ofxSceneManager::add(ofxScene* scene) {
 		ofLogWarning("ofxSceneManager") << "cannot add NULL scene";
 		return NULL;
 	}
-
 	if(_scenes.find(scene->getName()) != _scenes.end()) {
 		ofLogWarning("ofxSceneManager") << "scene \"" << scene->getName()
 									 << "\" already added, only unique names allowed";
 		return NULL;
 	}
-	
 	_scenes.insert(_scenes.end(), pair<std::string,ofxScene::RunnerScene*>(scene->getName(), new ofxScene::RunnerScene(scene)));
 	return scene;
 }
@@ -45,7 +45,6 @@ void ofxSceneManager::remove(ofxScene* scene) {
 		ofLogWarning("ofxSceneManager") << "cannot remove NULL scene";
 		return;
 	}
-	
 	map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	map<std::string,ofxScene::RunnerScene*>::iterator diter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
@@ -60,7 +59,6 @@ void ofxSceneManager::remove(ofxScene* scene) {
 			return;
 		}
 	}
-
 }
 
 //--------------------------------------------------------------
@@ -116,9 +114,9 @@ bool ofxSceneManager::isRunning() {
 
 //--------------------------------------------------------------
 void ofxSceneManager::noScene(bool now) {
-	if(_sceneChangeTimer.getDiff() < _minChangeTimeMS)
+	if(_sceneChangeTimer.getDiff() < _minChangeTimeMS) {
 		return;
-	
+	}
 	if(!now && _currentScene > -1) {
 		_currentScenePtr->startExiting();
 	}
@@ -148,15 +146,15 @@ void ofxSceneManager::prevScene(bool now) {
 //--------------------------------------------------------------
 void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 	if(_scenes.empty() || index >= _scenes.size() ||
-	   _sceneChangeTimer.getDiff() < _minChangeTimeMS)
+	   _sceneChangeTimer.getDiff() < _minChangeTimeMS) {
 		return;
-
+	}
+	
 	ofxScene* s;
 	if(_currentScene == (int) index) {
 		ofLogWarning("ofxSceneManager") << "ignoring duplicate goto scene change";
 		return;
 	}
-
 	if(!now) {
 	
 		// tell current scene to exit
@@ -249,14 +247,12 @@ void ofxSceneManager::update() {
 
 	// update the current main scene
 	if(!_scenes.empty() && _currentScene >= 0) {
-	
 		ofxScene* s = _currentScenePtr;
 
 		// call setup if scene is not setup yet
 		if(!s->isSetup()) {
 			_currentRunnerScenePtr->setup();
 		}
-
 		_currentRunnerScenePtr->update();
 
 		// if this scene says it's done, go to the next one
@@ -268,13 +264,10 @@ void ofxSceneManager::update() {
 	
 	 // update the new scene, if there is one
 	if(_bOverlap && !_scenes.empty() && _newScene != SCENE_NOCHANGE && _newScene >= 0) {
-		
 		ofxScene* next_s = getSceneAt(_newScene);
- 
 		if(!next_s->isSetup()) {
 			_newRunnerScenePtr->setup();
 		}
-
 		_newRunnerScenePtr->update();
 	}
 }
@@ -456,7 +449,6 @@ void ofxSceneManager::_handleSceneChanges() {
 	
 		// ignore duplicates
 		if(_newScene == _currentScene) {
-			
 			if(_newScene == SCENE_NONE) { // nothing to do
 				return;
 			}
@@ -488,7 +480,7 @@ void ofxSceneManager::changeToNewScene() {
 	_currentScene = _newScene;
 	_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
 	_newRunnerScenePtr = NULL;
-	
+
 	if(_currentRunnerScenePtr) {
 		_currentScenePtr = _currentRunnerScenePtr->scene;
 		ofLogVerbose("ofxSceneManager") << "changed to " << _currentScene

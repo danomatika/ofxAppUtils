@@ -174,7 +174,11 @@ void ofApp::keyPressed(int key) {
 			if(sceneManager.getCurrentScene() == particleScene) {
 				particleScene->addOneParticle();
 			}
-			break;	
+			break;
+			
+		case 'o':
+			sceneManager.setOverlap(!sceneManager.getOverlap());
+			break;
 	}
 }
 

@@ -15,7 +15,8 @@
 //--------------------------------------------------------------
 ofxSceneManager::ofxSceneManager() :
 	_currentScene(SCENE_NONE), _newScene(SCENE_NOCHANGE),
-	_bChangeNow(false), _minChangeTimeMS(100), _bSignalledAutoChange(false)
+	_bChangeNow(false), _minChangeTimeMS(100), _bOverlap(false),
+	_bSignalledAutoChange(false)
 {
 	_sceneChangeTimer.set();
 	_currentScenePtr = NULL;
@@ -167,6 +168,7 @@ void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 		// tell new scene to enter
 		s = getSceneAt(index);
 		s->startEntering();
+		_newRunnerScenePtr = _getRunnerSceneAt(index);
 	}
 	
 	_newScene = index;
@@ -229,6 +231,15 @@ void ofxSceneManager::setMinChangeTime(unsigned int time) {
 	_minChangeTimeMS = time;
 }
 
+//--------------------------------------------------------------
+void ofxSceneManager::setOverlap(bool overlap) {
+	_bOverlap = overlap;
+}
+
+bool ofxSceneManager::getOverlap() {
+	return _bOverlap;
+}
+
 // ofBaseApp
 //--------------------------------------------------------------
 // need to call ofxScene::RunnerScene::update()
@@ -254,12 +265,27 @@ void ofxSceneManager::update() {
 			_bSignalledAutoChange = true;
 		}
 	}
+	
+	 // update the new scene, if there is one
+	if(_bOverlap && !_scenes.empty() && _newScene != SCENE_NOCHANGE && _newScene >= 0) {
+		
+		ofxScene* next_s = getSceneAt(_newScene);
+ 
+		if(!next_s->isSetup()) {
+			_newRunnerScenePtr->setup();
+		}
+
+		_newRunnerScenePtr->update();
+	}
 }
 
 // need to call ofxScene::RunnerScene::draw()
 void ofxSceneManager::draw() {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentRunnerScenePtr->draw();
+	}
+	if(_bOverlap && !_scenes.empty() && _newScene != SCENE_NOCHANGE && _newScene >= 0) {
+		_newRunnerScenePtr->draw();
 	}
 }
 
@@ -461,6 +487,7 @@ void ofxSceneManager::changeToNewScene() {
 	
 	_currentScene = _newScene;
 	_currentRunnerScenePtr = _getRunnerSceneAt(_currentScene);
+	_newRunnerScenePtr = NULL;
 	
 	if(_currentRunnerScenePtr) {
 		_currentScenePtr = _currentRunnerScenePtr->scene;

@@ -89,6 +89,11 @@ class ofxSceneManager {
 		/// note: this is ignored it the change is done "now"
 		unsigned int getMinChangeTime();
 		void setMinChangeTime(unsigned int time);
+	
+		/// get/set overlapping current & new scene updates on a scene change
+		/// note: current scene does not change until end of the transition
+		void setOverlap(bool overlap);
+		bool getOverlap();
 		
 	/// \section Current Scene Callbacks
 		
@@ -115,7 +120,7 @@ class ofxSceneManager {
 		void windowResized(int w, int h);
 		
 	#ifdef TARGET_OF_IPHONE
-		/// ofxIphone callbacks
+		/// ofxIOS callbacks
 		void touchDown(ofTouchEventArgs & touch);
 		void touchMoved(ofTouchEventArgs & touch);
 		void touchUp(ofTouchEventArgs & touch);
@@ -160,9 +165,11 @@ class ofxSceneManager {
 	
 		ofxScene*	_currentScenePtr; ///< pointer to the current scene
 		ofxScene::RunnerScene* _currentRunnerScenePtr; ///< pointer to the current runner scene
+		ofxScene::RunnerScene* _newRunnerScenePtr; ///< pointer to the next runner scene (when overlapping)
 		int _currentScene; ///< the current scene, < 0 if none
 		int _newScene;     ///< scene to change to
 		bool _bChangeNow;  ///< ignore enter and exit when changing scenes?
+		bool _bOverlap;    //< make new scenes start entering while current scene is finishing?
 		
 		std::map<std::string, ofxScene::RunnerScene*> _scenes; ///< scenes
 	

@@ -13,7 +13,7 @@
 #include "ofMain.h"
 
 #include "ofxAppUtils.h"
-#include "ofxGui.h"
+#include "ofxControlPanel.h"
 
 // we only specify a pointer to the Particle Scene here, so tell the compiler
 // that it exists as a class and we can include the class header in testApp.cpp

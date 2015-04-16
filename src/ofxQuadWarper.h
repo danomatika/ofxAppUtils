@@ -26,15 +26,15 @@ class ofxQuadWarper {
 		
 		/// set/get the warp points
 		/// index: 0 - upper left, 1 - upper right, 2 - lower right, 3 - lower left 
-		void setPoint(unsigned int index, ofVec2f point);
+		void setPoint(unsigned int index, const ofVec2f &point);
 		ofVec2f getPoint(unsigned int index);
 		
 		/// reset the quad to screen size
 		void reset();
 		
 		/// load/save the quad coords from/to an xml file
-		bool loadSettings(const string xmlFile="quadWarper.xml");
-		void saveSettings(const string xmlFile="quadWarper.xml");
+		bool loadSettings(const string &xmlFile="quadWarper.xml");
+		void saveSettings(const string &xmlFile="quadWarper.xml");
 		
 	private:
 		

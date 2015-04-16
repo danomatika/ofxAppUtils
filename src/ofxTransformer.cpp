@@ -121,11 +121,14 @@ void ofxTransformer::resetWarp() {
 	_quadWarper.reset();
 }
 
-bool ofxTransformer::loadWarpSettings(const string xmlFile) {
-	return _quadWarper.loadSettings(xmlFile);
+bool ofxTransformer::loadWarpSettings(const string &xmlFile) {
+	if(ofFile::doesFileExist(ofToDataPath(xmlFile))) {
+		return _quadWarper.loadSettings(xmlFile);
+	}
+	return false;
 }
 
-void ofxTransformer::saveWarpSettings(const string xmlFile) {
+void ofxTransformer::saveWarpSettings(const string &xmlFile) {
 	return _quadWarper.saveSettings(xmlFile);
 }
 

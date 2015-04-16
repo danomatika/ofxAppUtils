@@ -27,10 +27,10 @@ ofxApp::ofxApp() : _currentWarpPoint(-1) {
 	_sceneManager = NULL;
 	_bSceneManagerUpdate = true;
 	_bSceneManagerDraw = true;
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	_bTransformControls = false;
-	_bDrawControlPanel = true;
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	_bTransformControls = false;
+//	_bDrawControlPanel = true;
+//#endif
 }
 
 //--------------------------------------------------------------
@@ -41,113 +41,124 @@ void ofxApp::setMirror(bool mirrorX, bool mirrorY) {
 
 void ofxApp::setMirrorX(bool mirrorX) {
 	_bMirrorX = mirrorX;
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(_bTransformControls) {
-		controlPanel.setValueB("transformMirrorX", _bMirrorX);
-	}
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueB("transformMirrorX", _bMirrorX);
+//	}
+//#endif
 }
 
 void ofxApp::setMirrorY(bool mirrorY) {
 	_bMirrorY = mirrorY;
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(_bTransformControls) {
-		controlPanel.setValueB("transformMirrorY", _bMirrorY);
-	}
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueB("transformMirrorY", _bMirrorY);
+//	}
+//#endif
+}
+
+void ofxApp::setOrigin(ofPoint &p) {
+	_origin = p;
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueF("transformPos", x, 0);
+//		controlPanel.setValueF("transformPos", y, 1);
+//		controlPanel.setValueF("transformZ", x);
+//	}
+//#endif
 }
 
 void ofxApp::setOrigin(float x, float y, float z)	{
 	_origin.set(x, y, z);
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(_bTransformControls) {
-		controlPanel.setValueF("transformPos", x, 0);
-		controlPanel.setValueF("transformPos", y, 1);
-		controlPanel.setValueF("transformZ", x);
-	}
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueF("transformPos", x, 0);
+//		controlPanel.setValueF("transformPos", y, 1);
+//		controlPanel.setValueF("transformZ", x);
+//	}
+//#endif
 }
 
 void ofxApp::setAspect(bool aspect) {
 	_bHandleAspect = aspect;
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(_bTransformControls) {
-		controlPanel.setValueB("transformAspect", _bHandleAspect);
-	}
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueB("transformAspect", _bHandleAspect);
+//	}
+//#endif
 }
 		
 void ofxApp::setCentering(bool center) {
 	_bCenter = center;
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(_bTransformControls) {
-		controlPanel.setValueB("transformCenter", _bCenter);
-	}
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueB("transformCenter", _bCenter);
+//	}
+//#endif
 }
 
 void ofxApp::setWarp(bool warp) {
 	_bWarp = warp;
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(_bTransformControls) {
-		controlPanel.setValueB("transformEnableQuadWarper", _bWarp);
-	}
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	if(_bTransformControls) {
+//		controlPanel.setValueB("transformEnableQuadWarper", _bWarp);
+//	}
+//#endif
 }
 
-//--------------------------------------------------------------
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-
-void ofxApp::addTransformControls(int panelNum, int panelCol) {
-	if(_bTransformControls) {
-		return;
-	}
-	if(panelNum < 0) {
-		controlPanel.addPanel("Transformer", 1, false);
-		controlPanel.setWhichPanel(controlPanel.panels.size()-1);
-	}
-	else {
-		controlPanel.setWhichPanel(panelNum);
-	}
-	controlPanel.setWhichColumn(panelCol);
-	controlPanel.addSlider2D("position", "transformPosition", getOriginX(), getOriginY(),
-							 -getRenderWidth(), getRenderWidth(),
-							 -getRenderHeight(), getRenderHeight(), false);
-	controlPanel.addSlider("z", "transformZ", getOriginZ(), -1000, 200, false);
-	controlPanel.addToggle("keep aspect", "transformAspect", getOriginTranslate());
-	controlPanel.addToggle("center rendering", "transformCenter", getCentering());
-	controlPanel.addToggle("mirror x", "transformMirrorX", getMirrorX());
-	controlPanel.addToggle("mirror y", "transformMirrorY", getMirrorY());
-	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", getWarp());
-	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
-	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
-	_bTransformControls = true;
-}
-
-void ofxApp::loadControlSettings(const string xmlFile) {
-	controlPanel.loadSettings(ofToDataPath(xmlFile));
-}
-
-void ofxApp::saveControlSettings(const string xmlFile) {
-	controlPanel.saveSettings(ofToDataPath(xmlFile));
-}
-
-void ofxApp::setDrawControlPanel(bool draw) {
-	_bDrawControlPanel = draw;
-}
-
-bool ofxApp::getDrawControlPanel() {
-	return _bDrawControlPanel;
-}
-
-void ofxApp::drawControlPanel() {
-	ofFill();
-	ofSetColor(255);
-	ofSetRectMode(OF_RECTMODE_CORNER);
-	controlPanel.draw();
-}
-
-#endif
+////--------------------------------------------------------------
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//
+//void ofxApp::addTransformControls(int panelNum, int panelCol) {
+//	if(_bTransformControls) {
+//		return;
+//	}
+//	if(panelNum < 0) {
+//		controlPanel.addPanel("Transformer", 1, false);
+//		controlPanel.setWhichPanel(controlPanel.panels.size()-1);
+//	}
+//	else {
+//		controlPanel.setWhichPanel(panelNum);
+//	}
+//	controlPanel.setWhichColumn(panelCol);
+//	controlPanel.addSlider2D("position", "transformPosition", getOriginX(), getOriginY(),
+//							 -getRenderWidth(), getRenderWidth(),
+//							 -getRenderHeight(), getRenderHeight(), false);
+//	controlPanel.addSlider("z", "transformZ", getOriginZ(), -1000, 200, false);
+//	controlPanel.addToggle("keep aspect", "transformAspect", getOriginTranslate());
+//	controlPanel.addToggle("center rendering", "transformCenter", getCentering());
+//	controlPanel.addToggle("mirror x", "transformMirrorX", getMirrorX());
+//	controlPanel.addToggle("mirror y", "transformMirrorY", getMirrorY());
+//	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", getWarp());
+//	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
+//	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
+//	_bTransformControls = true;
+//}
+//
+//void ofxApp::loadControlSettings(const string xmlFile) {
+//	controlPanel.loadSettings(ofToDataPath(xmlFile));
+//}
+//
+//void ofxApp::saveControlSettings(const string xmlFile) {
+//	controlPanel.saveSettings(ofToDataPath(xmlFile));
+//}
+//
+//void ofxApp::setDrawControlPanel(bool draw) {
+//	_bDrawControlPanel = draw;
+//}
+//
+//bool ofxApp::getDrawControlPanel() {
+//	return _bDrawControlPanel;
+//}
+//
+//void ofxApp::drawControlPanel() {
+//	ofFill();
+//	ofSetColor(255);
+//	ofSetRectMode(OF_RECTMODE_CORNER);
+//	controlPanel.draw();
+//}
+//
+//#endif
 
 //--------------------------------------------------------------
 void ofxApp::drawFramerate(float x, float y) {
@@ -204,40 +215,40 @@ void ofxApp::RunnerApp::update() {
 	app->mouseX = mouseX;
 	app->mouseY = mouseY;
 
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	ofxControlPanel& controlPanel = app->controlPanel;
-	if(app->_bTransformControls) {
-	
-		// grab control panel variables
-		app->_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
-						 controlPanel.getValueF("transformPosition", 1),	// y
-						 controlPanel.getValueF("transformZ"));             // z
-		
-		// keep aspect?
-		app->_bHandleAspect = controlPanel.getValueB("transformAspect");
-		app->_bCenter = controlPanel.getValueB("transformCenter");
-		
-		// mirror x/y?
-		app->_bMirrorX = controlPanel.getValueB("transformMirrorX");
-		app->_bMirrorY = controlPanel.getValueB("transformMirrorY");
-		
-		// enable quad warper?
-		app->_bWarp = controlPanel.getValueB("transformEnableQuadWarper");
-		
-		// edit quad warper?
-		if(controlPanel.getValueB("transformEditQuadWarper")) {
-			app->setEditWarp(true);
-			controlPanel.setValueB("transformEditQuadWarper", false);
-		}
-		
-		// save quad warper?
-		if(controlPanel.getValueB("transformSaveQuadWarper")) {
-			app->saveWarpSettings();
-			controlPanel.setValueB("transformSaveQuadWarper", false);
-		}
-	}
-	controlPanel.update();
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	ofxControlPanel& controlPanel = app->controlPanel;
+//	if(app->_bTransformControls) {
+//	
+//		// grab control panel variables
+//		app->_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
+//						 controlPanel.getValueF("transformPosition", 1),	// y
+//						 controlPanel.getValueF("transformZ"));             // z
+//		
+//		// keep aspect?
+//		app->_bHandleAspect = controlPanel.getValueB("transformAspect");
+//		app->_bCenter = controlPanel.getValueB("transformCenter");
+//		
+//		// mirror x/y?
+//		app->_bMirrorX = controlPanel.getValueB("transformMirrorX");
+//		app->_bMirrorY = controlPanel.getValueB("transformMirrorY");
+//		
+//		// enable quad warper?
+//		app->_bWarp = controlPanel.getValueB("transformEnableQuadWarper");
+//		
+//		// edit quad warper?
+//		if(controlPanel.getValueB("transformEditQuadWarper")) {
+//			app->setEditWarp(true);
+//			controlPanel.setValueB("transformEditQuadWarper", false);
+//		}
+//		
+//		// save quad warper?
+//		if(controlPanel.getValueB("transformSaveQuadWarper")) {
+//			app->saveWarpSettings();
+//			controlPanel.setValueB("transformSaveQuadWarper", false);
+//		}
+//	}
+//	controlPanel.update();
+//#endif
 	if(app->_sceneManager && app->_bSceneManagerUpdate) {
 		app->_sceneManager->update();
 	}

@@ -17,10 +17,10 @@
 	#include "ofBaseApp.h"
 #endif
 
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	#include "ofxXmlSettings.h"
-	#include "ofxControlPanel.h"
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//	#include "ofxXmlSettings.h"
+//	#include "ofxControlPanel.h"
+//#endif
 
 #include "ofxQuadWarper.h"
 #include "ofxTransformer.h"
@@ -57,6 +57,7 @@ class ofxApp :
 		void setMirrorY(bool mirrorY);
 		
 		/// set the origin position
+		void setOrigin(ofPoint &p);
 		void setOrigin(float x, float y, float z=0);
 		
 		/// keep the aspect ratio when scaling?
@@ -104,40 +105,39 @@ class ofxApp :
 		/// void pushTransforms();
 		/// void popTransforms();
 		
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-
-	/// \section Control Panel (optional) 
-	///
-	/// define OFX_APP_UTILS_USE_CONTROL_PANEL to enable the control panel
-	/// (and ofxControlPanel dependency)
-	///
-		
-		/// add transform controls to the ofxControlPanel (optional)
-		/// set panelNum to choose which to add the controls to, otherwise a
-		/// new panel is added
-		///
-		/// the controls are (xmlName, type):
-		/// - transformPos              float slider2D
-		/// - transformZ                float slider
-		/// - transformMirrorX          bool toggle
-		/// - transformMirrorY          bool toggle
-		/// - transformEnableQuadWarper bool toggle
-		/// - transformEditQuadWarper   bool toggle (button)
-		/// - transformSaveQuadWarper   bool toggle (button)
-		///
-		void addTransformControls(int panelNum=-1, int panelCol=0);
-		
-		/// load and save the control panel settings
-		void loadControlSettings(const string xmlFile="controlPanelSettings.xml");
-		void saveControlSettings(const string xmlFile="controlPanelSettings.xml");
-		
-		/// draw the control panel automatically in debug mode? (on by default)
-		void setDrawControlPanel(bool draw);
-		bool getDrawControlPanel();
-		
-		/// draw the control panel manually
-		void drawControlPanel();
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//
+//	/// \section Control Panel (optional) 
+//	///
+//	/// define OFX_APP_UTILS_USE_CONTROL_PANEL to enable the control panel
+//	/// (and ofxControlPanel dependency)
+//	///
+//		
+//		/// add transform controls to the ofxControlPanel (optional)
+//		/// set panelNum to choose which to add the controls to, otherwise a
+//		/// new panel is added
+//		///
+//		/// the controls are (xmlName, type):
+//		/// - transformPos              float vec slider
+//		/// - transformMirrorX          bool toggle
+//		/// - transformMirrorY          bool toggle
+//		/// - transformEnableQuadWarper bool toggle
+//		/// - transformEditQuadWarper   bool toggle (button)
+//		/// - transformSaveQuadWarper   bool toggle (button)
+//		///
+//		void addTransformControls(int panelNum=-1, int panelCol=0);
+//		
+//		/// load and save the control panel settings
+//		void loadControlSettings(const string xmlFile="transformSettings.xml");
+//		void saveControlSettings(const string xmlFile="transformSettings.xml");
+//		
+//		/// draw the control panel automatically in debug mode? (on by default)
+//		void setDrawControlPanel(bool draw);
+//		bool getDrawControlPanel();
+//		
+//		/// draw the control panel manually
+//		void drawControlPanel();
+//#endif
 
 	/// \section Drawing the Framerate (as text, default lower right corner)
 
@@ -146,7 +146,7 @@ class ofxApp :
 		bool getDrawFramerate()                  {return _bDrawFramerate;}
 		
 		/// reference to the framerate text color
-		ofColor& getFramerateColorRef() {return _framerateColor;}
+		ofColor& getFramerateColor() {return _framerateColor;}
 		
 		/// draw the framerate text manually
 		void drawFramerate(float x, float y);
@@ -175,16 +175,16 @@ class ofxApp :
 	
 	/// \section Util
 			
-		/// is debug mode on? (show control panel and fps, allow editing of warper)
+		/// is debug mode on? (show fps, allow editing of warper, draw custom debug info)
 		inline bool isDebug() {return bDebug;}
 
 	protected:
 	
 		bool bDebug; //< are we in debug mode?
 
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		ofxControlPanel	controlPanel; //< the settings control panel
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//		ofxControlPanel	controlPanel; //< the settings control panel
+//#endif
 
 	private:
 		
@@ -203,10 +203,10 @@ class ofxApp :
 		bool _bSceneManagerUpdate; //< call scene manager update automatically?
 		bool _bSceneManagerDraw; //< call scene manager draw automatically?
 		
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		bool _bTransformControls;   //< have the projection controls been added?
-		bool _bDrawControlPanel;    //< draw the control panel automatically?
-#endif
+//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
+//		bool _bTransformControls;   //< have the projection controls been added?
+//		bool _bDrawControlPanel;    //< draw the control panel automatically?
+//#endif
 
 	public:
 

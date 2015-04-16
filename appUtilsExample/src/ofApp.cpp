@@ -33,18 +33,24 @@ void ofApp::setup() {
 	//
 	// loads and saves control panel settings to "controlPanelSettings.xml"
 	// in the data folder 
-	addTransformControls();
+	//addTransformControls();
 	
 	// load saved control panel settings
 	// loads and saves to "controlPanelSettings.xml" in the data folder
 	// or use your own filename
 	// note: this may override what was set with setTransforms
-	loadControlSettings();
+	//loadControlSettings();
 	
 	// load saved quad warper settings
 	// loads and saves to "quadWarper.xml" in the data folder
 	// or use your own filename
-	loadWarpSettings();
+	//loadWarpSettings();
+	
+	#ifdef HAVE_OFX_GUI
+		// setup trnasform panel with transformer pointer,
+		// loads settings & waud warper xml files if found
+		panel.setup(this);
+	#endif
 	
 	// load scenes
 	particleScene = (ParticleScene*) sceneManager.add(new ParticleScene()); // save pointer
@@ -76,8 +82,15 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::update() {
 
-	// the control panel and current scene are automatically updated before
+	// the current scene is automatically updated before
 	// this function
+
+	#ifdef HAVE_OFX_GUI
+		// update the transform panel when in debug mode
+		if(isDebug()) {
+			panel.update();
+		}
+	#endif
 }
 
 //--------------------------------------------------------------
@@ -86,7 +99,7 @@ void ofApp::draw() {
 	// the current scene is automatically drawn before this function
 
 	// show the render area edges with a white rect
-	if(bDebug) {
+	if(isDebug()) {
 		ofNoFill();
 		ofSetColor(255);
 		ofSetRectMode(OF_RECTMODE_CORNER);
@@ -96,6 +109,13 @@ void ofApp::draw() {
 	
 	// drop out of the auto transform space back to OF screen space
 	popTransforms();
+	
+	#ifdef HAVE_OFX_GUI
+		// draw the transform panel when in debug mode
+		if(isDebug()) {
+			panel.draw();
+		}
+	#endif
 	
 	// draw current scene info using the ofxBitmapString stream interface
 	// to ofDrawBitmapString

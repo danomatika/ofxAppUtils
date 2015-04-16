@@ -13,7 +13,15 @@
 #include "ofMain.h"
 
 #include "ofxAppUtils.h"
-#include "ofxControlPanel.h"
+
+// optional ofxGUI control panel for transformer,
+// uncomment this if you're using ofxGui in this project
+//#define HAVE_OFX_GUI
+
+#ifdef HAVE_OFX_GUI
+	#include "ofxGui.h"
+	#include "ofxTransformPanel.h"
+#endif
 
 // we only specify a pointer to the Particle Scene here, so tell the compiler
 // that it exists as a class and we can include the class header in testApp.cpp
@@ -60,4 +68,8 @@ class ofApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 		
 		// keep a pointer to the Particle Scene, so we can modify it more easily
 		ParticleScene *particleScene;
+	
+		#ifdef HAVE_OFX_GUI
+			ofxTransformPanel panel;
+		#endif
 };

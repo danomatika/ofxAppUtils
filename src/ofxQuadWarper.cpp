@@ -83,7 +83,7 @@ void ofxQuadWarper::apply(float width, float height) {
 }
 
 //--------------------------------------------------------------
-void ofxQuadWarper::setPoint(unsigned int index, ofVec2f point) {
+void ofxQuadWarper::setPoint(unsigned int index, const ofVec2f &point) {
 	if(index > 3) {
 		return;
 	}
@@ -106,7 +106,7 @@ void ofxQuadWarper::reset() {
 }
 
 //--------------------------------------------------------------
-bool ofxQuadWarper::loadSettings(const string xmlFile) {
+bool ofxQuadWarper::loadSettings(const string &xmlFile) {
 	
 	ofXml xml;
 	if(!xml.load(xmlFile)) {
@@ -129,7 +129,7 @@ bool ofxQuadWarper::loadSettings(const string xmlFile) {
 	return true;
 }
 
-void ofxQuadWarper::saveSettings(const string xmlFile) {
+void ofxQuadWarper::saveSettings(const string &xmlFile) {
 
 	ofXml xml;
 	xml.addChild("quad");

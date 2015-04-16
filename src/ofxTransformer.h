@@ -92,8 +92,8 @@ class ofxTransformer {
 		virtual void setWarp(bool warp);
 		bool getWarp()          {return _bWarp;}
 		void resetWarp();
-		bool loadWarpSettings(const string xmlFile="quadWarper.xml");
-		void saveWarpSettings(const string xmlFile="quadWarper.xml");
+		bool loadWarpSettings(const string &xmlFile="quadWarper.xml");
+		void saveWarpSettings(const string &xmlFile="quadWarper.xml");
 		
 		/// manually set/get the warp points
 		/// index: 0 - upper left, 1 - upper right, 2 - lower right, 3 - lower left 

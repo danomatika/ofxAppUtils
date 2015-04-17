@@ -35,7 +35,6 @@ class ofApp : public ofxApp{
 		void setup();
 		void update();
 		void draw();
-		void exit();
 
 		void touchDown(ofTouchEventArgs & touch);
 		void touchMoved(ofTouchEventArgs & touch);
@@ -47,7 +46,10 @@ class ofApp : public ofxApp{
 		void gotFocus();
 		void gotMemoryWarning();
 		void deviceOrientationChanged(int newOrientation);
-		
+	
+		// rendering transformer
+		ofxTransformer transformer;
+	
 		// handles the scenes
 		ofxSceneManager sceneManager;
 		

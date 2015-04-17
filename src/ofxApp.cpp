@@ -12,159 +12,54 @@
 
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
-
 #include "ofxSceneManager.h"
 
-/// APP
+// APP
 
 //--------------------------------------------------------------
-ofxApp::ofxApp() : _currentWarpPoint(-1) {
+ofxApp::ofxApp() {
 	bDebug = false;
 	_bAutoTransforms = true;
-	_bEditingWarpPoints = false;
 	_bDrawFramerate = true;
 	_framerateColor.set(255);	// white
+	_transformer = NULL;
 	_sceneManager = NULL;
 	_bSceneManagerUpdate = true;
 	_bSceneManagerDraw = true;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	_bTransformControls = false;
-//	_bDrawControlPanel = true;
-//#endif
+}
+
+// TRANSFORMER
+
+//--------------------------------------------------------------
+void ofxApp::setTransformer(ofxTransformer *transformer) {
+	if(transformer == NULL) {
+		ofLogWarning("ofxApp") << "cannot add NULL transformer";
+		return;
+	}
+	_transformer = transformer;
 }
 
 //--------------------------------------------------------------
-void ofxApp::setMirror(bool mirrorX, bool mirrorY) {
-	setMirrorX(mirrorX);
-	setMirrorY(mirrorY);
+ofxTransformer* ofxApp::getTransformer() {
+	return _transformer;
 }
-
-void ofxApp::setMirrorX(bool mirrorX) {
-	_bMirrorX = mirrorX;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueB("transformMirrorX", _bMirrorX);
-//	}
-//#endif
-}
-
-void ofxApp::setMirrorY(bool mirrorY) {
-	_bMirrorY = mirrorY;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueB("transformMirrorY", _bMirrorY);
-//	}
-//#endif
-}
-
-void ofxApp::setOrigin(ofPoint &p) {
-	_origin = p;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueF("transformPos", x, 0);
-//		controlPanel.setValueF("transformPos", y, 1);
-//		controlPanel.setValueF("transformZ", x);
-//	}
-//#endif
-}
-
-void ofxApp::setOrigin(float x, float y, float z)	{
-	_origin.set(x, y, z);
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueF("transformPos", x, 0);
-//		controlPanel.setValueF("transformPos", y, 1);
-//		controlPanel.setValueF("transformZ", x);
-//	}
-//#endif
-}
-
-void ofxApp::setAspect(bool aspect) {
-	_bHandleAspect = aspect;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueB("transformAspect", _bHandleAspect);
-//	}
-//#endif
-}
-		
-void ofxApp::setCentering(bool center) {
-	_bCenter = center;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueB("transformCenter", _bCenter);
-//	}
-//#endif
-}
-
-void ofxApp::setWarp(bool warp) {
-	_bWarp = warp;
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	if(_bTransformControls) {
-//		controlPanel.setValueB("transformEnableQuadWarper", _bWarp);
-//	}
-//#endif
-}
-
-////--------------------------------------------------------------
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//
-//void ofxApp::addTransformControls(int panelNum, int panelCol) {
-//	if(_bTransformControls) {
-//		return;
-//	}
-//	if(panelNum < 0) {
-//		controlPanel.addPanel("Transformer", 1, false);
-//		controlPanel.setWhichPanel(controlPanel.panels.size()-1);
-//	}
-//	else {
-//		controlPanel.setWhichPanel(panelNum);
-//	}
-//	controlPanel.setWhichColumn(panelCol);
-//	controlPanel.addSlider2D("position", "transformPosition", getOriginX(), getOriginY(),
-//							 -getRenderWidth(), getRenderWidth(),
-//							 -getRenderHeight(), getRenderHeight(), false);
-//	controlPanel.addSlider("z", "transformZ", getOriginZ(), -1000, 200, false);
-//	controlPanel.addToggle("keep aspect", "transformAspect", getOriginTranslate());
-//	controlPanel.addToggle("center rendering", "transformCenter", getCentering());
-//	controlPanel.addToggle("mirror x", "transformMirrorX", getMirrorX());
-//	controlPanel.addToggle("mirror y", "transformMirrorY", getMirrorY());
-//	controlPanel.addToggle("enable quad warper", "transformEnableQuadWarper", getWarp());
-//	controlPanel.addToggle("edit quad warper", "transformEditQuadWarper", false);
-//	controlPanel.addToggle("save quad warper", "transformSaveQuadWarper", false);
-//	_bTransformControls = true;
-//}
-//
-//void ofxApp::loadControlSettings(const string xmlFile) {
-//	controlPanel.loadSettings(ofToDataPath(xmlFile));
-//}
-//
-//void ofxApp::saveControlSettings(const string xmlFile) {
-//	controlPanel.saveSettings(ofToDataPath(xmlFile));
-//}
-//
-//void ofxApp::setDrawControlPanel(bool draw) {
-//	_bDrawControlPanel = draw;
-//}
-//
-//bool ofxApp::getDrawControlPanel() {
-//	return _bDrawControlPanel;
-//}
-//
-//void ofxApp::drawControlPanel() {
-//	ofFill();
-//	ofSetColor(255);
-//	ofSetRectMode(OF_RECTMODE_CORNER);
-//	controlPanel.draw();
-//}
-//
-//#endif
 
 //--------------------------------------------------------------
-void ofxApp::drawFramerate(float x, float y) {
-	ofSetColor(_framerateColor);
-	ofDrawBitmapStringHighlight("fps: "+ofToString(ceil(ofGetFrameRate())), x, y);
+void ofxApp::clearTransformer() {
+	_transformer = NULL;
 }
+
+//--------------------------------------------------------------
+float ofxApp::getRenderWidth() {
+	return (_transformer == NULL) ? ofGetWidth() : _transformer->getRenderWidth();
+}
+
+//--------------------------------------------------------------
+float ofxApp::getRenderHeight() {
+	return (_transformer == NULL) ? ofGetHeight() : _transformer->getRenderHeight();
+}
+
+// SCENE MANAGER
 
 //--------------------------------------------------------------
 void ofxApp::setSceneManager(ofxSceneManager* manager) {
@@ -185,7 +80,15 @@ void ofxApp::clearSceneManager() {
 	_sceneManager = NULL;
 }
 
-/// RUNNER APP
+// DRAW FRAMERATE
+
+//--------------------------------------------------------------
+void ofxApp::drawFramerate(float x, float y) {
+	ofSetColor(_framerateColor);
+	ofDrawBitmapStringHighlight("fps: "+ofToString(ceil(ofGetFrameRate())), x, y);
+}
+
+// RUNNER APP
 
 //--------------------------------------------------------------
 ofxApp::RunnerApp::RunnerApp(ofxApp* app) {
@@ -201,54 +104,17 @@ ofxApp::RunnerApp::~RunnerApp() {
 void ofxApp::RunnerApp::setup() {
 	
 	// set transform sizes here, since width/height aren't set yet in main.cpp
-	app->clearTransforms();
-	app->setRenderSize(ofGetWidth(), ofGetHeight());
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	app->controlPanel.setup("App Controls", 1, 0, 275, app->getRenderHeight()-40);
-#endif
+	if(app->getTransformer()) {
+		app->getTransformer()->clearTransforms();
+		app->getTransformer()->setRenderSize(ofGetWidth(), ofGetHeight());
+	}
 	app->setup();
 }
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::update() {
-
 	app->mouseX = mouseX;
 	app->mouseY = mouseY;
-
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	ofxControlPanel& controlPanel = app->controlPanel;
-//	if(app->_bTransformControls) {
-//	
-//		// grab control panel variables
-//		app->_origin.set(controlPanel.getValueF("transformPosition", 0),	// x
-//						 controlPanel.getValueF("transformPosition", 1),	// y
-//						 controlPanel.getValueF("transformZ"));             // z
-//		
-//		// keep aspect?
-//		app->_bHandleAspect = controlPanel.getValueB("transformAspect");
-//		app->_bCenter = controlPanel.getValueB("transformCenter");
-//		
-//		// mirror x/y?
-//		app->_bMirrorX = controlPanel.getValueB("transformMirrorX");
-//		app->_bMirrorY = controlPanel.getValueB("transformMirrorY");
-//		
-//		// enable quad warper?
-//		app->_bWarp = controlPanel.getValueB("transformEnableQuadWarper");
-//		
-//		// edit quad warper?
-//		if(controlPanel.getValueB("transformEditQuadWarper")) {
-//			app->setEditWarp(true);
-//			controlPanel.setValueB("transformEditQuadWarper", false);
-//		}
-//		
-//		// save quad warper?
-//		if(controlPanel.getValueB("transformSaveQuadWarper")) {
-//			app->saveWarpSettings();
-//			controlPanel.setValueB("transformSaveQuadWarper", false);
-//		}
-//	}
-//	controlPanel.update();
-//#endif
 	if(app->_sceneManager && app->_bSceneManagerUpdate) {
 		app->_sceneManager->update();
 	}
@@ -256,77 +122,33 @@ void ofxApp::RunnerApp::update() {
 }
 
 //--------------------------------------------------------------
-// TODO: changing _bAutoTransforms in the user draw function may result a missing
-// transform push/pop
 void ofxApp::RunnerApp::draw() {
-	if(app->_bAutoTransforms) {
-		app->pushTransforms(app->_bEditingWarpPoints);
+	
+	// push transforms
+	if(app->_bAutoTransforms && app->_transformer) {
+		app->_transformer->push(app->_transformer->getEditWarp());
 	}
+	
+	// draw scene
 	if(app->_sceneManager && app->_bSceneManagerDraw) {
 		app->_sceneManager->draw();
 	}
 		
 	// do the user callback
 	app->draw();
-	if(app->_bWarpPushed) {
-		ofPopMatrix();
-		app->_bWarpPushed = false;
+
+	// pop transforms & draw the quad warper bounds (if editing)
+	if(app->_transformer) {
+		app->_transformer->popWarp();
+		app->_transformer->drawWarpBounds();
+		app->_transformer->pop();
 	}
 	
-	// draw the quad warper editor
-	if(app->_bEditingWarpPoints && app->bDebug) {
-	
-		// push transforms if needed (for manual mode)
-		bool forceTransform = !app->_bTransformsPushed;
-		if(forceTransform) {
-			app->pushTransforms(true);
-			ofPopMatrix();
-		}
-		
-		// draw projection warping bounding box
-		ofNoFill();
-		ofSetRectMode(OF_RECTMODE_CORNER);
-		ofSetHexColor(0x00FF00);
-		ofRect(0.35, 0.35, app->_renderWidth-1.35, app->_renderHeight-1.35);
-		ofSetRectMode(OF_RECTMODE_CORNER);
-		ofFill();
-		
-		if(forceTransform) {
-			ofPopMatrix();
-			app->_bTransformsPushed = false;
-		}
-	}
-	
-	if(app->_bAutoTransforms && app->_bTransformsPushed) {
-		ofPopMatrix();
-		app->_bTransformsPushed = false;
-	}
-	
+	// draw debug quad warper editor (if editing) & framerate
 	if(app->bDebug) {
-		stringstream text;
-		
-		// draw the quad warper editor
-		if(app->_bEditingWarpPoints) {
-		
-			ofSetHexColor(0x00FF00);
-			text << "Quad Warper Edit Mode" << endl
-				 << "Drag from the corners of the screen" << endl
-				 << "Click center rectangle to exit";
-			ofDrawBitmapString(text.str(), 28, 28);
-			text.str("");
-				
-			// draw center exit box
-			ofNoFill();
-			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofRect(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
-			ofSetRectMode(OF_RECTMODE_CORNER);
-			ofFill();
+		if(app->_transformer) {
+			app->_transformer->drawWarpEditor();
 		}
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		else if(app->_bDrawControlPanel) {
-			app->drawControlPanel();
-		}
-#endif
 		if(app->_bDrawFramerate) {
 			app->drawFramerate(ofGetWidth()-60, ofGetHeight()-6);
 		}
@@ -347,11 +169,6 @@ void ofxApp::RunnerApp::keyPressed(int key) {
 		app->_sceneManager->keyPressed(key);
 	}
 	app->keyPressed(key);
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(app->bDebug) {
-		app->controlPanel.keyPressed(key);
-	}
-#endif
 }
 
 //--------------------------------------------------------------
@@ -371,62 +188,28 @@ void ofxApp::RunnerApp::mouseMoved(int x, int y) {
 }
 
 //--------------------------------------------------------------
-void ofxApp::RunnerApp::mouseDragged(int x, int y, int button) {
-	if(app->_sceneManager) {
-		app->_sceneManager->mouseDragged(x, y, button);
-	}
-	app->mouseDragged(x, y, button);
-	if(app->bDebug) {
-		if(app->_bEditingWarpPoints) {
-			if(app->_currentWarpPoint >= 0) {
-				app->_quadWarper.setPoint(app->_currentWarpPoint,
-					ofVec2f((float)x/ofGetWidth(), (float)y/ofGetHeight()));
-			}
-		}
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		else {
-			app->controlPanel.mouseDragged(x, y, button);
-		}
-#endif
-	}
-}
-
-//--------------------------------------------------------------
 void ofxApp::RunnerApp::mousePressed(int x, int y, int button) {
 	if(app->_sceneManager) {
 		app->_sceneManager->mousePressed(x, y, button);
 	}
-	app->mousePressed(x, y, button);
-	if(app->bDebug) {
-		if(app->_bEditingWarpPoints) {
-		
-			// check if middle of the screen was pressed to exit edit mode
-			if((x > ofGetWidth()/2  - 50 && (x < ofGetWidth()/2  + 50) &&
-			   (y > ofGetHeight()/2 - 50 && (y < ofGetHeight()/2 + 50))))
-			{
-				app->_bEditingWarpPoints = false;
-				return;
-			}
-			
-			// check if the screen corners are being clicked
-			float smallestDist = 1.0;
-			app->_currentWarpPoint = -1;
-			for(int i = 0; i < 4; i++) {
-				float distx = app->_quadWarper.getPoint(i).x - (float) x/ofGetWidth();
-				float disty = app->_quadWarper.getPoint(i).y - (float) y/ofGetHeight();
-				float dist  = sqrt(distx * distx + disty * disty);
+	if(app->bDebug && app->getTransformer()) {
+		app->getTransformer()->mousePressed(x, y, button);
+	}
+	else {
+		app->mousePressed(x, y, button);
+	}
+}
 
-				if(dist < smallestDist && dist < 0.1) {
-					app->_currentWarpPoint = i;
-					smallestDist = dist;
-				}
-			}	
-		}
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-		else {
-			app->controlPanel.mousePressed(x, y, button);
-		}
-#endif
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::mouseDragged(int x, int y, int button) {
+	if(app->_sceneManager) {
+		app->_sceneManager->mouseDragged(x, y, button);
+	}
+	if(app->bDebug && app->getTransformer()) {
+		app->getTransformer()->mouseDragged(x, y, button);
+	}
+	else {
+		app->mouseDragged(x, y, button);
 	}
 }
 
@@ -435,21 +218,21 @@ void ofxApp::RunnerApp::mouseReleased(int x, int y, int button) {
 	if(app->_sceneManager) {
 		app->_sceneManager->mouseReleased(x, y, button);
 	}
-	app->mouseReleased(x, y, button);
-#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-	if(app->bDebug) {
-		if(!app->_bEditingWarpPoints) {
-			app->controlPanel.mouseReleased();
-		}
+	if(app->bDebug && app->getTransformer()) {
+		app->getTransformer()->mouseReleased(x, y, button);
 	}
-#endif
-	app->_currentWarpPoint = -1;
+	else {
+		app->mouseReleased(x, y, button);
+	}
 }
 
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::windowResized(int w, int h) {
 	if(app->_sceneManager) {
 		app->_sceneManager->windowResized(w, h);
+	}
+	if(app->getTransformer()) {
+		app->_transformer->setNewScreenSize(w, h);
 	}
 	app->windowResized(w, h);
 }
@@ -577,6 +360,9 @@ void ofxApp::RunnerApp::gotMemoryWarning() {
 void ofxApp::RunnerApp::deviceOrientationChanged(int newOrientation) {
 	if(app->_sceneManager) {
 		app->_sceneManager->deviceOrientationChanged(newOrientation);
+	}
+	if(app->_transformer) {
+		app->_transformer->setNewScreenSize(ofGetWidth(), ofGetHeight());
 	}
 	app->deviceOrientationChanged(newOrientation);
 }

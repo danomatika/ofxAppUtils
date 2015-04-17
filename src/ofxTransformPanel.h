@@ -11,14 +11,17 @@
 #pragma once
 
 #include "ofxGui.h"
-
 #include "ofxTransformer.h"
 
 /// \class TransformPanel
 /// \brief ofxGui panel for transform control
+///
+/// note: requires including ofxGui in your project
 class ofxTransformPanel {
 
 	public:
+	
+		ofxTransformPanel() : transformer(NULL) {}
 	
 		ofxPanel panel; //< gui panel
 	
@@ -31,6 +34,7 @@ class ofxTransformPanel {
 		ofxToggle warp;          //< enable the quad warper?
 		ofxButton editWarp;      //< edit quad warper
 		ofxButton saveWarp;      //< save quad warper
+		ofxButton reset;         //< reset everything
 	
 		/// set the transformer to control, set optional panel name and settings file name,
 		/// loads settings file if found
@@ -49,8 +53,9 @@ class ofxTransformPanel {
 		/// button callbacks
 		void editWarpPressed();
 		void saveWarpPressed();
+		void resetPressed();
 	
 	protected:
 	
-		ofxTransformer *transformer; //< 
+		ofxTransformer *transformer; //< current transformer to control
 };

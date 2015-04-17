@@ -1,5 +1,16 @@
+/*
+ * Copyright (c) 2015 Dan Wilcox <danomatika@gmail.com>
+ *
+ * BSD Simplified License.
+ * For information on usage and redistribution, and for a DISCLAIMER OF ALL
+ * WARRANTIES, see the file, "LICENSE.txt," in this distribution.
+ *
+ * See https://github.com/danomatika/ofxAppUtils for documentation
+ *
+ */
 #include "ofxTransformPanel.h"
 
+//--------------------------------------------------------------
 void ofxTransformPanel::setup(ofxTransformer *transformer, const string &name, const string &xmlFile) {
 	
 	this->transformer = transformer;
@@ -7,13 +18,14 @@ void ofxTransformPanel::setup(ofxTransformer *transformer, const string &name, c
 	// setup callbacks
 	editWarp.addListener(this, &ofxTransformPanel::editWarpPressed);
 	saveWarp.addListener(this, &ofxTransformPanel::saveWarpPressed);
+	reset.addListener(this, &ofxTransformPanel::resetPressed);
 	
 	// setup values from transformer
 	position.setup("position",
-	   transformer->getOrigin(),                                                        // val
+	   transformer->getPosition(),                                                      // val
 	   ofPoint(-transformer->getRenderWidth(), -transformer->getRenderHeight(), -200),  // min
 	   ofPoint(transformer->getRenderWidth(), transformer->getRenderHeight(), 1000));   // max
-	translate.setup("translate", transformer->getOriginTranslate());
+	translate.setup("translate", transformer->getTranslate());
 	mirrorX.setup("mirrorX", transformer->getMirrorX());
 	mirrorY.setup("mirrorY", transformer->getMirrorY());
 	centering.setup("centering", transformer->getCentering());
@@ -21,6 +33,7 @@ void ofxTransformPanel::setup(ofxTransformer *transformer, const string &name, c
 	warp.setup("warp", transformer->getWarp());
 	editWarp.setup("edit warp");
 	saveWarp.setup("save warp");
+	reset.setup("reset everything");
 	
 	// add widgets to panel
 	panel.setup(name, ofToDataPath(xmlFile));
@@ -33,17 +46,23 @@ void ofxTransformPanel::setup(ofxTransformer *transformer, const string &name, c
 	panel.add(&warp);
 	panel.add(&editWarp);
 	panel.add(&saveWarp);
+	panel.add(&reset);
 
 	// load settings if they exist
 	if(ofFile::doesFileExist(ofToDataPath(xmlFile))) {
 		loadSettings(xmlFile);
 	}
 	transformer->loadWarpSettings();
+	update();
 }
 
+//--------------------------------------------------------------
 void ofxTransformPanel::update() {
-	transformer->setOrigin(position->x, position->y, position->z);
-	transformer->setOriginTranslate(translate);
+	if(!transformer) {
+		return;
+	}
+	transformer->setPosition(position->x, position->y, position->z);
+	transformer->setTranslate(translate);
 	transformer->setMirrorX(mirrorX);
 	transformer->setMirrorY(mirrorY);
 	transformer->setCentering(centering);
@@ -51,26 +70,47 @@ void ofxTransformPanel::update() {
 	transformer->setWarp(warp);
 }
 
+//--------------------------------------------------------------
 void ofxTransformPanel::draw() {
-	//if(transformer->isDebug() && !transformer->getEditWarp()) {
-		panel.draw();
-	//}
+	if(!transformer || transformer->getEditWarp()) {
+		return;
+	}
+	panel.draw();
 }
 
+//--------------------------------------------------------------
 void ofxTransformPanel::loadSettings(const string &xmlFile) {
 	panel.loadFromFile(ofToDataPath(xmlFile));
 }
 
+//--------------------------------------------------------------
 void ofxTransformPanel::saveSettings(const string &xmlFile) {
 	panel.saveToFile(ofToDataPath(xmlFile));
 }
 
+//--------------------------------------------------------------
 void ofxTransformPanel::editWarpPressed() {
-	//transformer->setEditWarp(true);
-	ofLog() << "edit pressed";
+	if(!transformer) {
+		return;
+	}
+	transformer->setEditWarp(true);
 }
 
+//--------------------------------------------------------------
 void ofxTransformPanel::saveWarpPressed() {
+	if(!transformer) {
+		return;
+	}
 	transformer->saveWarpSettings();
-	ofLog() << "save pressed";
+}
+
+//--------------------------------------------------------------
+void ofxTransformPanel::resetPressed() {
+	position = ofPoint(0, 0, 0);
+	translate = false;
+	mirrorX = false;
+	mirrorY = false;
+	centering = false;
+	aspect = false;
+	warp = false;
 }

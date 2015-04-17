@@ -17,11 +17,6 @@
 	#include "ofBaseApp.h"
 #endif
 
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//	#include "ofxXmlSettings.h"
-//	#include "ofxControlPanel.h"
-//#endif
-
 #include "ofxQuadWarper.h"
 #include "ofxTransformer.h"
 #include "ofxTimer.h"
@@ -38,59 +33,48 @@ class ofxSceneManager;
 class ofxApp :
 
 #ifdef TARGET_OF_IPHONE
-	public ofxiOSApp,
+	public ofxiOSApp {
 #else
-	public ofBaseApp,
+	public ofBaseApp {
 #endif
-	public ofxTransformer {
 
 	public:
 	
 		ofxApp();
 		virtual ~ofxApp() {}
 		
-	/// \section Transform Controls
+	/// \section Transformer
 		
-		/// screen mirroring
-		void setMirror(bool mirrorX, bool mirrorY);
-		void setMirrorX(bool mirrorX);
-		void setMirrorY(bool mirrorY);
+		/// set the transformer, this object is never deleted
+		void setTransformer(ofxTransformer *transformer);
 		
-		/// set the origin position
-		void setOrigin(ofPoint &p);
-		void setOrigin(float x, float y, float z=0);
+		/// get the current transformer or NULL if not set
+		ofxTransformer* getTransformer();
 		
-		/// keep the aspect ratio when scaling?
-		void setAspect(bool aspect);
+		/// clear the current transformer
+		void clearTransformer();
 		
-		/// center within the parent screen area?
-		void setCentering(bool center);
+		/// get app render width based on current transformer,
+		/// returns ofGetWidth() if transformer is not set
+		float getRenderWidth();
 		
-		/// set/edit the projection warping
-		void setWarp(bool warp);
-		void setEditWarp(bool edit) {_bEditingWarpPoints = edit;}
-		bool getEditWarp()          {return _bEditingWarpPoints;}
+		/// get app render height based on current transformer,
+		/// returns ofGetHeight() if transformer is not set
+		float getRenderHeight();
 		
 		/// enable/disable automatically applying the transforms
 		///
-		/// enable/disable individual transforms using setTransforms or the
-		/// specific ofxTransform setter functions (setScale, setOriginTranslate,
+		/// enable/disable individual transforms using transformer setTransforms
+		/// of the specific ofxTransform setter functions (setScale, setTranslate,
 		/// etc)
 		///
 		/// this is done automatically before the scene and app draw functions
-		/// are called, see push/popTransforms if you need to drop back to
-		/// screen space
+		/// are called, see transformer push/pop functions if you need to drop
+		/// back to screen space
 		///
-		/// warning: the quad warper requires an extra matrix push/pop, do not
-		///          change the setWarp within your draw function as an extra
-		///          push or pop may ocurr which could muck up your transforms
+		/// to manually push/pop the transforms, use ofxTransformer push()/pop():
 		///
-		void setAutoTransforms(bool apply) {_bAutoTransforms = apply;}
-		bool getAutoTransforms()           {return _bAutoTransforms;}
-		
-		/// manually push/pop the transforms
-		///
-		/// use this if you need to jump out of the auto transform and do
+		/// use these if you need to jump out of the auto transform and do
 		/// something in the default screen space
 		///
 		/// note: the transforms can only be pushed/popped in a pair, multiple
@@ -100,56 +84,8 @@ class ofxApp :
 		///       nothing if you've disabled all of the individual transform
 		///       options (origin translation, scaling, etc)
 		///
-		/// inherited from ofxTransformer
-		///
-		/// void pushTransforms();
-		/// void popTransforms();
-		
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//
-//	/// \section Control Panel (optional) 
-//	///
-//	/// define OFX_APP_UTILS_USE_CONTROL_PANEL to enable the control panel
-//	/// (and ofxControlPanel dependency)
-//	///
-//		
-//		/// add transform controls to the ofxControlPanel (optional)
-//		/// set panelNum to choose which to add the controls to, otherwise a
-//		/// new panel is added
-//		///
-//		/// the controls are (xmlName, type):
-//		/// - transformPos              float vec slider
-//		/// - transformMirrorX          bool toggle
-//		/// - transformMirrorY          bool toggle
-//		/// - transformEnableQuadWarper bool toggle
-//		/// - transformEditQuadWarper   bool toggle (button)
-//		/// - transformSaveQuadWarper   bool toggle (button)
-//		///
-//		void addTransformControls(int panelNum=-1, int panelCol=0);
-//		
-//		/// load and save the control panel settings
-//		void loadControlSettings(const string xmlFile="transformSettings.xml");
-//		void saveControlSettings(const string xmlFile="transformSettings.xml");
-//		
-//		/// draw the control panel automatically in debug mode? (on by default)
-//		void setDrawControlPanel(bool draw);
-//		bool getDrawControlPanel();
-//		
-//		/// draw the control panel manually
-//		void drawControlPanel();
-//#endif
-
-	/// \section Drawing the Framerate (as text, default lower right corner)
-
-		/// draw the framerate automatically in debug mode? (on by default)
-		virtual void setDrawFramerate(bool draw) {_bDrawFramerate = draw;}
-		bool getDrawFramerate()                  {return _bDrawFramerate;}
-		
-		/// reference to the framerate text color
-		ofColor& getFramerateColor() {return _framerateColor;}
-		
-		/// draw the framerate text manually
-		void drawFramerate(float x, float y);
+		void setAutoTransforms(bool apply) {_bAutoTransforms = apply;}
+		bool getAutoTransforms()           {return _bAutoTransforms;}
 
 	/// \section SceneManager
 	
@@ -171,42 +107,42 @@ class ofxApp :
 		void setSceneManagerUpdate(bool update) {_bSceneManagerUpdate = update;}
 		bool getSceneManagerUpdate()            {return _bSceneManagerUpdate;} 
 		void setSceneManagerDraw(bool draw)     {_bSceneManagerDraw = draw;}
-		bool getSceneManagerDraw()              {return _bSceneManagerDraw;} 
+		bool getSceneManagerDraw()              {return _bSceneManagerDraw;}
+
+	/// \section Drawing the Framerate (as text, default lower right corner)
+
+		/// draw the framerate automatically in debug mode? (on by default)
+		virtual void setDrawFramerate(bool draw) {_bDrawFramerate = draw;}
+		bool getDrawFramerate()                  {return _bDrawFramerate;}
+		
+		/// reference to the framerate text color
+		ofColor& getFramerateColor() {return _framerateColor;}
+		
+		/// draw the framerate text manually
+		void drawFramerate(float x, float y);
 	
 	/// \section Util
 			
-		/// is debug mode on? (show fps, allow editing of warper, draw custom debug info)
+		/// is debug mode on? (show fps, allow editing of warper, draw custom debug info),
+		/// you can also use bDebug directly in your inherited ofxApp
 		inline bool isDebug() {return bDebug;}
+		inline void setDebug(bool debug) {bDebug = debug;}
 
 	protected:
 	
-		bool bDebug; //< are we in debug mode?
-
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//		ofxControlPanel	controlPanel; //< the settings control panel
-//#endif
+		bool bDebug; //< are we in debug mode? default: false
 
 	private:
 		
-		ofxTransformer _transformer;
-		bool _bAutoTransforms;      //< apply the transforms automatically?
+		ofxTransformer *_transformer; //< optional built in transformer
+		bool _bAutoTransforms;      //< apply the transforms automatically? default: true
 		
-		/// quad warper
-		int _currentWarpPoint;      //< currently selected projection point
-		bool _bEditingWarpPoints;   //< are we currently editing the warp points?
-		ofMatrix4x4 _warpTransform; //< warp transform matrix needed for mouse picking
-		
-		bool _bDrawFramerate;       //< draw the dramerate in debug mode?
+		bool _bDrawFramerate;       //< draw the dramerate in debug mode? default: true
 		ofColor _framerateColor;    //< framerate text color
 		
 		ofxSceneManager* _sceneManager; //< optional built in scene manager
 		bool _bSceneManagerUpdate; //< call scene manager update automatically?
 		bool _bSceneManagerDraw; //< call scene manager draw automatically?
-		
-//#ifdef OFX_APP_UTILS_USE_CONTROL_PANEL
-//		bool _bTransformControls;   //< have the projection controls been added?
-//		bool _bDrawControlPanel;    //< draw the control panel automatically?
-//#endif
 
 	public:
 

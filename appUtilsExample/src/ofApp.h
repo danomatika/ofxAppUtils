@@ -62,6 +62,9 @@ class ofApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 		
 		void windowResized(int w, int h);
 
+		// rendering transformer
+		ofxTransformer transformer;
+
 		// handles the scenes
 		ofxSceneManager sceneManager;
 		int lastScene;

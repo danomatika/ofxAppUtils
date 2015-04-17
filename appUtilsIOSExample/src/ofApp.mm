@@ -23,18 +23,21 @@ void ofApp::setup(){
 	ofBackground(0, 0, 0);
 
 	// setup the render size (working area)
-	setRenderSize(640, 480); // 4:3
+	transformer.setRenderSize(640, 480); // 4:3
 	
-	// setup the built in render transforms
-	setScale(true); // scale to screen size
-	setAspect(true); // keep aspect ratio when scaling
-	setCentering(true); // center render area in screen
+	// setup the render transforms
+	transformer.setScale(true); // scale to screen size
+	transformer.setAspect(true); // keep aspect ratio when scaling
+	transformer.setCentering(true); // center render area in screen
 	
 	// you could also do the same with the setTransforms() function
 	//
 	// turn off transform origin translation and scaling to screen size,
 	// disable quad warping, and enable aspect ratio and centering when scaling
-	//setTransforms(false, true, false, true, true);
+	//transformer.setTransforms(false, true, false, true, true);
+	
+	// apply the transformer automatically
+	setTransformer(&transformer);
 	
 	// load scenes
 	sceneManager.add(new TextScene("Scene One", "1"));
@@ -86,7 +89,7 @@ void ofApp::draw(){
 	ofFill();
 	
 	// drop out of the auto transform space back to OF screen space
-	popTransforms();
+	transformer.pop();
 	
 	// draw the buttons
 	prevButton.draw();
@@ -103,12 +106,7 @@ void ofApp::draw(){
 	//
 	// this is actually done automatically if the transforms were popped
 	// before the control panel is drawn, but included here for completeness
-	pushTransforms();
-}
-
-//--------------------------------------------------------------
-void ofApp::exit(){
-
+	transformer.push();
 }
 
 // current scene input functions are called automatically before calling these
@@ -143,22 +141,18 @@ void ofApp::touchDoubleTap(ofTouchEventArgs & touch){
 
 //--------------------------------------------------------------
 void ofApp::touchCancelled(ofTouchEventArgs & touch){
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::lostFocus(){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::gotFocus(){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMemoryWarning(){
-
 }
 
 //--------------------------------------------------------------
@@ -167,8 +161,7 @@ void ofApp::deviceOrientationChanged(int newOrientation){
 	// rotate graphics world ...
 	ofSetOrientation((ofOrientation) newOrientation);
 	
-	// set up transforms with new screen size
-	setNewScreenSize(ofGetWidth(), ofGetHeight());
+	// transformer.setNewScreenSize() is automatically called if the transformer is set
 	
 	// set button pos again
 	prevButton.set(1, ofGetHeight()-51, 50, 50);

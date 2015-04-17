@@ -13,15 +13,13 @@
 #include "ofAppRunner.h"
 #include "ofGraphics.h"
 
-/// TRANSFORMER
-
 //--------------------------------------------------------------
-ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
+ofxTransformer::ofxTransformer() {
 	_bScale = false;
 	_bMirrorX = false;
 	_bMirrorY = false;
 	_bTranslate = false;
-	_bHandleAspect = false;
+	_bAspect = false;
 	_bCenter = false;
 	_bWarp = false;
 	
@@ -32,8 +30,10 @@ ofxTransformer::ofxTransformer() : _origin(0, 0, 0) {
 	_renderAspect = 1;
 	_screenAspect = 1;
 	
+	_bEditingWarpPoints = false;
+	_currentWarpPoint = -1;
+	
 	_bTransformsPushed = false;
-	_bWarpPushed = false;
 }
 
 //--------------------------------------------------------------
@@ -42,7 +42,7 @@ void ofxTransformer::clearTransforms() {
 	_bMirrorX = false;
 	_bMirrorY = false;
 	_bTranslate = false;
-	_bHandleAspect = false;
+	_bAspect = false;
 	_bCenter = false;
 	_bWarp = false;
 	
@@ -54,8 +54,9 @@ void ofxTransformer::clearTransforms() {
 	_screenAspect = ofGetWidth()/ofGetHeight();
 	
 	_bTransformsPushed = false;
-	_bWarpPushed = false;
 }
+
+// RENDER SIZE
 
 //--------------------------------------------------------------
 void ofxTransformer::setRenderSize(float w, float h, float screenWidth, float screenHeight) {
@@ -67,6 +68,7 @@ void ofxTransformer::setRenderSize(float w, float h, float screenWidth, float sc
 	_renderScaleX = _screenWidth/_renderWidth;
 	_renderScaleY = _screenHeight/_renderHeight;
 	_screenAspect = _screenWidth/_screenHeight;
+	_quadWarper.setSize(w, h);
 }
 
 //--------------------------------------------------------------
@@ -81,70 +83,29 @@ void ofxTransformer::setRenderScale(float x, float y) {
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::setTransforms(bool translate, bool scale, bool warp, bool handleAspect, bool center) {
-	_bTranslate = translate;
-	_bScale = scale;
-	_bWarp = warp;
-	_bHandleAspect = handleAspect;
-	_bCenter = center;
+float ofxTransformer::getRenderWidth()	{
+	return _renderWidth;
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::setNewScreenSize(float screenWidth, float screenHeight) {
-	setRenderSize(_renderWidth, _renderHeight, screenWidth, screenHeight);
+float ofxTransformer::getRenderHeight()	{
+	return _renderHeight;
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::setMirror(bool mirrorX, bool mirrorY) {
-	_bMirrorX = mirrorX;
-	_bMirrorY = mirrorY;
-}
-
-void ofxTransformer::setMirrorX(bool mirrorX) {
-	_bMirrorX = mirrorX;
-}
-
-void ofxTransformer::setMirrorY(bool mirrorY) {
-	_bMirrorY = mirrorY;
-}
-
-void ofxTransformer::setOrigin(float x, float y, float z)	{
-	_origin.set(x, y, z);
-}
-
-void ofxTransformer::setWarp(bool warp) {
-	_bWarp = warp;
+float ofxTransformer::getScreenWidth()	{
+	return _screenWidth;
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::resetWarp() {
-	_quadWarper.reset();
-}
-
-bool ofxTransformer::loadWarpSettings(const string &xmlFile) {
-	if(ofFile::doesFileExist(ofToDataPath(xmlFile))) {
-		return _quadWarper.loadSettings(xmlFile);
-	}
-	return false;
-}
-
-void ofxTransformer::saveWarpSettings(const string &xmlFile) {
-	return _quadWarper.saveSettings(xmlFile);
-}
-
-//--------------------------------------------------------------
-void ofxTransformer::setWarpPoint(unsigned int index, ofVec2f point) {
-	_quadWarper.setPoint(index, point);
-}
-
-ofVec2f ofxTransformer::getWarpPoint(unsigned int index) {
-	return _quadWarper.getPoint(index);
+float ofxTransformer::getScreenHeight() {
+	return _screenHeight;
 }
 
 //--------------------------------------------------------------
 void ofxTransformer::applyRenderScale() {
 	// adjust to screen dimensions?
-	if(_bHandleAspect && _renderAspect != _screenAspect) {
+	if(_bAspect && _renderAspect != _screenAspect) {
 		if(_renderAspect > _screenAspect) {	// letter box
 			if(_bCenter && !_bWarp) {
 				ofTranslate(0, (_screenHeight-(_renderScaleX*_renderHeight))/2);
@@ -176,17 +137,22 @@ void ofxTransformer::applyMirrorY() {
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::applyOriginTranslate() {
-	ofTranslate(_origin);
+void ofxTransformer::applyTranslate() {
+	ofTranslate(_position);
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::applyWarp() {
-	_quadWarper.apply(_renderWidth, _renderHeight);
+void ofxTransformer::pushWarp() {
+	_quadWarper.push();
 }
 
 //--------------------------------------------------------------
-void ofxTransformer::pushTransforms(bool forceWarp) {
+void ofxTransformer::popWarp() {
+	_quadWarper.pop();
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::push(bool forceWarp) {
 	if(_bTransformsPushed) {
 		return; // don't push twice
 	}
@@ -195,12 +161,10 @@ void ofxTransformer::pushTransforms(bool forceWarp) {
 		applyRenderScale();
 	}
 	if(_bTranslate) {
-		applyOriginTranslate();
+		applyTranslate();
 	}
 	if(_bWarp || forceWarp) {
-		applyWarp();
-		ofPushMatrix();
-		_bWarpPushed = true;
+		pushWarp();
 	}
 	if(_bMirrorX) {
 		applyMirrorX();
@@ -211,16 +175,270 @@ void ofxTransformer::pushTransforms(bool forceWarp) {
 	_bTransformsPushed = true;
 }
 
-// TODO: an extra pop would occur if warp was set to false in the user
-// draw function ...
-void ofxTransformer::popTransforms() {
+//--------------------------------------------------------------
+void ofxTransformer::pop() {
+	if(_bWarp) {
+		popWarp();
+	}
 	if(!_bTransformsPushed) {
 		return; // avoid extra pops
-	}
-	if(_bWarp && _bWarpPushed == true) {
-		ofPopMatrix();
-		_bWarpPushed = false;
 	}
 	ofPopMatrix();
 	_bTransformsPushed = false;
 }
+
+//--------------------------------------------------------------
+bool ofxTransformer::isPushed() {
+	return _bTransformsPushed;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setTransforms(bool translate, bool scale, bool warp, bool aspect, bool center) {
+	_bTranslate = translate;
+	_bScale = scale;
+	_bWarp = warp;
+	_bAspect = aspect;
+	_bCenter = center;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setNewScreenSize(float screenWidth, float screenHeight) {
+	setRenderSize(_renderWidth, _renderHeight, screenWidth, screenHeight);
+}
+
+/// SETTINGS
+
+//--------------------------------------------------------------
+float ofxTransformer::getRenderScaleX() {
+	return _renderScaleX;
+}
+
+//--------------------------------------------------------------
+float ofxTransformer::getRenderScaleY() {
+	return _renderScaleY;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setScale(bool scale) {
+	_bScale = scale;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getScale() {
+	return _bScale;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setAspect(bool aspect) {
+	_bAspect = aspect;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getAspect() {
+	return _bAspect;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setCentering(bool center) {
+	_bCenter = center;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getCentering() {
+	return _bCenter;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setMirror(bool mirrorX, bool mirrorY) {
+	_bMirrorX = mirrorX;
+	_bMirrorY = mirrorY;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setMirrorX(bool mirrorX) {
+	_bMirrorX = mirrorX;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setMirrorY(bool mirrorY) {
+	_bMirrorY = mirrorY;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getMirrorX() {
+	return _bMirrorX;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getMirrorY() {
+	return _bMirrorY;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setTranslate(bool translate) {
+	_bTranslate = translate;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getTranslate() {
+	return _bTranslate;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setPosition(float x, float y, float z)	{
+	_position.set(x, y, z);
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setPosition(const ofPoint &point) {
+	_position = point;
+}
+
+//--------------------------------------------------------------
+const ofPoint& ofxTransformer::getPosition() {
+	return _position;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setWarp(bool warp) {
+	_bWarp = warp;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getWarp() {
+	return _bWarp;
+}
+
+// QUAD WARPER
+
+//--------------------------------------------------------------
+void ofxTransformer::resetWarp() {
+	_quadWarper.reset();
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::loadWarpSettings(const string &xmlFile) {
+	if(ofFile::doesFileExist(ofToDataPath(xmlFile))) {
+		return _quadWarper.loadSettings(xmlFile);
+	}
+	return false;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::saveWarpSettings(const string &xmlFile) {
+	return _quadWarper.saveSettings(xmlFile);
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setEditWarp(bool edit) {
+	_bEditingWarpPoints = edit;
+}
+
+//--------------------------------------------------------------
+bool ofxTransformer::getEditWarp() {
+	return _bEditingWarpPoints;
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::setWarpPoint(unsigned int index, const ofVec2f &point) {
+	_quadWarper.setPoint(index, point);
+}
+
+//--------------------------------------------------------------
+const ofVec2f& ofxTransformer::getWarpPoint(unsigned int index) {
+	return _quadWarper.getPoint(index);
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::drawWarpBounds() {
+	if(!_bEditingWarpPoints) {
+		return;
+	}
+	
+	// push transforms if needed (for manual mode)
+	bool doTransform = !_bTransformsPushed;
+	if(doTransform) {
+		push(true);
+	}
+	
+	ofNoFill();
+	ofSetColor(ofColor::green);
+	ofSetRectMode(OF_RECTMODE_CORNER);
+	ofRect(0.35, 0.35, _renderWidth-1.35, _renderHeight-1.35);
+	ofFill();
+	
+	if(doTransform) {
+		pop();
+	}
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::drawWarpEditor() {
+	if(!_bEditingWarpPoints) {
+		return;
+	}
+
+	// draw the quad warper editor
+	stringstream text;
+	text << "Quad Warper Edit Mode" << endl
+		 << "Drag the corner control points" << endl
+		 << "Click center rectangle to exit";
+	ofDrawBitmapStringHighlight(text.str(), 28, 28, ofColor::black, ofColor::green);
+		
+	// draw center exit box
+	ofSetColor(ofColor::green);
+	ofNoFill();
+	ofSetRectMode(OF_RECTMODE_CENTER);
+	ofRect(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
+	ofSetRectMode(OF_RECTMODE_CORNER);
+	ofFill();
+	
+	_quadWarper.drawPoints();
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::mousePressed(int x, int y, int button) {
+	if(!_bEditingWarpPoints) {
+		return;
+	}
+	
+	// check if middle of the screen was pressed to exit edit mode
+	if((x > ofGetWidth()/2  - 50 && (x < ofGetWidth()/2  + 50) &&
+	   (y > ofGetHeight()/2 - 50 && (y < ofGetHeight()/2 + 50))))
+	{
+		_bEditingWarpPoints = false;
+		return;
+	}
+	
+	// check if the screen corners are being clicked
+	float smallestDist = 1.0;
+	_currentWarpPoint = -1;
+	for(int i = 0; i < 4; i++) {
+		float distx = _quadWarper.getPoint(i).x - (float) (x)/ofGetWidth();
+		float disty = _quadWarper.getPoint(i).y - (float) (y)/ofGetHeight();
+		float dist  = sqrt(distx * distx + disty * disty);
+		if(dist < smallestDist && dist < 0.1) {
+			_currentWarpPoint = i;
+			smallestDist = dist;
+		}
+	}
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::mouseDragged(int x, int y, int button) {
+	if(!_bEditingWarpPoints) {
+		return;
+	}
+	if(_currentWarpPoint > -1) {
+		_quadWarper.setPoint(_currentWarpPoint, (float)x/ofGetWidth(), (float)y/ofGetHeight());
+	}
+}
+
+//--------------------------------------------------------------
+void ofxTransformer::mouseReleased(int x, int y, int button) {
+	if(!_bEditingWarpPoints) {
+		return;
+	}
+	_currentWarpPoint = -1;
+}
+

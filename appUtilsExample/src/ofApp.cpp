@@ -20,36 +20,19 @@ void ofApp::setup() {
 	ofBackground(0, 0, 0);
 
 	// setup the render size (working area)
-	setRenderSize(600, 400);
+	transformer.setRenderSize(600, 400);
 
 	// turn on transform origin translation and scaling to screen size,
 	// disable quad warping, and enable aspect ratio and centering when scaling
-	setTransforms(true, true, false, true, true);
-
-	// the control panel is setup automatically, of course you can still change
-	// all the settings manually here
-
-	// add the built in transform control to control panel (adds new panel)
-	//
-	// loads and saves control panel settings to "controlPanelSettings.xml"
-	// in the data folder 
-	//addTransformControls();
+	transformer.setTransforms(true, true, false, true, true);
 	
-	// load saved control panel settings
-	// loads and saves to "controlPanelSettings.xml" in the data folder
-	// or use your own filename
-	// note: this may override what was set with setTransforms
-	//loadControlSettings();
-	
-	// load saved quad warper settings
-	// loads and saves to "quadWarper.xml" in the data folder
-	// or use your own filename
-	//loadWarpSettings();
+	// set the ofxApp transformer so it's automatically applied in draw()
+	setTransformer(&transformer);
 	
 	#ifdef HAVE_OFX_GUI
-		// setup trnasform panel with transformer pointer,
-		// loads settings & waud warper xml files if found
-		panel.setup(this);
+		// setup transform panel with transformer pointer,
+		// loads settings & quad warper xml files if found
+		panel.setup(&transformer);
 	#endif
 	
 	// load scenes
@@ -82,8 +65,7 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::update() {
 
-	// the current scene is automatically updated before
-	// this function
+	// the current scene is automatically updated before this function
 
 	#ifdef HAVE_OFX_GUI
 		// update the transform panel when in debug mode
@@ -108,7 +90,7 @@ void ofApp::draw() {
 	}
 	
 	// drop out of the auto transform space back to OF screen space
-	popTransforms();
+	transformer.pop();
 	
 	#ifdef HAVE_OFX_GUI
 		// draw the transform panel when in debug mode
@@ -126,12 +108,11 @@ void ofApp::draw() {
 	
 	// go back to the auto transform space
 	//
-	// this is actually done automatically if the transforms were popped
-	// before the control panel is drawn, but included here for completeness
-	pushTransforms();
+	// this is actually done automatically if the transformer is set but
+	// included here for completeness
+	transformer.push();
 
-	// the control panel and warp editor are drawn automatically after this
-	// function
+	// the warp editor is drawn automatically after this function
 }
 
 // current scene input functions are called automatically before calling these
@@ -145,23 +126,23 @@ void ofApp::keyPressed(int key) {
 			break;
 			
 		case 'a':
-			setAspect(!getAspect());
+			transformer.setAspect(!transformer.getAspect());
 			break;
 			
 		case 'c':
-			setCentering(!getCentering());
+			transformer.setCentering(!transformer.getCentering());
 			break;
 			
 		case 'm':
-			setMirrorX(!getMirrorX());
+			transformer.setMirrorX(!transformer.getMirrorX());
 			break;
 			
 		case 'n':
-			setMirrorY(!getMirrorY());
+			transformer.setMirrorY(!transformer.getMirrorY());
 			break;
 			
 		case 'q':
-			setWarp(!getWarp());
+			transformer.setWarp(!transformer.getWarp());
 			break;
 			
 		case 'f':
@@ -228,6 +209,6 @@ void ofApp::mouseReleased(int x, int y, int button) {
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
 
-	// set up transforms with new screen size
-	setNewScreenSize(w, h);
+	// transformer.setNewScreenSize() is automatically called if the transformer is set
+	
 }

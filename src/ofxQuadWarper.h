@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include "ofVectorMath.h"
+#include "ofPoint.h"
 
 ///	\class  QuadWarper
 ///	\brief  a gl matrix transform quad warper
@@ -18,16 +18,30 @@ class ofxQuadWarper {
 	public:
 	
 		ofxQuadWarper();
-		virtual ~ofxQuadWarper() {}
-		
-		/// apply the gl matrix transform
-		/// width and height is the size of the screen/render area
-		void apply(float width, float height);
+	
+		/// set width and height of the screen/render area
+		void setSize(float width, float height);
+	
+		/// apply the gl matrix transform, make sure to set the render size first
+		void push();
+	
+		/// pop the gl matrix transform
+		void pop();
+	
+		/// has the gl matrix trasnform been pushed?
+		bool isPushed();
+	
+		/// draw the quad warper corner points in screen space
+		void drawPoints();
+	
+		/// draw the quad warper corner points in a given width & height
+		void drawPoints(float width, float height);
 		
 		/// set/get the warp points
 		/// index: 0 - upper left, 1 - upper right, 2 - lower right, 3 - lower left 
+		void setPoint(unsigned int index, float x, float y);
 		void setPoint(unsigned int index, const ofVec2f &point);
-		ofVec2f getPoint(unsigned int index);
+		const ofVec2f& getPoint(unsigned int index); //< coords are normalized 0-1 base on render size
 		
 		/// reset the quad to screen size
 		void reset();
@@ -36,12 +50,17 @@ class ofxQuadWarper {
 		bool loadSettings(const string &xmlFile="quadWarper.xml");
 		void saveSettings(const string &xmlFile="quadWarper.xml");
 		
-	private:
-		
-		// projection warp points
-		ofVec2f	_warpPoints[4];
-		
-		// projection warping matrices
-		double _warpMatrix[3][3];
-		GLfloat _glWarpMatrix[16];
+	protected:
+	
+		/// recompute warp matrix based on render size & points
+		void updateMatrix();
+	
+		float _width;  //< projection width
+		float _height; //< projection height
+	
+		ofVec2f	_warpPoints[4];    //< projection warp points
+		double _warpMatrix[3][3];  //< interim projection warping matrix
+		GLfloat _glWarpMatrix[16]; //< projection warping matrix
+	
+		bool _bPushed; //< was the warp pushed?
 };

@@ -26,10 +26,10 @@ class ofxParticle : public ofRectangle {
 		virtual ~ofxParticle();
 
 		/// copy constructor
-		ofxParticle(const ofxParticle& from);
+		ofxParticle(const ofxParticle &from);
 
 		/// copy operator
-		ofxParticle& operator=(const ofxParticle& from);
+		ofxParticle& operator=(const ofxParticle &from);
 
 
 	/// \section Main

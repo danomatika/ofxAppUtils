@@ -121,7 +121,7 @@ class ofxScene :
 
 			public:
 
-				RunnerScene(ofxScene* scene);
+				RunnerScene(ofxScene *scene);
 				~RunnerScene();
 
 				// need these for proper entering/exit, etc
@@ -130,7 +130,7 @@ class ofxScene :
 				void draw();
 				void exit();
 				
-				ofxScene* scene;
+				ofxScene *scene;
 		};
 		
 		friend class RunnerScene; //< used to wrap this app
@@ -145,7 +145,7 @@ class ofxFadeScene : public ofxScene {
 
 	public:
 	
-		ofxFadeScene(const string& name) : ofxScene(name) {
+		ofxFadeScene(const string &name) : ofxScene(name) {
 			fadeIn = 0;
 			fadeOut = 0;
 			fadeTimer.set();

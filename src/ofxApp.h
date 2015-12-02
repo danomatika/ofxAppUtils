@@ -94,7 +94,7 @@ class ofxApp :
 		/// the scene manager's update, draw, and input callback functions are
 		/// called automatically which, in turn, calls those of the current scene
 		///
-		void setSceneManager(ofxSceneManager* manager);
+		void setSceneManager(ofxSceneManager *manager);
 		ofxSceneManager* getSceneManager();
 		void clearSceneManager();
 		
@@ -140,7 +140,7 @@ class ofxApp :
 		bool _bDrawFramerate;       //< draw the dramerate in debug mode? default: true
 		ofColor _framerateColor;    //< framerate text color
 		
-		ofxSceneManager* _sceneManager; //< optional built in scene manager
+		ofxSceneManager *_sceneManager; //< optional built in scene manager
 		bool _bSceneManagerUpdate; //< call scene manager update automatically?
 		bool _bSceneManagerDraw; //< call scene manager draw automatically?
 
@@ -158,7 +158,7 @@ class ofxApp :
 			
 			public:
 
-				RunnerApp(ofxApp* app);
+				RunnerApp(ofxApp *app);
 				~RunnerApp();
 
 				// ofBaseApp callbacks
@@ -181,11 +181,11 @@ class ofxApp :
 				
 			#ifdef TARGET_OF_IOS
 				// ofxIOS callbacks
-				void touchDown(ofTouchEventArgs & touch);
-				void touchMoved(ofTouchEventArgs & touch);
-				void touchUp(ofTouchEventArgs & touch);
-				void touchDoubleTap(ofTouchEventArgs & touch);
-				void touchCancelled(ofTouchEventArgs & touch);
+				void touchDown(ofTouchEventArgs &touch);
+				void touchMoved(ofTouchEventArgs &touch);
+				void touchUp(ofTouchEventArgs &touch);
+				void touchDoubleTap(ofTouchEventArgs &touch);
+				void touchCancelled(ofTouchEventArgs &touch);
 
 				void lostFocus();
 				void gotFocus();
@@ -194,20 +194,20 @@ class ofxApp :
 			#endif
 				
 				// ofBaseSoundInput callbacks
-				void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-				void audioIn(float * input, int bufferSize, int nChannels );
-				void audioReceived(float * input, int bufferSize, int nChannels);
+				void audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+				void audioIn(float *input, int bufferSize, int nChannels );
+				void audioReceived(float *input, int bufferSize, int nChannels);
 				
 				// ofBaseSoundOutput callbacks
-				void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-				void audioOut(float * output, int bufferSize, int nChannels);
-				void audioRequested(float * output, int bufferSize, int nChannels);
+				void audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+				void audioOut(float *output, int bufferSize, int nChannels);
+				void audioRequested(float *output, int bufferSize, int nChannels);
 				
 				ofxApp* getAppPtr() {return app;}
 				
 			private:
 			
-				ofxApp* app;
+				ofxApp *app;
 		};
 		
 		friend class RunnerApp; ///< used to wrap this app

@@ -25,7 +25,7 @@ ofxSceneManager::ofxSceneManager() {
 }
 
 //--------------------------------------------------------------
-ofxScene* ofxSceneManager::add(ofxScene* scene) {
+ofxScene* ofxSceneManager::add(ofxScene *scene) {
 	if(scene == NULL) {
 		ofLogWarning("ofxSceneManager") << "cannot add NULL scene";
 		return NULL;
@@ -40,7 +40,7 @@ ofxScene* ofxSceneManager::add(ofxScene* scene) {
 }
 		
 //--------------------------------------------------------------
-void ofxSceneManager::remove(ofxScene* scene) {
+void ofxSceneManager::remove(ofxScene *scene) {
 	if(scene == NULL) {
 		ofLogWarning("ofxSceneManager") << "cannot remove NULL scene";
 		return;
@@ -48,7 +48,7 @@ void ofxSceneManager::remove(ofxScene* scene) {
 	map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	map<std::string,ofxScene::RunnerScene*>::iterator diter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene::RunnerScene* s = (*iter).second;
+		ofxScene::RunnerScene *s = (*iter).second;
 		if(s->scene == scene) {
 			if(s != NULL) {
 				s->exit();
@@ -65,7 +65,7 @@ void ofxSceneManager::remove(ofxScene* scene) {
 void ofxSceneManager::clear() {
 	map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene::RunnerScene* s = (*iter).second;
+		ofxScene::RunnerScene *s = (*iter).second;
 		if(s != NULL) {
 			s->exit();
 			delete s;
@@ -80,7 +80,7 @@ void ofxSceneManager::setup(bool loadAll) {
 	if(loadAll) {
 		map<std::string,ofxScene::RunnerScene*>::iterator iter;
 		for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-			ofxScene::RunnerScene* s = (*iter).second;
+			ofxScene::RunnerScene *s = (*iter).second;
 			s->setup();
 		}
 	} else {	// load the current one only
@@ -150,7 +150,7 @@ void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 		return;
 	}
 	
-	ofxScene* s;
+	ofxScene *s;
 	if(_currentScene == (int) index) {
 		ofLogWarning("ofxSceneManager") << "ignoring duplicate goto scene change";
 		return;
@@ -192,12 +192,12 @@ ofxScene* ofxSceneManager::getScene(std::string name) {
 }
 
 ofxScene* ofxSceneManager::getSceneAt(unsigned int index) {
-	ofxScene::RunnerScene* rs = _getRunnerSceneAt(index);
+	ofxScene::RunnerScene *rs = _getRunnerSceneAt(index);
 	return rs == NULL ? NULL : rs->scene;
 }
 
 std::string ofxSceneManager::getSceneName(unsigned int index) {
-	ofxScene* s = getSceneAt(index);
+	ofxScene *s = getSceneAt(index);
 	return s == NULL ? "" : s->getName();
 }
 
@@ -247,7 +247,7 @@ void ofxSceneManager::update() {
 
 	// update the current main scene
 	if(!_scenes.empty() && _currentScene >= 0) {
-		ofxScene* s = _currentScenePtr;
+		ofxScene *s = _currentScenePtr;
 
 		// call setup if scene is not setup yet
 		if(!s->isSetup()) {
@@ -264,7 +264,7 @@ void ofxSceneManager::update() {
 	
 	 // update the new scene, if there is one
 	if(_bOverlap && !_scenes.empty() && _newScene != SCENE_NOCHANGE && _newScene >= 0) {
-		ofxScene* next_s = getSceneAt(_newScene);
+		ofxScene *next_s = getSceneAt(_newScene);
 		if(!next_s->isSetup()) {
 			_newRunnerScenePtr->setup();
 		}
@@ -322,7 +322,7 @@ void ofxSceneManager::mouseReleased(int x, int y, int button) {
 void ofxSceneManager::windowResized(int w, int h) {
 	map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene::RunnerScene* s = (*iter).second;
+		ofxScene::RunnerScene *s = (*iter).second;
 		s->windowResized(w, h);
 	}
 }
@@ -342,31 +342,31 @@ void ofxSceneManager::gotMessage(ofMessage msg){
 #ifdef TARGET_OF_IOS
 // ofxIOSApp
 //--------------------------------------------------------------
-void ofxSceneManager::touchDown(ofTouchEventArgs & touch) {
+void ofxSceneManager::touchDown(ofTouchEventArgs &touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->touchDown(touch);
 	}
 }
 
-void ofxSceneManager::touchMoved(ofTouchEventArgs & touch) {
+void ofxSceneManager::touchMoved(ofTouchEventArgs &touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->touchMoved(touch);
 	}
 }
 
-void ofxSceneManager::touchUp(ofTouchEventArgs & touch) {
+void ofxSceneManager::touchUp(ofTouchEventArgs &touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->touchUp(touch);
 	}
 }
 
-void ofxSceneManager::touchDoubleTap(ofTouchEventArgs & touch) {
+void ofxSceneManager::touchDoubleTap(ofTouchEventArgs &touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->touchDoubleTap(touch);
 	}
 }
 
-void ofxSceneManager::touchCancelled(ofTouchEventArgs & touch) {
+void ofxSceneManager::touchCancelled(ofTouchEventArgs &touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->touchCancelled(touch);
 	}
@@ -394,7 +394,7 @@ void ofxSceneManager::gotMemoryWarning() {
 void ofxSceneManager::deviceOrientationChanged(int newOrientation) {
 	map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene::RunnerScene* s = (*iter).second;
+		ofxScene::RunnerScene *s = (*iter).second;
 		s->deviceOrientationChanged(newOrientation);
 	}
 }
@@ -402,18 +402,18 @@ void ofxSceneManager::deviceOrientationChanged(int newOrientation) {
 
 // ofBaseSoundInput
 //--------------------------------------------------------------
-void ofxSceneManager::audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+void ofxSceneManager::audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
 	}
 }
 
-void ofxSceneManager::audioIn(float * input, int bufferSize, int nChannel ) {
+void ofxSceneManager::audioIn(float *input, int bufferSize, int nChannel ) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannel);
 	}
 }
-void ofxSceneManager::audioReceived(float * input, int bufferSize, int nChannels) {
+void ofxSceneManager::audioReceived(float *input, int bufferSize, int nChannels) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannels);
 	}
@@ -421,19 +421,19 @@ void ofxSceneManager::audioReceived(float * input, int bufferSize, int nChannels
 
 // ofBaseSoundOutput
 //--------------------------------------------------------------
-void ofxSceneManager::audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+void ofxSceneManager::audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
 	}
 }
 
-void ofxSceneManager::audioOut(float * output, int bufferSize, int nChannels) {
+void ofxSceneManager::audioOut(float *output, int bufferSize, int nChannels) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels);
 	}
 }
 
-void ofxSceneManager::audioRequested(float * output, int bufferSize, int nChannels) {
+void ofxSceneManager::audioRequested(float *output, int bufferSize, int nChannels) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels);
 	}

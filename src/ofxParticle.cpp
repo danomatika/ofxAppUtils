@@ -39,13 +39,13 @@ ofxParticle::ofxParticle(ofRectangle rect) :
 ofxParticle::~ofxParticle() {}
 
 //--------------------------------------------------------------
-ofxParticle::ofxParticle(const ofxParticle& from) {
+ofxParticle::ofxParticle(const ofxParticle &from) {
 	this->ofxParticle::operator=(from);
 }
 
 //--------------------------------------------------------------
-ofxParticle& ofxParticle::operator=(const ofxParticle& from) {
-	(ofRectangle&) *this = from;    // call ofRectangle copy operator
+ofxParticle& ofxParticle::operator=(const ofxParticle &from) {
+	(ofRectangle &)*this = from;    // call ofRectangle copy operator
 	bAlive = from.bAlive;
 	lifespan = from.lifespan;
 	age = from.age;

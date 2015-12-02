@@ -114,7 +114,7 @@ class ParticleScene : public ofxFadeScene {
 					// you can also cast the ofxApp reference to your own derived
 					// class to pass custom data:
 					//
-					// TestApp* testApp = (TestApp*) (ofxGetAppPtr());
+					// TestApp *testApp = (TestApp*) (ofxGetAppPtr());
 					//
 					// NOTE: you must use "ofxGetAppPtr()" <-- note the "x",
 					// this is a replacement for "ofGetAppPtr()" which does not

@@ -22,11 +22,11 @@ class ofxTimer {
 		virtual ~ofxTimer() {}
 		
 		/// copy constructor
-		ofxTimer(const ofxTimer& from) {
+		ofxTimer(const ofxTimer &from) {
 			this->ofxTimer::operator=(from);
 		}
 		/// copy operator
-		ofxTimer& operator=(const ofxTimer& from) {
+		ofxTimer& operator=(const ofxTimer &from) {
 			alarmMS = from.alarmMS;
 			alarmstamp = from.alarmstamp;
 			timestamp = from.timestamp;

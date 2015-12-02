@@ -86,7 +86,7 @@ class LineScene : public ofxFadeScene {
 		// cleanup
 		void exit() {
 			for(unsigned int i = 0; i < lines.size(); ++i) {
-				Line* l = lines[i];
+				Line *l = lines[i];
 				delete l;
 			}
 			lines.clear();
@@ -108,7 +108,7 @@ class LineScene : public ofxFadeScene {
 					// you can also cast the ofxApp reference to your own derived
 					// class to pass custom data:
 					//
-					// TestApp* testApp = (TestApp*) (ofxGetAppPtr());
+					// TestApp *testApp = (TestApp*) (ofxGetAppPtr());
 					//
 					// NOTE: you must use "ofxGetAppPtr()" <-- note the "x",
 					// this is a replacement for "ofGetAppPtr()" which does not

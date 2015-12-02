@@ -29,10 +29,10 @@ class ofxSceneManager {
 		
 		/// add a scene
 		/// returns a pointer to the scene or NULL if the scene could not be added
-		ofxScene* add(ofxScene* scene);
+		ofxScene* add(ofxScene *scene);
 		
 		// remove a scene
-		void remove(ofxScene* scene);
+		void remove(ofxScene *scene);
 		
 		// clear all scenes
 		void clear();
@@ -119,11 +119,11 @@ class ofxSceneManager {
 		
 	#ifdef TARGET_OF_IOS
 		/// ofxIOSApp callbacks
-		void touchDown(ofTouchEventArgs & touch);
-		void touchMoved(ofTouchEventArgs & touch);
-		void touchUp(ofTouchEventArgs & touch);
-		void touchDoubleTap(ofTouchEventArgs & touch);
-		void touchCancelled(ofTouchEventArgs & touch);
+		void touchDown(ofTouchEventArgs &touch);
+		void touchMoved(ofTouchEventArgs &touch);
+		void touchUp(ofTouchEventArgs &touch);
+		void touchDoubleTap(ofTouchEventArgs &touch);
+		void touchCancelled(ofTouchEventArgs &touch);
 
 		void lostFocus();
 		void gotFocus();
@@ -135,14 +135,14 @@ class ofxSceneManager {
 	#endif
 		
 		/// ofBaseSoundInput callbacks
-		void audioIn(float * input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-		void audioIn(float * input, int bufferSize, int nChannels );
-		void audioReceived(float * input, int bufferSize, int nChannels);
+		void audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+		void audioIn(float *input, int bufferSize, int nChannels );
+		void audioReceived(float *input, int bufferSize, int nChannels);
 		
 		/// ofBaseSoundOutput callbacks
-		void audioOut(float * output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
-		void audioOut(float * output, int bufferSize, int nChannels);
-		void audioRequested(float * output, int bufferSize, int nChannels);
+		void audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
+		void audioOut(float *output, int bufferSize, int nChannels);
+		void audioRequested(float *output, int bufferSize, int nChannels);
 		
 	private:
 	
@@ -161,15 +161,15 @@ class ofxSceneManager {
 			SCENE_NONE = -1,
 		};
 	
-		ofxScene*	_currentScenePtr; //< pointer to the current scene
-		ofxScene::RunnerScene* _currentRunnerScenePtr; //< pointer to the current runner scene
-		ofxScene::RunnerScene* _newRunnerScenePtr; //< pointer to the next runner scene (when overlapping)
+		ofxScene *_currentScenePtr; //< pointer to the current scene
+		ofxScene::RunnerScene *_currentRunnerScenePtr; //< pointer to the current runner scene
+		ofxScene::RunnerScene *_newRunnerScenePtr; //< pointer to the next runner scene (when overlapping)
 		int _currentScene; //< the current scene, < 0 if none
 		int _newScene;     //< scene to change to
 		bool _bChangeNow;  //< ignore enter and exit when changing scenes?
 		bool _bOverlap;    //< make new scenes start entering while current scene is finishing?
 		
-		std::map<std::string, ofxScene::RunnerScene*> _scenes; //< scenes
+		std::map<std::string,ofxScene::RunnerScene*> _scenes; //< scenes
 	
 		bool _bSignalledAutoChange;    //< has an automatic change been called?
 		unsigned int _minChangeTimeMS; //< minimum ms to wait before accepting scene change commands

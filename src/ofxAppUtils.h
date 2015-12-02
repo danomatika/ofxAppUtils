@@ -22,18 +22,18 @@
 
 /// replace ofRunApp with this in main.cpp, make sure to call ofxGetAppPtr()
 /// instead of ofGetAppPtr() if you need access to the global ofxApp pointer
-inline void ofRunAppWithAppUtils(ofxApp* app) {
+inline void ofRunAppWithAppUtils(ofxApp *app) {
 
 	// wrap up user app with runner
 	#ifdef TARGET_OF_IOS
-		ofRunApp((ofxiOSApp*) new ofxApp::RunnerApp(app));
+		ofRunApp((ofxiOSApp *) new ofxApp::RunnerApp(app));
 	#else
-		ofRunApp((ofBaseApp*) new ofxApp::RunnerApp(app));
+		ofRunApp((ofBaseApp *) new ofxApp::RunnerApp(app));
 	#endif
 }
 
 /// get the global ofxApp ptr, important! use this INSTEAD of ofGetAppPtr()
 /// if you started your app with ofRunAppWithAppUtils()
 inline ofxApp* ofxGetAppPtr() {
-	return ((ofxApp::RunnerApp*) ofGetAppPtr())->getAppPtr();
+	return ((ofxApp::RunnerApp *) ofGetAppPtr())->getAppPtr();
 }

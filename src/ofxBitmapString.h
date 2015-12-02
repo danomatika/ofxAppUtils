@@ -30,7 +30,7 @@
 class ofxBitmapString {
 	public:
 
-		ofxBitmapString(const ofPoint & p) {
+		ofxBitmapString(const ofPoint &p) {
 			pos = p;
 		}
 		
@@ -45,13 +45,13 @@ class ofxBitmapString {
 		
 		/// catch the << ostream with a template class to read any type of data
 		template <class T> 
-		ofxBitmapString& operator<<(const T& value) {
+		ofxBitmapString& operator<<(const T &value) {
 			message << value;
 			return *this;
 		}
 
 		/// catch the << ostream function pointers such as std::endl and std::hex
-		ofxBitmapString& operator<<(std::ostream& (*func)(std::ostream&)) {
+		ofxBitmapString& operator<<(std::ostream& (*func)(std::ostream &)) {
 			func(message);
 			return *this;
 		}

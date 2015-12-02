@@ -85,7 +85,7 @@ void ofApp::draw(){
 	ofNoFill();
 	ofSetColor(127);
 	ofSetRectMode(OF_RECTMODE_CORNER);
-	ofRect(1, 1, getRenderWidth()-2, getRenderHeight()-2);
+	ofDrawRectangle(1, 1, getRenderWidth()-2, getRenderHeight()-2);
 	ofFill();
 	
 	// drop out of the auto transform space back to OF screen space

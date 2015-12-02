@@ -12,6 +12,8 @@
 
 #include "matrix_funcs.h"
 #include "ofConstants.h"
+#include "ofGraphics.h"
+#include "ofAppRunner.h"
 #include "ofXml.h"
 
 //--------------------------------------------------------------
@@ -60,7 +62,7 @@ void ofxQuadWarper::drawPoints() {
 void ofxQuadWarper::drawPoints(float width, float height) {
 	ofSetRectMode(OF_RECTMODE_CENTER);
 	for(int i = 0; i < 4; i++){
-		ofRect(_warpPoints[i].x * width, _warpPoints[i].y * height, 10, 10);
+		ofDrawRectangle(_warpPoints[i].x * width, _warpPoints[i].y * height, 10, 10);
 	}
 	ofSetRectMode(OF_RECTMODE_CORNER);
 }

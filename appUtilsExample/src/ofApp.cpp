@@ -85,7 +85,7 @@ void ofApp::draw() {
 		ofNoFill();
 		ofSetColor(255);
 		ofSetRectMode(OF_RECTMODE_CORNER);
-		ofRect(1, 1, getRenderWidth()-2, getRenderHeight()-2);
+		ofDrawRectangle(1, 1, getRenderWidth()-2, getRenderHeight()-2);
 		ofFill();
 	}
 	
@@ -208,7 +208,5 @@ void ofApp::mouseReleased(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
-
 	// transformer.setNewScreenSize() is automatically called if the transformer is set
-	
 }

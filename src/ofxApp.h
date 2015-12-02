@@ -11,8 +11,8 @@
 #pragma once
 
 #include "ofConstants.h"
-#ifdef TARGET_OF_IPHONE
-	#include "ofxiPhone.h"
+#ifdef TARGET_OF_IOS
+	#include "ofxiOS.h"
 #else
 	#include "ofBaseApp.h"
 #endif
@@ -32,7 +32,7 @@ class ofxSceneManager;
 ///	ie setup(), update(), draw(), etc
 class ofxApp :
 
-#ifdef TARGET_OF_IPHONE
+#ifdef TARGET_OF_IOS
 	public ofxiOSApp {
 #else
 	public ofBaseApp {
@@ -150,7 +150,7 @@ class ofxApp :
 		/// do not use directly!
 		class RunnerApp :
 
-		#ifdef TARGET_OF_IPHONE
+		#ifdef TARGET_OF_IOS
 			public ofxiOSApp {
 		#else
 			public ofBaseApp {
@@ -179,7 +179,7 @@ class ofxApp :
 				void dragEvent(ofDragInfo dragInfo);
 				void gotMessage(ofMessage msg);
 				
-			#ifdef TARGET_OF_IPHONE
+			#ifdef TARGET_OF_IOS
 				// ofxIOS callbacks
 				void touchDown(ofTouchEventArgs & touch);
 				void touchMoved(ofTouchEventArgs & touch);

@@ -364,7 +364,7 @@ void ofxTransformer::drawWarpBounds() {
 	ofNoFill();
 	ofSetColor(ofColor::green);
 	ofSetRectMode(OF_RECTMODE_CORNER);
-	ofRect(0.35, 0.35, _renderWidth-1.35, _renderHeight-1.35);
+	ofDrawRectangle(0.35, 0.35, _renderWidth-1.35, _renderHeight-1.35);
 	ofFill();
 	
 	if(doTransform) {
@@ -389,7 +389,7 @@ void ofxTransformer::drawWarpEditor() {
 	ofSetColor(ofColor::green);
 	ofNoFill();
 	ofSetRectMode(OF_RECTMODE_CENTER);
-	ofRect(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
+	ofDrawRectangle(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	ofFill();
 	

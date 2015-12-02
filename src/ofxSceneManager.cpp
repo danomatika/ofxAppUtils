@@ -339,8 +339,8 @@ void ofxSceneManager::gotMessage(ofMessage msg){
 	}
 }
 
-#ifdef TARGET_OF_IPHONE
-// ofxIPhoneApp
+#ifdef TARGET_OF_IOS
+// ofxIOSApp
 //--------------------------------------------------------------
 void ofxSceneManager::touchDown(ofTouchEventArgs & touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {

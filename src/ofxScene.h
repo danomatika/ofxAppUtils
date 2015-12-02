@@ -17,7 +17,7 @@
 ///	\brief  application scene abstract class
 class ofxScene :
 
-#ifdef TARGET_OF_IPHONE
+#ifdef TARGET_OF_IOS
 	public ofxiOSApp {
 #else
 	public ofBaseApp {
@@ -113,7 +113,7 @@ class ofxScene :
 		/// do not use directly!
 		class RunnerScene :
 
-		#ifdef TARGET_OF_IPHONE
+		#ifdef TARGET_OF_IOS
 			public ofxiOSApp {
 		#else
 			public ofBaseApp {

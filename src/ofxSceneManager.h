@@ -117,8 +117,8 @@ class ofxSceneManager {
 		/// are handled during transtions, etc correctly
 		void windowResized(int w, int h);
 		
-	#ifdef TARGET_OF_IPHONE
-		/// ofxIOS callbacks
+	#ifdef TARGET_OF_IOS
+		/// ofxIOSApp callbacks
 		void touchDown(ofTouchEventArgs & touch);
 		void touchMoved(ofTouchEventArgs & touch);
 		void touchUp(ofTouchEventArgs & touch);

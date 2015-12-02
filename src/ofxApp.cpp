@@ -298,7 +298,7 @@ void ofxApp::RunnerApp::audioRequested(float * output, int bufferSize, int nChan
 	app->audioOut(output, bufferSize, nChannels);
 }
 
-#ifdef TARGET_OF_IPHONE
+#ifdef TARGET_OF_IOS
 // ofxiOSApp
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::touchDown(ofTouchEventArgs & touch) {

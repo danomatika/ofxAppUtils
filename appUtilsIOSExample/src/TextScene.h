@@ -29,7 +29,7 @@ class TextScene : public ofxFadeScene {
 		void setup() {
 			// load the font if not already loaded
 			if(!font.isLoaded()) {
-				font.loadFont("vera.ttf", 300);
+				font.load("vera.ttf", 300);
 			}
 			bbox = font.getStringBoundingBox(text, 0, 0);
 		}

@@ -129,7 +129,7 @@ class LineScene : public ofxFadeScene {
 				}
 				
 				void draw() {
-					ofLine(pos1, pos2);
+					ofDrawLine(pos1, pos2);
 				}
 				
 				enum Type {

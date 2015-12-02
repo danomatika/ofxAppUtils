@@ -160,7 +160,7 @@ class ParticleScene : public ofxFadeScene {
 				}
 				
 				void draw() {
-					ofRect(*this); // <- use this object as an ofRectangle
+					ofDrawRectangle(*this); // <- use this object as an ofRectangle
 				}
 				
 				ofxApp *app;

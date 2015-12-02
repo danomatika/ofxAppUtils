@@ -11,9 +11,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxiPhone.h"
-#include "ofxiPhoneExtras.h"
-
 #include "ofxAppUtils.h"
 
 #include "Button.h"
@@ -21,7 +18,7 @@
 /// make sure you check out main.cpp for how to run this app with app utils!
 ///
 /// this example mainly demonstrates using scenes, see appUtilsExample for
-/// for info on using the transforms, simple particles, etc
+/// info on using the transforms, simple particles, etc
 ///
 /// it lets you cycle through scenes whose smaller render areas are scaled
 /// and placed at the center of the screen
@@ -56,4 +53,3 @@ class ofApp : public ofxApp{
 		// simple scene change gui
 		Button prevButton, nextButton;
 };
-

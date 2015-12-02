@@ -11,7 +11,6 @@
 #pragma once
 
 #include "ofMain.h"
-
 #include "ofxAppUtils.h"
 
 // a simple gui button
@@ -51,26 +50,26 @@ class Button {
 			if(isInside) {
 				ofFill();
 				ofSetColor(127);
-				ofRect(rect);
+				ofDrawRectangle(rect);
 			}
 			
 			// outline
 			ofNoFill();
 			ofSetLineWidth(1.0);
 			ofSetColor(255);
-			ofRect(rect);
+			ofDrawRectangle(rect);
 			
 			// arrow
 			ofFill();
 			if(type == LEFT) {
-				ofLine(rect.x+offset, rect.y+rect.height/2, rect.x+rect.width-offset, rect.y+rect.height/2);
-				ofLine(rect.x+offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+offset);
-				ofLine(rect.x+offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+rect.height-offset);
+				ofDrawLine(rect.x+offset, rect.y+rect.height/2, rect.x+rect.width-offset, rect.y+rect.height/2);
+				ofDrawLine(rect.x+offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+offset);
+				ofDrawLine(rect.x+offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+rect.height-offset);
 			}
 			if(type == RIGHT) {
-				ofLine(rect.x+rect.width-offset, rect.y+rect.height/2, rect.x+offset, rect.y+rect.height/2);
-				ofLine(rect.x+rect.width-offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+offset);
-				ofLine(rect.x+rect.width-offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+rect.height-offset);
+				ofDrawLine(rect.x+rect.width-offset, rect.y+rect.height/2, rect.x+offset, rect.y+rect.height/2);
+				ofDrawLine(rect.x+rect.width-offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+offset);
+				ofDrawLine(rect.x+rect.width-offset, rect.y+rect.height/2, rect.x+rect.width/2, rect.y+rect.height-offset);
 			}
 		}
 

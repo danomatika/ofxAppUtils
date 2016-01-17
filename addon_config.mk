@@ -22,12 +22,13 @@ meta:
 	ADDON_URL = http://github.com/danomatika/ofxAppUtils
 
 common:
+	
 
 ios:
 	# don't include by default as this requires ofxGui
 	ADDON_SOURCES_EXCLUDE += src/ofxTransformPanel.h src/ofxTransformPanel.cpp
 
-	# force obj-c++ compilation to avoid Unknow type name 'NSString' errors
+	# force obj-c++ compilation to avoid Unknown type name 'NSString' errors
 	ADDON_CFLAGS += -x objective-c++
 
 android:

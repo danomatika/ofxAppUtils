@@ -317,42 +317,6 @@ void ofxApp::RunnerApp::touchCancelled(int x, int y, int id) {
 	app->touchCancelled(x, y, id);
 }
 
-//--------------------------------------------------------------
-void ofxApp::RunnerApp::touchDown(ofTouchEventArgs &touch) {
-	if(app->_sceneManager) {
-		app->_sceneManager->touchDown(touch);
-	}
-	app->touchDown(touch);
-}
-
-void ofxApp::RunnerApp::touchMoved(ofTouchEventArgs &touch) {
-	if(app->_sceneManager) {
-		app->_sceneManager->touchMoved(touch);
-	}
-	app->touchMoved(touch);
-}
-
-void ofxApp::RunnerApp::touchUp(ofTouchEventArgs &touch) {
-	if(app->_sceneManager) {
-		app->_sceneManager->touchUp(touch);
-	}
-	app->touchUp(touch);
-}
-
-void ofxApp::RunnerApp::touchDoubleTap(ofTouchEventArgs &touch) {
-	if(app->_sceneManager) {
-		app->_sceneManager->touchDoubleTap(touch);
-	}
-	app->touchDoubleTap(touch);
-}
-
-void ofxApp::RunnerApp::touchCancelled(ofTouchEventArgs &touch) {
-	if(app->_sceneManager) {
-		app->_sceneManager->touchCancelled(touch);
-	}
-	app->touchCancelled(touch);
-}
-
 // ofBaseSoundInput
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::audioIn(ofSoundBuffer& buffer) {

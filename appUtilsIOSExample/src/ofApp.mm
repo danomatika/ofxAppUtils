@@ -111,19 +111,19 @@ void ofApp::draw(){
 
 // current scene input functions are called automatically before calling these
 //--------------------------------------------------------------
-void ofApp::touchDown(ofTouchEventArgs & touch){	
-	prevButton.inside(touch.x, touch.y);
-	nextButton.inside(touch.x, touch.y);
+void ofApp::touchDown(int x, int y, int id) {
+	prevButton.inside(x, y);
+	nextButton.inside(x, y);
 }
 
 //--------------------------------------------------------------
-void ofApp::touchMoved(ofTouchEventArgs & touch){
-	prevButton.inside(touch.x, touch.y);
-	nextButton.inside(touch.x, touch.y);
+void ofApp::touchMoved(int x, int y, int id) {
+	prevButton.inside(x, y);
+	nextButton.inside(x, y);
 }
 
 //--------------------------------------------------------------
-void ofApp::touchUp(ofTouchEventArgs & touch){
+void ofApp::touchUp(int x, int y, int id) {
 	if(prevButton.isInside) {
 		sceneManager.prevScene();
 		prevButton.isInside = false;
@@ -135,12 +135,13 @@ void ofApp::touchUp(ofTouchEventArgs & touch){
 }
 
 //--------------------------------------------------------------
-void ofApp::touchDoubleTap(ofTouchEventArgs & touch){
+void ofApp::touchDoubleTap(int x, int y, int id) {
 	sceneManager.nextScene();
 }
 
 //--------------------------------------------------------------
-void ofApp::touchCancelled(ofTouchEventArgs & touch){
+void ofApp::touchCancelled(int x, int y, int id){
+
 }
 
 //--------------------------------------------------------------

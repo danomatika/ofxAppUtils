@@ -387,37 +387,6 @@ void ofxSceneManager::touchCancelled(int x, int y, int id) {
 	}
 }
 
-//--------------------------------------------------------------
-void ofxSceneManager::touchDown(ofTouchEventArgs &touch) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->touchDown(touch);
-	}
-}
-
-void ofxSceneManager::touchMoved(ofTouchEventArgs &touch) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->touchMoved(touch);
-	}
-}
-
-void ofxSceneManager::touchUp(ofTouchEventArgs &touch) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->touchUp(touch);
-	}
-}
-
-void ofxSceneManager::touchDoubleTap(ofTouchEventArgs &touch) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->touchDoubleTap(touch);
-	}
-}
-
-void ofxSceneManager::touchCancelled(ofTouchEventArgs &touch) {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentScenePtr->touchCancelled(touch);
-	}
-}
-
 #ifdef TARGET_OF_IOS
 // ofxIOSApp
 //--------------------------------------------------------------

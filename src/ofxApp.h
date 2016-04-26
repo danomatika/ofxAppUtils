@@ -189,12 +189,6 @@ class ofxApp :
 				void touchDoubleTap(int x, int y, int id);
 				void touchCancelled(int x, int y, int id);
 				
-				void touchDown(ofTouchEventArgs &touch);
-				void touchMoved(ofTouchEventArgs &touch);
-				void touchUp(ofTouchEventArgs &touch);
-				void touchDoubleTap(ofTouchEventArgs &touch);
-				void touchCancelled(ofTouchEventArgs &touch);
-				
 			#ifdef TARGET_OF_IOS
 				// ofxIOS callbacks
 				void lostFocus();

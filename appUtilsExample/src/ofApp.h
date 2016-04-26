@@ -24,7 +24,7 @@
 #endif
 
 // we only specify a pointer to the Particle Scene here, so tell the compiler
-// that it exists as a class and we can include the class header in testApp.cpp
+// that it exists as a class and we can include the class header in ofApp.cpp
 class ParticleScene;
 
 /// make sure you check out main.cpp for how to run this app with app utils!

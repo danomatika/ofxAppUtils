@@ -164,6 +164,17 @@ void ofxApp::RunnerApp::exit() {
 }
 
 //--------------------------------------------------------------
+void ofxApp::RunnerApp::windowResized(int w, int h) {
+	if(app->_sceneManager) {
+		app->_sceneManager->windowResized(w, h);
+	}
+	if(app->getTransformer()) {
+		app->_transformer->setNewScreenSize(w, h);
+	}
+	app->windowResized(w, h);
+}
+
+//--------------------------------------------------------------
 void ofxApp::RunnerApp::keyPressed(int key) {
 	if(app->_sceneManager) {
 		app->_sceneManager->keyPressed(key);
@@ -227,14 +238,27 @@ void ofxApp::RunnerApp::mouseReleased(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void ofxApp::RunnerApp::windowResized(int w, int h) {
+void ofxApp::RunnerApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
 	if(app->_sceneManager) {
-		app->_sceneManager->windowResized(w, h);
+		app->_sceneManager->mouseScrolled(x, y, scrollX, scrollY);
 	}
-	if(app->getTransformer()) {
-		app->_transformer->setNewScreenSize(w, h);
+	app->mouseScrolled(x, y, scrollX, scrollY);
+}
+
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::mouseEntered(int x, int y) {
+	if(app->_sceneManager) {
+		app->_sceneManager->mouseEntered(x, y);
 	}
-	app->windowResized(w, h);
+	app->mouseEntered(x, y);
+}
+
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::mouseExited(int x, int y) {
+	if(app->_sceneManager) {
+		app->_sceneManager->mouseExited(x, y);
+	}
+	app->mouseExited(x, y);
 }
 
 //--------------------------------------------------------------
@@ -253,53 +277,46 @@ void ofxApp::RunnerApp::gotMessage(ofMessage msg){
 	app->gotMessage(msg);
 }
 
-// ofBaseSoundInput
 //--------------------------------------------------------------
-void ofxApp::RunnerApp::audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+void ofxApp::RunnerApp::touchDown(int x, int y, int id) {
 	if(app->_sceneManager) {
-		app->_sceneManager->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+		app->_sceneManager->touchDown(x, y, id);
 	}
-	app->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+	app->touchDown(x, y, id);
 }
 
-void ofxApp::RunnerApp::audioIn(float *input, int bufferSize, int nChannel ) {
-	if(app->_sceneManager) {
-		app->_sceneManager->audioIn(input, bufferSize, nChannel);
-	}
-	app->audioIn(input, bufferSize, nChannel);
-}
-void ofxApp::RunnerApp::audioReceived(float *input, int bufferSize, int nChannels) {
-	if(app->_sceneManager) {
-		app->_sceneManager->audioIn(input, bufferSize, nChannels);
-	}
-	app->audioIn(input, bufferSize, nChannels);
-}
-
-// ofBaseSoundOutput
 //--------------------------------------------------------------
-void ofxApp::RunnerApp::audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+void ofxApp::RunnerApp::touchMoved(int x, int y, int id) {
 	if(app->_sceneManager) {
-		app->_sceneManager->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+		app->_sceneManager->touchMoved(x, y, id);
 	}
-	app->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+	app->touchMoved(x, y, id);
 }
 
-void ofxApp::RunnerApp::audioOut(float *output, int bufferSize, int nChannels) {
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::touchUp(int x, int y, int id) {
 	if(app->_sceneManager) {
-		app->_sceneManager->audioOut(output, bufferSize, nChannels);
+		app->_sceneManager->touchUp(x, y, id);
 	}
-	app->audioOut(output, bufferSize, nChannels);
+	app->touchUp(x, y, id);
 }
 
-void ofxApp::RunnerApp::audioRequested(float *output, int bufferSize, int nChannels) {
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::touchDoubleTap(int x, int y, int id) {
 	if(app->_sceneManager) {
-		app->_sceneManager->audioOut(output, bufferSize, nChannels);
+		app->_sceneManager->touchDoubleTap(x, y, id);
 	}
-	app->audioOut(output, bufferSize, nChannels);
+	app->touchDoubleTap(x, y, id);
 }
 
-#ifdef TARGET_OF_IOS
-// ofxiOSApp
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::touchCancelled(int x, int y, int id) {
+	if(app->_sceneManager) {
+		app->_sceneManager->touchCancelled(x, y, id);
+	}
+	app->touchCancelled(x, y, id);
+}
+
 //--------------------------------------------------------------
 void ofxApp::RunnerApp::touchDown(ofTouchEventArgs &touch) {
 	if(app->_sceneManager) {
@@ -336,6 +353,68 @@ void ofxApp::RunnerApp::touchCancelled(ofTouchEventArgs &touch) {
 	app->touchCancelled(touch);
 }
 
+// ofBaseSoundInput
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::audioIn(ofSoundBuffer& buffer) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioIn(buffer);
+	}
+	app->audioIn(buffer);
+}
+
+void ofxApp::RunnerApp::audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+	}
+	app->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
+}
+
+void ofxApp::RunnerApp::audioIn(float *input, int bufferSize, int nChannel ) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioIn(input, bufferSize, nChannel);
+	}
+	app->audioIn(input, bufferSize, nChannel);
+}
+void ofxApp::RunnerApp::audioReceived(float *input, int bufferSize, int nChannels) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioIn(input, bufferSize, nChannels);
+	}
+	app->audioIn(input, bufferSize, nChannels);
+}
+
+// ofBaseSoundOutput
+//--------------------------------------------------------------
+void ofxApp::RunnerApp::audioOut(ofSoundBuffer& buffer) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioOut(buffer);
+	}
+	app->audioOut(buffer);
+}
+
+void ofxApp::RunnerApp::audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+	}
+	app->audioOut(output, bufferSize, nChannels, deviceID, tickCount);
+}
+
+void ofxApp::RunnerApp::audioOut(float *output, int bufferSize, int nChannels) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioOut(output, bufferSize, nChannels);
+	}
+	app->audioOut(output, bufferSize, nChannels);
+}
+
+void ofxApp::RunnerApp::audioRequested(float *output, int bufferSize, int nChannels) {
+	if(app->_sceneManager) {
+		app->_sceneManager->audioOut(output, bufferSize, nChannels);
+	}
+	app->audioOut(output, bufferSize, nChannels);
+}
+
+#ifdef TARGET_OF_IOS
+// ofxiOSApp
+//--------------------------------------------------------------
 void ofxApp::RunnerApp::lostFocus() {
 	if(app->_sceneManager) {
 		app->_sceneManager->lostFocus();

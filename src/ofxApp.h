@@ -135,10 +135,10 @@ class ofxApp :
 	private:
 		
 		ofxTransformer *_transformer; //< optional built in transformer
-		bool _bAutoTransforms;      //< apply the transforms automatically? default: true
+		bool _bAutoTransforms; //< apply the transforms automatically? default: true
 		
-		bool _bDrawFramerate;       //< draw the dramerate in debug mode? default: true
-		ofColor _framerateColor;    //< framerate text color
+		bool _bDrawFramerate; //< draw the dramerate in debug mode? default: true
+		ofColor _framerateColor; //< framerate text color
 		
 		ofxSceneManager *_sceneManager; //< optional built in scene manager
 		bool _bSceneManagerUpdate; //< call scene manager update automatically?
@@ -166,6 +166,8 @@ class ofxApp :
 				void update();
 				void draw();
 				void exit();
+				
+				void windowResized(int w, int h);
 
 				void keyPressed(int key);
 				void keyReleased(int key);
@@ -174,19 +176,27 @@ class ofxApp :
 				void mouseDragged(int x, int y, int button);
 				void mousePressed(int x, int y, int button);
 				void mouseReleased(int x, int y, int button);
+				void mouseScrolled(int x, int y, float scrollX, float scrollY);
+				void mouseEntered(int x, int y);
+				void mouseExited(int x, int y);
 				
-				void windowResized(int w, int h);
 				void dragEvent(ofDragInfo dragInfo);
 				void gotMessage(ofMessage msg);
 				
-			#ifdef TARGET_OF_IOS
-				// ofxIOS callbacks
+				void touchDown(int x, int y, int id);
+				void touchMoved(int x, int y, int id);
+				void touchUp(int x, int y, int id);
+				void touchDoubleTap(int x, int y, int id);
+				void touchCancelled(int x, int y, int id);
+				
 				void touchDown(ofTouchEventArgs &touch);
 				void touchMoved(ofTouchEventArgs &touch);
 				void touchUp(ofTouchEventArgs &touch);
 				void touchDoubleTap(ofTouchEventArgs &touch);
 				void touchCancelled(ofTouchEventArgs &touch);
-
+				
+			#ifdef TARGET_OF_IOS
+				// ofxIOS callbacks
 				void lostFocus();
 				void gotFocus();
 				void gotMemoryWarning();
@@ -194,11 +204,13 @@ class ofxApp :
 			#endif
 				
 				// ofBaseSoundInput callbacks
+				void audioIn(ofSoundBuffer& buffer);
 				void audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
 				void audioIn(float *input, int bufferSize, int nChannels );
 				void audioReceived(float *input, int bufferSize, int nChannels);
 				
 				// ofBaseSoundOutput callbacks
+				void audioOut(ofSoundBuffer& buffer);
 				void audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount);
 				void audioOut(float *output, int bufferSize, int nChannels);
 				void audioRequested(float *output, int bufferSize, int nChannels);

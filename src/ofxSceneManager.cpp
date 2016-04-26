@@ -282,6 +282,15 @@ void ofxSceneManager::draw() {
 	}
 }
 
+// call resize on all scenes
+void ofxSceneManager::windowResized(int w, int h) {
+	map<std::string,ofxScene::RunnerScene*>::iterator iter;
+	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
+		ofxScene::RunnerScene *s = (*iter).second;
+		s->windowResized(w, h);
+	}
+}
+
 void ofxSceneManager::keyPressed(int key) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->keyPressed(key);
@@ -318,12 +327,21 @@ void ofxSceneManager::mouseReleased(int x, int y, int button) {
 	}
 }
 
-// call resize on all scenes
-void ofxSceneManager::windowResized(int w, int h) {
-	map<std::string,ofxScene::RunnerScene*>::iterator iter;
-	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
-		ofxScene::RunnerScene *s = (*iter).second;
-		s->windowResized(w, h);
+void ofxSceneManager::mouseScrolled(int x, int y, float scrollX, float scrollY) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseScrolled(x, y, scrollX, scrollY);
+	}
+}
+
+void ofxSceneManager::mouseEntered(int x, int y) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseEntered(x, y);
+	}
+}
+
+void ofxSceneManager::mouseExited(int x, int y) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->mouseExited(x, y);
 	}
 }
 
@@ -339,8 +357,36 @@ void ofxSceneManager::gotMessage(ofMessage msg){
 	}
 }
 
-#ifdef TARGET_OF_IOS
-// ofxIOSApp
+void ofxSceneManager::touchDown(int x, int y, int id) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->touchDown(x, y, id);
+	}
+}
+
+void ofxSceneManager::touchMoved(int x, int y, int id) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->touchMoved(x, y, id);
+	}
+}
+
+void ofxSceneManager::touchUp(int x, int y, int id) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->touchUp(x, y, id);
+	}
+}
+
+void ofxSceneManager::touchDoubleTap(int x, int y, int id) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->touchDoubleTap(x, y, id);
+	}
+}
+
+void ofxSceneManager::touchCancelled(int x, int y, int id) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->touchCancelled(x, y, id);
+	}
+}
+
 //--------------------------------------------------------------
 void ofxSceneManager::touchDown(ofTouchEventArgs &touch) {
 	if(!_scenes.empty() && _currentScene >= 0) {
@@ -372,6 +418,9 @@ void ofxSceneManager::touchCancelled(ofTouchEventArgs &touch) {
 	}
 }
 
+#ifdef TARGET_OF_IOS
+// ofxIOSApp
+//--------------------------------------------------------------
 void ofxSceneManager::lostFocus() {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->lostFocus();
@@ -402,6 +451,12 @@ void ofxSceneManager::deviceOrientationChanged(int newOrientation) {
 
 // ofBaseSoundInput
 //--------------------------------------------------------------
+void ofxSceneManager::audioIn(ofSoundBuffer& buffer) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioIn(buffer);
+	}
+}
+
 void ofxSceneManager::audioIn(float *input, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioIn(input, bufferSize, nChannels, deviceID, tickCount);
@@ -421,6 +476,12 @@ void ofxSceneManager::audioReceived(float *input, int bufferSize, int nChannels)
 
 // ofBaseSoundOutput
 //--------------------------------------------------------------
+void ofxSceneManager::audioOut(ofSoundBuffer& buffer) {
+	if(!_scenes.empty() && _currentScene >= 0) {
+		_currentScenePtr->audioOut(buffer);
+	}
+}
+
 void ofxSceneManager::audioOut(float *output, int bufferSize, int nChannels, int deviceID, long unsigned long tickCount) {
 	if(!_scenes.empty() && _currentScene >= 0) {
 		_currentScenePtr->audioOut(output, bufferSize, nChannels, deviceID, tickCount);

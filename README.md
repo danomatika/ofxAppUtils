@@ -57,14 +57,20 @@ You will may also need the following addon dependencies:
 
 To enable the ofxGui transformer panel, include `ofxTransformerPanel.h`, create an "ofxTransformerPanel" object, and set the transformer in _ofxTransformerPanel::setup()_.
 
-Running the Example Project
--------------------------------
+Running the Example Projects
+----------------------------
 
 The example projects are in the `appUtilsExample` & `appUtilsIOSExample` folders.
 
 Project files for the examples are not included so you will need to generate the project files for your operating system and development environment using the OF ProjectGenerator which is included with the OpenFrameworks distribution.
 
-Point the ProjectGenerator to `addons/ofxAppUtils`, change the project name to the **exact** name of the example you want to generate (ie `appUtilsExample`), and make sure to choose `ofxAppUtils` (& optionally `ofxGui` for appUtilsExample) from the addons. Hitting "Generate Project" will populate that example with the project files you will need to build it.
+To (re)generate project files for an *existing* project:
+
+* click the "Import" button in the ProjectGenerator
+* navigate the to base folder for the project ie. "appUtilsExample"
+* click the "Update" button
+
+If everything went Ok, you should now be able to open the generated project and build/run the example.
 
 ### OSX
 

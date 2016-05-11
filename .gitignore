@@ -36,13 +36,11 @@ appUtilsExample/bin/appUtilsExample
 appUtilsExample/bin/appUtilsExample_debug
 appUtilsExample/Makefile
 appUtilsExample/Project.xcconfig
-appUtilsExample/addons.make
 appUtilsExample/appUtilsExample.xcodeproj/
 appUtilsExample/config.make
 appUtilsExample/openFrameworks-Info.plist
 
 appUtilsIOSExample/Project.xcconfig
-appUtilsIOSExample/addons.make
 appUtilsIOSExample/appUtilsIOSExample.xcodeproj/
 appUtilsIOSExample/ofxiOS-Info.plist
 appUtilsIOSExample/ofxiOS_Prefix.pch

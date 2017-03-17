@@ -1,0 +1,111 @@
+0.6.1: 2017 Mar 17
+
+* added some missing ofxApp callbacks: windowResized, mouseScrolled, 
+  mouseEntered, mouseExited, and touch events
+
+* updated to OF 0.9.0
+* don't ignore addons.make as it's used by the PG
+
+0.6.0: 2015 Apr 17
+
+* added ofxMovingAverage
+* added scene change overlapping from masOTROS
+* added ofxFadeScene to automate scene transition fade
+* added ofxGUI transform panel to replace ofxControlPanel
+
+* simplified ofxApp so it no longer inherits from ofxTransformer, set the
+  transformer using the setTransformer() function instead
+* simplified naming of a few things
+* commenting & code consistency updates
+
+0.5.0: 2015 Jan 19
+
+* particle manager updates:
+  - added particle pointer access
+  - renamed popOldestParticle & popNewestParticle to popFirstParticle &
+    popLastParticle
+* replaced ofxXmlSetings with ofXml, so OFX_APP_UTILS_NO_XML define is
+  no longer needed
+* renamed example testApp to ofApp
+* updated xcode project for xcode 5
+
+* fixed mouseReleased() without arguments removed from OF (thanks Mat Loz)
+
+* removed example project files (use the OF ProjectGenerator)
+
+0.4.0: 2013 Aug 13
+
+* added logo
+* added ofxGetAppPtr()
+* added ofxSceneManager::getNumScenes()
+* added some util functions to ofxParticleManager
+
+* updated to OF 0.8.0
+* dont need to set fps when vsync is enabled
+* ofxSceneManager::add now returns scene pointer
+* addTransformControls now loads gui with current transform values
+* renamed control panel define to OFX_APP_UTILS_USE_CONTROL_PANEL
+* ofxSceneManager::getCurrentSceneName() now returns NO_SCENE string on no scene
+
+* fix error by checking for NULL runnerScene instead of SCENE_NONE in 
+  changeToNewScene (reported by dorald)
+* fixed crash on duplicate change to NO_SCENE
+* fixed null pointer crash on change to no scene
+
+0.3.0: 2012 Oct 15
+
+* big update for iOS:
+  - ofxApp & ofxScene now inherit from ofxiPhoneApp on iOS,
+    so runAppWithAppUtils now works
+  - added new iOS example
+* added Win & Linux project files
+
+* added define for disabling the xml settings addon requirement
+* added setSingleSetup to scene
+
+* renamed ofxTransform::setRenderSize() to setNewScreenSize()
+* renamed example to appUtilsExample
+* replaced ofMain.h includes with specific files, should save a little 
+  on compile times
+
+* ofxTransformer no longer sets size from screen size in it's constructor as this was causing problems on iOS
+* fixed incorrect render autocentering
+* fixed missing mouseDragged call
+* fixed example crahs when changing to lines scene
+* moved background setting forward, since doing it in draw loop was
+  overdrawing scenes
+
+* removed automatic render resizing on window size change, that should be
+  left up to developers
+
+0.2.0: 2011 Nov 27
+
+* added BSD license
+* all ofBaseApp callbacks are now supported down to the scene level
+* added app runner wrapper class and functions to remove need to rename
+  ofBaseApp functions in user app
+* added scene runner and functions
+* added all control panel inputs and framerate drawing options
+* added object copying and resetAlarm() to ofxTimer
+* added ofxParticle and ofxParticleScene
+* added ofxBitmapString (from ofxLogger)
+* added scene getters to scene manager
+* added settable transform controls
+* added ability to disable auto sceneManager update and draw calls
+* added aspect and center settings to file and key controls to example
+* added particle constructors for ofPoint and ofRectangle
+* added app load/save control settings function wrappers
+
+* updated for OF 007
+* quad warper is no longer enabled by default
+* ofxControlPanel is now optional (via define)
+* warp editor can now be enabled if the warper is off
+* auto centering disabled if warper is on
+
+* fixed missing vector clear to particle manager clear()
+
+* removed ofxDirList & ofxLogger dependency
+
+0.1.0: 2011 Apr 11
+
+  initial version

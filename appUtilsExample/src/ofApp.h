@@ -47,7 +47,7 @@ class ofApp : public ofxApp { // <-- inherits ofxApp instead of ofBaseApp
 	
 	public:
 	
-		ofApp()  {}
+		ofApp() {}
 	
 		void setup();
 		void update();

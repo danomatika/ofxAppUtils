@@ -6,14 +6,14 @@ ofxAppUtils
 
 OpenFrameworks app utilities
 
-Copyright (c) [Dan Wilcox](danomatika.com) 2011-2013
+Copyright (c) [Dan Wilcox](danomatika.com) 2011-2017
 
 BSD Simplified License.
 
 For information on usage and redistribution, and for a DISCLAIMER OF ALL
 WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 
-See Documentation on [Github](https://github.com/danomatika/ofxAppUtils) and the [OpenFrameworks Forum post](http://forum.openframeworks.cc/index.php/topic,5995.0.html).
+See Documentation on [Github](https://github.com/danomatika/ofxAppUtils) and the [OpenFrameworks Forum post](https://forum.openframeworks.cc/t/ofxapputils/5995).
 
 OpenFrameworks is a cross platform open source toolkit for creative coding in C++.
 
@@ -49,9 +49,21 @@ git clone git://github.com/danomatika/ofxAppUtils.git
 
 The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
+### Which version to use?
+
+The master branch of ofxAppUtils will work with the current stable version of OpenFrameworks and can be considered *relatively* stable.
+
+Previous versions are tagged using [Semantic Versioning](http://semver.org) with the updates to newer versions of OpenFrameworks noted in the changelog, CHANGES.txt. You can select the tag in the Github "Current Branch" menu or clone and check it out using git.
+
+If you want to use ofxAppUtils with a previous version of OpenFrameworks, checkout the corresponding version tag after cloning:
+
+    git clone git://github.com/danomatika/ofxAppUtils.git
+    cd ofxAppUtils
+    git checkout 0.5.0
+
 ### Dependencies
 
-You will may also need the following addon dependencies:
+You may also need the following addon dependencies:
 
 * ofxGui: included with OpenFrameworks
 
@@ -153,20 +165,20 @@ openFrameworks/addons/ofxAppUtils/src
 
 There are two changes you need to make to extend your app with the ofApputils ofxApp class which handles all the *automagic*:
 
-* your base app needs to inherit from ofxApp in your testApp.h
+* your base app needs to inherit from ofxApp in your ofApp.h
 <pre>
-class testApp : public ofBaseApp { 
+class ofApp : public ofBaseApp { 
 // becomes
-class testApp : public ofxApp { 
+class ofApp : public ofxApp { 
 </pre>
 * you need to run your app with the app utils in main.cpp
 <pre>
-ofRunApp(new testApp());
+ofRunApp(new ofApp());
 // becomes
-ofRunAppWithAppUtils(new testApp());
+ofRunAppWithAppUtils(new ofApp());
 </pre>
 
-That's it. Check the example testApp::setup() for more info on startup settings.
+That's it. Check the example ofApp::setup() for more info on startup settings.
 
 Note: this is completely optional. You can always handle the transforms etc yourself using an ofxTransformer instance, etc.
 

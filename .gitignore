@@ -45,3 +45,5 @@ appUtilsIOSExample/appUtilsIOSExample.xcodeproj/
 appUtilsIOSExample/ofxiOS-Info.plist
 appUtilsIOSExample/ofxiOS_Prefix.pch
 appUtilsIOSExample/bin/data/*.png
+appUtilsIOSExample/mediaAssets
+

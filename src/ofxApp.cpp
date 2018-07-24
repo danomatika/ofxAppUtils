@@ -12,6 +12,7 @@
 
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
+#include "ofLog.h"
 #include "ofxSceneManager.h"
 
 // APP
@@ -140,7 +141,7 @@ void ofxApp::RunnerApp::draw() {
 	// pop transforms & draw the quad warper bounds (if editing)
 	if(app->_transformer) {
 		app->_transformer->popWarp();
-		app->_transformer->drawWarpBounds();
+		//app->_transformer->drawWarpBounds();
 		app->_transformer->pop();
 	}
 	

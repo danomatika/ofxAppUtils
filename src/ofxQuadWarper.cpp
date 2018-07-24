@@ -60,11 +60,11 @@ void ofxQuadWarper::drawPoints() {
 
 //--------------------------------------------------------------
 void ofxQuadWarper::drawPoints(float width, float height) {
-	ofSetRectMode(OF_RECTMODE_CENTER);
-	for(int i = 0; i < 4; i++){
+	//ofSetRectMode(OF_RECTMODE_CENTER);
+	for(int i = 0; i < 4; i++) {
 		ofDrawRectangle(_warpPoints[i].x * width, _warpPoints[i].y * height, 10, 10);
 	}
-	ofSetRectMode(OF_RECTMODE_CORNER);
+	//ofSetRectMode(OF_RECTMODE_CORNER);
 }
 
 //--------------------------------------------------------------
@@ -106,24 +106,39 @@ void ofxQuadWarper::reset() {
 }
 
 //--------------------------------------------------------------
-bool ofxQuadWarper::loadSettings(const string &xmlFile) {
+bool ofxQuadWarper::loadSettings(const std::string &xmlFile) {
 	ofXml xml;
 	if(!xml.load(xmlFile)) {
 		return false;
 	}
-    xml.setTo("quad");
-    
-	_warpPoints[0].x = xml.getValue("upperLeft/x", 0.0f);
-	_warpPoints[0].y = xml.getValue("upperLeft/y", 0.0f);
-	
-	_warpPoints[1].x = xml.getValue("upperRight/x", 1.0);
-	_warpPoints[1].y = xml.getValue("upperRight/y", 0.0);
-	
-	_warpPoints[2].x = xml.getValue("lowerRight/x", 1.0);
-	_warpPoints[2].y = xml.getValue("lowerRight/y", 1.0);
-	
-	_warpPoints[3].x = xml.getValue("lowerLeft/x", 0.0);
-	_warpPoints[3].y = xml.getValue("lowerLeft/y", 1.0);
+	auto root = xml.getChild("quad");
+	if(!root) {
+		return false;
+	}
+
+    auto child = root.findFirst("upperLeft");
+    if(child) {
+		_warpPoints[0].x = child.getChild("x").getFloatValue();
+		_warpPoints[0].y = child.getChild("y").getFloatValue();
+	}
+
+	child = root.findFirst("upperRight");
+    if(child) {
+		_warpPoints[1].x = child.getChild("x").getFloatValue();
+		_warpPoints[1].y = child.getChild("y").getFloatValue();
+	}
+
+	child = root.findFirst("lowerRight");
+    if(child) {
+		_warpPoints[2].x = child.getChild("x").getFloatValue();
+		_warpPoints[2].y = child.getChild("y").getFloatValue();
+	}
+
+	child = root.findFirst("lowerLeft");
+    if(child) {
+		_warpPoints[3].x = child.getChild("x").getFloatValue();
+		_warpPoints[3].y = child.getChild("y").getFloatValue();
+	}
 	
 	updateMatrix();
 	
@@ -131,35 +146,27 @@ bool ofxQuadWarper::loadSettings(const string &xmlFile) {
 }
 
 //--------------------------------------------------------------
-void ofxQuadWarper::saveSettings(const string &xmlFile) {
+void ofxQuadWarper::saveSettings(const std::string &xmlFile) {
 
 	ofXml xml;
-	xml.addChild("quad");
-    
-    xml.addChild("upperLeft");
-    xml.setTo("upperLeft");
-        xml.addValue("x",  _warpPoints[0].x);
-        xml.addValue("y",  _warpPoints[0].y);
-    xml.setToParent();
-    
-    xml.addChild("upperRight");
-    xml.setTo("upperRight");
-        xml.addValue("x", _warpPoints[1].x);
-        xml.addValue("y", _warpPoints[1].y);
-    xml.setToParent();
-    
-    xml.addChild("lowerRight");
-    xml.setTo("lowerRight");
-        xml.addValue("x",  _warpPoints[2].x);
-        xml.addValue("y",  _warpPoints[2].y);
-    xml.setToParent();
-    
-    xml.addChild("lowerLeft");
-    xml.setTo("lowerLeft");
-        xml.addValue("x",  _warpPoints[3].x);
-        xml.addValue("y",  _warpPoints[3].y);
-	xml.setToParent();
-    
+	auto root = xml.appendChild("quad");
+
+	auto child = root.appendChild("upperLeft");
+	child.appendChild("x").set(_warpPoints[0].x);
+	child.appendChild("y").set(_warpPoints[0].y);
+
+	child = root.appendChild("upperRight");
+	child.appendChild("x").set(_warpPoints[1].x);
+	child.appendChild("y").set(_warpPoints[1].y);
+
+	child = root.appendChild("lowerRight");
+	child.appendChild("x").set(_warpPoints[2].x);
+	child.appendChild("y").set(_warpPoints[2].y);
+
+	child = root.appendChild("lowerLeft");
+	child.appendChild("x").set(_warpPoints[3].x);
+	child.appendChild("y").set(_warpPoints[3].y);
+
 	xml.save(xmlFile);
 }
 

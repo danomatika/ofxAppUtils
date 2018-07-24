@@ -11,6 +11,7 @@
 #pragma once
 
 #include "ofConstants.h"
+#include "ofColor.h"
 #ifdef TARGET_OF_IOS
 	#include "ofxiOS.h"
 #else

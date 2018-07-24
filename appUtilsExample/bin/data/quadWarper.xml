@@ -1,18 +1,19 @@
+<?xml version="1.0"?>
 <quad>
-    <upperLeft>
-        <x>0.168750</x>
-        <y>0.036667</y>
-    </upperLeft>
-    <upperRight>
-        <x>1.000000</x>
-        <y>0.000000</y>
-    </upperRight>
-    <lowerRight>
-        <x>0.824818</x>
-        <y>0.998466</y>
-    </lowerRight>
-    <lowerLeft>
-        <x>0.180049</x>
-        <y>0.978528</y>
-    </lowerLeft>
+	<upperLeft>
+		<x>0.0925</x>
+		<y>0.288333</y>
+	</upperLeft>
+	<upperRight>
+		<x>0.45375</x>
+		<y>0.14</y>
+	</upperRight>
+	<lowerRight>
+		<x>0.74125</x>
+		<y>0.948333</y>
+	</lowerRight>
+	<lowerLeft>
+		<x>0.03875</x>
+		<y>0.94</y>
+	</lowerLeft>
 </quad>

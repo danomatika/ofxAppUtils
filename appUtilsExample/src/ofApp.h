@@ -16,7 +16,7 @@
 
 // optional ofxGUI control panel for transformer,
 // uncomment this if you're using ofxGui in this project
-//#define HAVE_OFX_GUI
+#define HAVE_OFX_GUI
 
 #ifdef HAVE_OFX_GUI
 	#include "ofxGui.h"

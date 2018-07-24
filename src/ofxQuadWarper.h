@@ -41,14 +41,14 @@ class ofxQuadWarper {
 		/// index: 0 - upper left, 1 - upper right, 2 - lower right, 3 - lower left 
 		void setPoint(unsigned int index, float x, float y);
 		void setPoint(unsigned int index, const ofVec2f &point);
-		const ofVec2f& getPoint(unsigned int index); //< coords are normalized 0-1 base on render size
+		const ofVec2f& getPoint(unsigned int index); //< coords are normalized 0-1 based on render size
 		
 		/// reset the quad to screen size
 		void reset();
 		
 		/// load/save the quad coords from/to an xml file
-		bool loadSettings(const string &xmlFile="quadWarper.xml");
-		void saveSettings(const string &xmlFile="quadWarper.xml");
+		bool loadSettings(const std::string &xmlFile="quadWarper.xml");
+		void saveSettings(const std::string &xmlFile="quadWarper.xml");
 		
 	protected:
 	

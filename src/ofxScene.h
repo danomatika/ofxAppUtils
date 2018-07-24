@@ -145,7 +145,7 @@ class ofxFadeScene : public ofxScene {
 
 	public:
 	
-		ofxFadeScene(const string &name) : ofxScene(name) {
+		ofxFadeScene(const std::string &name) : ofxScene(name) {
 			fadeIn = 0;
 			fadeOut = 0;
 			fadeTimer.set();

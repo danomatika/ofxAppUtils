@@ -124,8 +124,8 @@ class ofxTransformer {
 		void setWarp(bool warp);
 		bool getWarp();
 		void resetWarp();
-		bool loadWarpSettings(const string &xmlFile="quadWarper.xml");
-		void saveWarpSettings(const string &xmlFile="quadWarper.xml");
+		bool loadWarpSettings(const std::string &xmlFile="quadWarper.xml");
+		void saveWarpSettings(const std::string &xmlFile="quadWarper.xml");
 	
 		/// set/edit the projection warping
 		void setEditWarp(bool edit);

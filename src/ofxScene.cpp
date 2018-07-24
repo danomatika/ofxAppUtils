@@ -10,6 +10,8 @@
  */
 #include "ofxScene.h"
 
+#include "ofAppRunner.h"
+
 /// RUNNER SCENE
 
 //--------------------------------------------------------------

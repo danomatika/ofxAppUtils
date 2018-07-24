@@ -11,7 +11,7 @@
 #include "ofxTransformPanel.h"
 
 //--------------------------------------------------------------
-void ofxTransformPanel::setup(ofxTransformer *transformer, const string &name, const string &xmlFile) {
+void ofxTransformPanel::setup(ofxTransformer *transformer, const std::string &name, const std::string &xmlFile) {
 	
 	this->transformer = transformer;
 	
@@ -79,12 +79,12 @@ void ofxTransformPanel::draw() {
 }
 
 //--------------------------------------------------------------
-void ofxTransformPanel::loadSettings(const string &xmlFile) {
+void ofxTransformPanel::loadSettings(const std::string &xmlFile) {
 	panel.loadFromFile(ofToDataPath(xmlFile));
 }
 
 //--------------------------------------------------------------
-void ofxTransformPanel::saveSettings(const string &xmlFile) {
+void ofxTransformPanel::saveSettings(const std::string &xmlFile) {
 	panel.saveToFile(ofToDataPath(xmlFile));
 }
 

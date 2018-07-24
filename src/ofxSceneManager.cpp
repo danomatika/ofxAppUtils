@@ -10,6 +10,9 @@
  */
 #include "ofxSceneManager.h"
 
+#include "ofEvents.h"
+#include "ofLog.h"
+
 /// SCENE MANAGER
 
 //--------------------------------------------------------------
@@ -35,7 +38,7 @@ ofxScene* ofxSceneManager::add(ofxScene *scene) {
 									 << "\" already added, only unique names allowed";
 		return NULL;
 	}
-	_scenes.insert(_scenes.end(), pair<std::string,ofxScene::RunnerScene*>(scene->getName(), new ofxScene::RunnerScene(scene)));
+	_scenes.insert(_scenes.end(), std::pair<std::string,ofxScene::RunnerScene*>(scene->getName(), new ofxScene::RunnerScene(scene)));
 	return scene;
 }
 		
@@ -45,8 +48,8 @@ void ofxSceneManager::remove(ofxScene *scene) {
 		ofLogWarning("ofxSceneManager") << "cannot remove NULL scene";
 		return;
 	}
-	map<std::string,ofxScene::RunnerScene*>::iterator iter;
-	map<std::string,ofxScene::RunnerScene*>::iterator diter;
+	std::map<std::string,ofxScene::RunnerScene*>::iterator iter;
+	std::map<std::string,ofxScene::RunnerScene*>::iterator diter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
 		ofxScene::RunnerScene *s = (*iter).second;
 		if(s->scene == scene) {
@@ -63,7 +66,7 @@ void ofxSceneManager::remove(ofxScene *scene) {
 
 //--------------------------------------------------------------
 void ofxSceneManager::clear() {
-	map<std::string,ofxScene::RunnerScene*>::iterator iter;
+	std::map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
 		ofxScene::RunnerScene *s = (*iter).second;
 		if(s != NULL) {
@@ -78,7 +81,7 @@ void ofxSceneManager::clear() {
 //--------------------------------------------------------------
 void ofxSceneManager::setup(bool loadAll) {
 	if(loadAll) {
-		map<std::string,ofxScene::RunnerScene*>::iterator iter;
+		std::map<std::string,ofxScene::RunnerScene*>::iterator iter;
 		for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
 			ofxScene::RunnerScene *s = (*iter).second;
 			s->setup();
@@ -177,7 +180,7 @@ void ofxSceneManager::gotoScene(unsigned int index, bool now) {
 //--------------------------------------------------------------
 // using the std::distance func to turn iter into index
 void ofxSceneManager::gotoScene(std::string name, bool now) {
-	map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
+	std::map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
 	if(iter == _scenes.end()) {
 		ofLogWarning("ofxSceneManager") << "could not find \"" << name << "\"";
 		return;
@@ -187,7 +190,7 @@ void ofxSceneManager::gotoScene(std::string name, bool now) {
 
 //--------------------------------------------------------------
 ofxScene* ofxSceneManager::getScene(std::string name) {
-	map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
+	std::map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
 	return iter != _scenes.end() ? iter->second->scene : NULL;
 }
 
@@ -203,7 +206,7 @@ std::string ofxSceneManager::getSceneName(unsigned int index) {
 
 // using the std::distance func to turn iter into index
 int ofxSceneManager::getSceneIndex(std::string name) {
-	map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
+	std::map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.find(name);
 	return iter != _scenes.end() ? std::distance(_scenes.begin(), iter) : -1;
 }
 
@@ -284,7 +287,7 @@ void ofxSceneManager::draw() {
 
 // call resize on all scenes
 void ofxSceneManager::windowResized(int w, int h) {
-	map<std::string,ofxScene::RunnerScene*>::iterator iter;
+	std::map<std::string,ofxScene::RunnerScene*>::iterator iter;
 	for(iter = _scenes.begin(); iter != _scenes.end(); ++iter) {
 		ofxScene::RunnerScene *s = (*iter).second;
 		s->windowResized(w, h);
@@ -529,7 +532,7 @@ void ofxSceneManager::changeToNewScene() {
 //--------------------------------------------------------------
 ofxScene::RunnerScene* ofxSceneManager::_getRunnerSceneAt(int index) {
 	if(index < _scenes.size()) {
-		map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.begin();
+		std::map<std::string,ofxScene::RunnerScene*>::iterator iter = _scenes.begin();
 		std::advance(iter, index);
 		return (*iter).second;
 	}

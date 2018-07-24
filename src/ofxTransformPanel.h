@@ -38,7 +38,8 @@ class ofxTransformPanel {
 	
 		/// set the transformer to control, set optional panel name and settings file name,
 		/// loads settings file if found
-		void setup(ofxTransformer *transformer, const string &name="Transform", const string &xmlFile="transformSettings.xml");
+		void setup(ofxTransformer *transformer, const std::string &name="Transform",
+		           const std::string &xmlFile="transformSettings.xml");
 	
 		/// update the transformer with the current panel settings
 		void update();
@@ -47,8 +48,8 @@ class ofxTransformPanel {
 		void draw();
 	
 		/// load and save the control panel settings
-		void loadSettings(const string &xmlFile="transformSettings.xml");
-		void saveSettings(const string &xmlFile="transformSettings.xml");
+		void loadSettings(const std::string &xmlFile="transformSettings.xml");
+		void saveSettings(const std::string &xmlFile="transformSettings.xml");
 	
 		/// button callbacks
 		void editWarpPressed();

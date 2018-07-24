@@ -1,15 +1,19 @@
+0.7.0: 2018 Jun 24
+
+* updated for OF 0.10.0
+
 0.6.1: 2017 Mar 17
 
 * added some missing ofxApp callbacks: windowResized, mouseScrolled, 
   mouseEntered, mouseExited, and touch events
 
-* updated to OF 0.9.0
+* updated for OF 0.9.0
 * don't ignore addons.make as it's used by the PG
 
 0.6.0: 2015 Apr 17
 
 * added ofxMovingAverage
-* added scene change overlapping from masOTROS
+* added scene change overlapping (from masOTROS' fork)
 * added ofxFadeScene to automate scene transition fade
 * added ofxGUI transform panel to replace ofxControlPanel
 

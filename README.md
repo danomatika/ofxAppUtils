@@ -19,6 +19,8 @@ OpenFrameworks is a cross platform open source toolkit for creative coding in C+
 
 [http://www.openframeworks.cc/](http://www.openframeworks.cc/)
 
+This project has been supported by the CMU [Studio for Creative Inquiry](http://studioforcreativeinquiry.org) and the DU [Emergent Digital Practices Program](https://www.du.edu/ahss/edp/).
+
 Description
 -----------
 
@@ -84,7 +86,7 @@ To (re)generate project files for an *existing* project:
 
 If everything went Ok, you should now be able to open the generated project and build/run the example.
 
-### OSX
+### macOS
 
 Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
 

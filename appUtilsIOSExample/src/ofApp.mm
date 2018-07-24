@@ -13,10 +13,7 @@
 #include "TextScene.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
-
-	// initialize the accelerometer
-	ofxAccelerometer.setup();
+void ofApp::setup() {
 	
 	// setup for nice jaggy-less rendering
 	ofSetVerticalSync(true);
@@ -73,12 +70,12 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
 	// current scene is automatically updated before this function
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
 	// the current scene is automatically drawn before this function
 	
 	// show the render area edges with a white rect
@@ -140,24 +137,24 @@ void ofApp::touchDoubleTap(int x, int y, int id) {
 }
 
 //--------------------------------------------------------------
-void ofApp::touchCancelled(int x, int y, int id){
+void ofApp::touchCancelled(int x, int y, int id) {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::lostFocus(){
+void ofApp::lostFocus() {
 }
 
 //--------------------------------------------------------------
-void ofApp::gotFocus(){
+void ofApp::gotFocus() {
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMemoryWarning(){
+void ofApp::gotMemoryWarning() {
 }
 
 //--------------------------------------------------------------
-void ofApp::deviceOrientationChanged(int newOrientation){
+void ofApp::deviceOrientationChanged(int newOrientation) {
 	
 	// rotate graphics world ...
 	ofSetOrientation((ofOrientation) newOrientation);
@@ -168,4 +165,3 @@ void ofApp::deviceOrientationChanged(int newOrientation){
 	prevButton.set(1, ofGetHeight()-51, 50, 50);
 	nextButton.set(ofGetWidth()-51, ofGetHeight()-51, 50, 50);
 }
-

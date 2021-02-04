@@ -4,7 +4,7 @@ ofxAppUtils
 <img src="https://raw.github.com/danomatika/ofxAppUtils/master/res/logo.png"/>
 </p>
 
-OpenFrameworks app utilities
+openFrameworks app utilities
 
 Copyright (c) [Dan Wilcox](danomatika.com) 2011-2017
 
@@ -13,9 +13,9 @@ BSD Simplified License.
 For information on usage and redistribution, and for a DISCLAIMER OF ALL
 WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 
-See Documentation on [Github](https://github.com/danomatika/ofxAppUtils) and the [OpenFrameworks Forum post](https://forum.openframeworks.cc/t/ofxapputils/5995).
+See Documentation on [Github](https://github.com/danomatika/ofxAppUtils) and the [openFrameworks Forum post](https://forum.openframeworks.cc/t/ofxapputils/5995).
 
-OpenFrameworks is a cross platform open source toolkit for creative coding in C++.
+openFrameworks is a cross platform open source toolkit for creative coding in C++.
 
 [http://www.openframeworks.cc/](http://www.openframeworks.cc/)
 
@@ -24,7 +24,7 @@ This project has been supported by the CMU [Frank-Ratchey STUDIO for Creative In
 Description
 -----------
 
-ofxAppUtils is a set of utilities for OpenFrameworks application development including:
+ofxAppUtils is a set of utilities for openFrameworks application development including:
 
 * ofxApp: an ofBaseApp/ofxiPhoneApp extension with optional screen scaling transformer & scene manager
 * ofxScene: a mini ofBaseApp/ofxiPhoneApp for writing stand alone scenes
@@ -53,11 +53,11 @@ The addon should sit in `openFrameworks/addons/ofxAppUtils/`.
 
 ### Which version to use?
 
-The master branch of ofxAppUtils will work with the current stable version of OpenFrameworks and can be considered *relatively* stable.
+The master branch of ofxAppUtils will work with the current stable version of openFrameworks and can be considered *relatively* stable.
 
-Previous versions are tagged using [Semantic Versioning](http://semver.org) with the updates to newer versions of OpenFrameworks noted in the changelog, CHANGES.txt. You can select the tag in the Github "Current Branch" menu or clone and check it out using git.
+Previous versions are tagged using [Semantic Versioning](http://semver.org) with the updates to newer versions of openFrameworks noted in the changelog, CHANGES.txt. You can select the tag in the Github "Current Branch" menu or clone and check it out using git.
 
-If you want to use ofxAppUtils with a previous version of OpenFrameworks, checkout the corresponding version tag after cloning:
+If you want to use ofxAppUtils with a previous version of openFrameworks, checkout the corresponding version tag after cloning:
 
     git clone git://github.com/danomatika/ofxAppUtils.git
     cd ofxAppUtils
@@ -67,7 +67,7 @@ If you want to use ofxAppUtils with a previous version of OpenFrameworks, checko
 
 You may also need the following addon dependencies:
 
-* ofxGui: included with OpenFrameworks
+* ofxGui: included with openFrameworks
 
 To enable the ofxGui transformer panel, include `ofxTransformerPanel.h`, create an "ofxTransformerPanel" object, and set the transformer in _ofxTransformerPanel::setup()_.
 
@@ -76,12 +76,12 @@ Running the Example Projects
 
 The example projects are in the `appUtilsExample` & `appUtilsIOSExample` folders.
 
-Project files for the examples are not included so you will need to generate the project files for your operating system and development environment using the OF ProjectGenerator which is included with the OpenFrameworks distribution.
+Project files for the examples are not included so you will need to generate the project files for your operating system and development environment using the OF ProjectGenerator which is included with the openFrameworks distribution.
 
 To (re)generate project files for an *existing* project:
 
 * click the "Import" button in the ProjectGenerator
-* navigate the to base folder for the project ie. "appUtilsExample"
+* navigate to the base folder for the example project ie. "appUtilsExample"
 * click the "Update" button
 
 If everything went Ok, you should now be able to open the generated project and build/run the example.

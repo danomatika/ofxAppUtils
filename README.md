@@ -80,9 +80,9 @@ Project files for the examples are not included so you will need to generate the
 
 To (re)generate project files for an *existing* project:
 
-* click the "Import" button in the ProjectGenerator
-* navigate to the base folder for the example project ie. "appUtilsExample"
-* click the "Update" button
+* Click the "Import" button in the ProjectGenerator
+* Navigate to the project's parent folder ie. "ofxAppUtils", select the base folder for the example project ie. "appUtilsExample", and click the Open button
+* Click the "Update" button
 
 If everything went Ok, you should now be able to open the generated project and build/run the example.
 
@@ -104,9 +104,8 @@ make run
 
 An example Visual Studio solution as well as a Codeblocks workspace are included.
 
-
 Adding ofxAppUtils to an Existing Project
----------------------------------------
+-----------------------------------------
 
 ### ProjectGenerator
 
@@ -125,40 +124,41 @@ openFrameworks/addons/ofxAppUtils/src
 
 ### Xcode
 
-* create a new group "ofxAppUtils"
-* drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
-* you also need to add the following addon dependencies (if you're using them) in a similar manner:
+* Create a new group "ofxAppUtils"
+* Drag these directories from ofxAppUtils into this new group: ofxAppUtils/src
+* You also need to add the following addon dependencies (if you're using them) in a similar manner:
 	* ofxGui
-* make sure to remove any of the example folders in the Xcode project tree for any of the addons you've added manually
+* Make sure to remove any of the example folders in the Xcode project tree for any of the addons you've added manually
 
 ### For Linux (Makefiles & Codeblocks):
 
-* edit addons.make in your project folder and add the following line to the end of the file: 
-	<pre>ofxAppUtils</pre>
+Edit addons.make in your project folder and add the following line to the end of the file: 
+<pre>ofxAppUtils</pre>
 	
 ### For Codeblocks (Win):
 
-* add the ofxAppUtils sources to the project:
-	* right-click on your project in the project tree
-	* select "Add Files Recursively ..."
-	* navigate and choose the ofxAppUtils/src folder
-* add defines, search paths, and libraries to link:
-	* right-click on your project in the project tree
-	* select "Build options..."
-	* make sure the project name is selected in the tree (not release or debug)
-	* select the "Compiler settings" tab
-	* select the "Search directories" tab, click add the search paths:
-	<pre>
-	..\\..\\..\addons\ofxAppUtils\src
-	</pre>
+Add the ofxAppUtils sources to the project:
+* Right-click on your project in the project tree
+* Select "Add Files Recursively ..."
+* Navigate and choose the ofxAppUtils/src folder
+
+Add defines, search paths, and libraries to link:
+* Right-click on your project in the project tree
+* Select "Build options..."
+* Make sure the project name is selected in the tree (not release or debug)
+* Select the "Compiler settings" tab
+* Select the "Search directories" tab, click add the search paths:
+<pre>
+..\\..\\..\addons\ofxAppUtils\src
+</pre>
 	
 ### For Visual Studio:
 
-* drag the ofxApputils/src folder onto the project tree
-* right click on the project in the project tree and select Properties
-* set the Configuration to All Configurations
-* add the defines and search paths:
-  * add to the search paths in Configuration Properties->C/C++->General->Additonal Include Directories:
+* Drag the ofxApputils/src folder onto the project tree
+* Right-click on the project in the project tree and select Properties
+* Set the Configuration to All Configurations
+* Add the defines and search paths:
+  - add to the search paths in Configuration Properties->C/C++->General->Additonal Include Directories:
   <pre>
   ..\\..\\..\\addons\ofxAppUtils\src
   </pre>
@@ -167,13 +167,13 @@ openFrameworks/addons/ofxAppUtils/src
 
 There are two changes you need to make to extend your app with the ofApputils ofxApp class which handles all the *automagic*:
 
-* your base app needs to inherit from ofxApp in your ofApp.h
+* Your base app needs to inherit from ofxApp in your ofApp.h
 <pre>
 class ofApp : public ofBaseApp { 
 // becomes
 class ofApp : public ofxApp { 
 </pre>
-* you need to run your app with the app utils in main.cpp
+* You need to run your app with the app utils in main.cpp
 <pre>
 ofRunApp(new ofApp());
 // becomes
@@ -190,7 +190,7 @@ Internally, calling `ofRunAppWithAppUtils` actually creates a wrapper ofBaseApp 
 
 In order to fix this, there is a new function added with ofxAppUtils called `ofxGetAppPtr()` (note the "x") which returns the correct pointer. If you are porting existing code, make sure to change any `ofGetAppPtr()` calls to `ofxGetAppPtr()`.
 
-DEVELOPING
+Developing
 ----------
 
 You can help develop ofxAppUtils on GitHub: [https://github.com/danomatika/ofxAppUtils](https://github.com/danomatika/ofxAppUtils)

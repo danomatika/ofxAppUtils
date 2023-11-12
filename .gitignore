@@ -18,10 +18,6 @@ xcshareddata
 build
 *.mode1v3
 
-# codeblocks
-*.layout
-*.depend
-
 # visual studio
 *.exp
 *.ilk
@@ -39,6 +35,7 @@ appUtilsExample/Project.xcconfig
 appUtilsExample/appUtilsExample.xcodeproj/
 appUtilsExample/config.make
 appUtilsExample/openFrameworks-Info.plist
+appUtilsExample/of.entitlements
 
 appUtilsIOSExample/Project.xcconfig
 appUtilsIOSExample/appUtilsIOSExample.xcodeproj/
@@ -46,4 +43,5 @@ appUtilsIOSExample/ofxiOS-Info.plist
 appUtilsIOSExample/ofxiOS_Prefix.pch
 appUtilsIOSExample/bin/data/*.png
 appUtilsIOSExample/mediaAssets
+appUtilsIOSExample/of.entitlements
 

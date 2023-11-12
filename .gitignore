@@ -39,6 +39,7 @@ appUtilsExample/of.entitlements
 
 appUtilsIOSExample/Project.xcconfig
 appUtilsIOSExample/appUtilsIOSExample.xcodeproj/
+appUtilsIOSExample/config.make
 appUtilsIOSExample/ofxiOS-Info.plist
 appUtilsIOSExample/ofxiOS_Prefix.pch
 appUtilsIOSExample/bin/data/*.png

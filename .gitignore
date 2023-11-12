@@ -1,7 +1,7 @@
 # libs
 *.a
 
-# OSX
+# macOS
 .DS_Store
 *.app
 
@@ -44,4 +44,3 @@ appUtilsIOSExample/ofxiOS_Prefix.pch
 appUtilsIOSExample/bin/data/*.png
 appUtilsIOSExample/mediaAssets
 appUtilsIOSExample/of.entitlements
-

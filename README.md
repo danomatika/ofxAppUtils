@@ -1,12 +1,12 @@
 ofxAppUtils
 ===========
 <p align="center">
-<img src="https://raw.github.com/danomatika/ofxAppUtils/master/res/logo.png"/>
+  <img src="https://raw.github.com/danomatika/ofxAppUtils/master/res/logo.png"/>
 </p>
 
 openFrameworks app utilities
 
-Copyright (c) [Dan Wilcox](danomatika.com) 2011-2017
+Copyright (c) [Dan Wilcox](danomatika.com) 2011-2023
 
 BSD Simplified License.
 
@@ -92,17 +92,17 @@ Open the Xcode project, select the appUtilsExample-Debug scheme, and hit "Run".
 
 ### Linux
 
-Open the Code::Blocks .cbp and hit F9 to build. Optionally, you can build the example with the Makefile.
+Open the QT Creator project file and/or build the example with the Makefile.
 
-To build and run it on the terminal:
-<pre>
+To build and run via Makefile on the terminal:
+~~~
 make
 make run
-</pre>
+~~~
 
 ### Windows
 
-An example Visual Studio solution as well as a Codeblocks workspace are included.
+Open the Visual Studio project, build and run.
 
 Adding ofxAppUtils to an Existing Project
 -----------------------------------------
@@ -118,9 +118,9 @@ Select ofxAppUtils and other addons used by your project from the available addo
 _Note: These instructions are for manually adding ofxAppUtils to an existing project. You do not need to follow these steps if you use the ProjecGenerator app, except for adding the OFX_APP_UTILS defines._
 
 If you want to add ofxAppUtils to another project, you need to make sure you include the src folders:
-<pre>
+~~~
 openFrameworks/addons/ofxAppUtils/src
-</pre>
+~~~
 
 ### Xcode
 
@@ -130,55 +130,40 @@ openFrameworks/addons/ofxAppUtils/src
 	* ofxGui
 * Make sure to remove any of the example folders in the Xcode project tree for any of the addons you've added manually
 
-### For Linux (Makefiles & Codeblocks):
+### Linux
 
 Edit addons.make in your project folder and add the following line to the end of the file: 
-<pre>ofxAppUtils</pre>
-	
-### For Codeblocks (Win):
+~~~
+ofxAppUtils
+~~~
 
-Add the ofxAppUtils sources to the project:
-* Right-click on your project in the project tree
-* Select "Add Files Recursively ..."
-* Navigate and choose the ofxAppUtils/src folder
-
-Add defines, search paths, and libraries to link:
-* Right-click on your project in the project tree
-* Select "Build options..."
-* Make sure the project name is selected in the tree (not release or debug)
-* Select the "Compiler settings" tab
-* Select the "Search directories" tab, click add the search paths:
-<pre>
-..\\..\\..\addons\ofxAppUtils\src
-</pre>
-	
-### For Visual Studio:
+### Visual Studio
 
 * Drag the ofxApputils/src folder onto the project tree
 * Right-click on the project in the project tree and select Properties
 * Set the Configuration to All Configurations
 * Add the defines and search paths:
   - add to the search paths in Configuration Properties->C/C++->General->Additonal Include Directories:
-  <pre>
+  ~~~
   ..\\..\\..\\addons\ofxAppUtils\src
-  </pre>
+  ~~~
 
 ### Extending Your BaseApp
 
 There are two changes you need to make to extend your app with the ofApputils ofxApp class which handles all the *automagic*:
 
 * Your base app needs to inherit from ofxApp in your ofApp.h
-<pre>
+~~~
 class ofApp : public ofBaseApp { 
 // becomes
 class ofApp : public ofxApp { 
-</pre>
+~~~
 * You need to run your app with the app utils in main.cpp
-<pre>
+~~~
 ofRunApp(new ofApp());
 // becomes
 ofRunAppWithAppUtils(new ofApp());
-</pre>
+~~~
 
 That's it. Check the example ofApp::setup() for more info on startup settings.
 
